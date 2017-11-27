@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26AE2235A08790EFC6EC2015 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5CA00BD6CE61EBA5B0246AA /* AssetsLibrary.framework */; };
 		41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B11FCC1B1600566D10 /* AppDelegate.swift */; };
 		41E825B51FCC1B1600566D10 /* Elder_ly.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B31FCC1B1600566D10 /* Elder_ly.xcdatamodeld */; };
 		41E825B71FCC1B1600566D10 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B61FCC1B1600566D10 /* MasterViewController.swift */; };
@@ -16,6 +17,14 @@
 		41E825C11FCC1B1600566D10 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E825BF1FCC1B1600566D10 /* LaunchScreen.storyboard */; };
 		41E825CC1FCC1B1700566D10 /* Elder_lyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825CB1FCC1B1700566D10 /* Elder_lyTests.swift */; };
 		41E825D71FCC1B1700566D10 /* Elder_lyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825D61FCC1B1700566D10 /* Elder_lyUITests.swift */; };
+		478FBF6EABB0FDA52E5A772B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3A25A7682D9348BC9F0690D /* CoreTelephony.framework */; };
+		59AA994F343F9749D31A8E08 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78CE041FC81AC546CC6BDD5F /* CoreMedia.framework */; };
+		697839356D13F9320A0AF526 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C344950F39E93082B4A9FBD6 /* AVFoundation.framework */; };
+		7CE8C4E184495C6C0FA95864 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FC9F62CB0F67A46F7BCF03D /* CoreText.framework */; };
+		893C49732D4601425FBBB403 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BAAEEEA4DCC04671C466634 /* QuartzCore.framework */; };
+		89D26E3F4F5C67D80104BDF8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD0F7FFCC06BC934D52F4F3E /* SystemConfiguration.framework */; };
+		9DB8C054EDF139ED6F15BF62 /* BuddyBuildSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC6E33C9271BEDC35AA98C9 /* BuddyBuildSDK.framework */; };
+		EB903FD67E9DB86AEF68A66F /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 387BA900ADFDDD9CE2D757E5 /* CoreVideo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +45,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0FC9F62CB0F67A46F7BCF03D /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		1BDCC486D8A8C30D237ADC99 /* Bridging-Header.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		387BA900ADFDDD9CE2D757E5 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		41E825AE1FCC1B1600566D10 /* Elder.ly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elder.ly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41E825B11FCC1B1600566D10 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41E825B41FCC1B1600566D10 /* Elder_ly.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Elder_ly.xcdatamodel; sourceTree = "<group>"; };
@@ -51,6 +63,13 @@
 		41E825D21FCC1B1700566D10 /* Elder.lyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Elder.lyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		41E825D61FCC1B1700566D10 /* Elder_lyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elder_lyUITests.swift; sourceTree = "<group>"; };
 		41E825D81FCC1B1700566D10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4DC6E33C9271BEDC35AA98C9 /* BuddyBuildSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BuddyBuildSDK.framework; path = BuddyBuildSDK.framework; sourceTree = "<group>"; };
+		78CE041FC81AC546CC6BDD5F /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		8BAAEEEA4DCC04671C466634 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B3A25A7682D9348BC9F0690D /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		C344950F39E93082B4A9FBD6 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		D5CA00BD6CE61EBA5B0246AA /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		DD0F7FFCC06BC934D52F4F3E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +77,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DB8C054EDF139ED6F15BF62 /* BuddyBuildSDK.framework in Frameworks */,
+				26AE2235A08790EFC6EC2015 /* AssetsLibrary.framework in Frameworks */,
+				7CE8C4E184495C6C0FA95864 /* CoreText.framework in Frameworks */,
+				478FBF6EABB0FDA52E5A772B /* CoreTelephony.framework in Frameworks */,
+				89D26E3F4F5C67D80104BDF8 /* SystemConfiguration.framework in Frameworks */,
+				893C49732D4601425FBBB403 /* QuartzCore.framework in Frameworks */,
+				697839356D13F9320A0AF526 /* AVFoundation.framework in Frameworks */,
+				59AA994F343F9749D31A8E08 /* CoreMedia.framework in Frameworks */,
+				EB903FD67E9DB86AEF68A66F /* CoreVideo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +106,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		260B67581C2A395A1CDA4138 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4DC6E33C9271BEDC35AA98C9 /* BuddyBuildSDK.framework */,
+				D5CA00BD6CE61EBA5B0246AA /* AssetsLibrary.framework */,
+				0FC9F62CB0F67A46F7BCF03D /* CoreText.framework */,
+				B3A25A7682D9348BC9F0690D /* CoreTelephony.framework */,
+				DD0F7FFCC06BC934D52F4F3E /* SystemConfiguration.framework */,
+				8BAAEEEA4DCC04671C466634 /* QuartzCore.framework */,
+				C344950F39E93082B4A9FBD6 /* AVFoundation.framework */,
+				78CE041FC81AC546CC6BDD5F /* CoreMedia.framework */,
+				387BA900ADFDDD9CE2D757E5 /* CoreVideo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		41E825A51FCC1B1600566D10 = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +129,8 @@
 				41E825CA1FCC1B1700566D10 /* Elder.lyTests */,
 				41E825D51FCC1B1700566D10 /* Elder.lyUITests */,
 				41E825AF1FCC1B1600566D10 /* Products */,
+				260B67581C2A395A1CDA4138 /* Frameworks */,
+				1BDCC486D8A8C30D237ADC99 /* Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -435,10 +481,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Elder.ly/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.formation.Elder-ly";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -449,10 +500,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Elder.ly/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.formation.Elder-ly";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
