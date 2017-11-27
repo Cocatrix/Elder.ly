@@ -33,7 +33,8 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        // TODO : clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
+        // TODO - clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
+        // It is related to selected element. Should it still be selected on viewWillAppear ? I think it's not important to comment it for now.
         super.viewWillAppear(animated)
     }
 
