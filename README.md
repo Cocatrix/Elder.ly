@@ -8,7 +8,7 @@ Our final project in Swift 4.
 Done in a team of 4 developers :
 
 | *Team Members :* | | |
-|---|---|---|---|
+|:---|:---:|:---:|:---|
 | Thibault GOUDOUNEIX | [Github](https://github.com/Nilmanduil) | [LinkedIn](https://www.linkedin.com/in/tgoudouneix/) |  
 | Maxime REVEL | [Github](https://github.com/Cocatrix) | [LinkedIn](https://www.linkedin.com/in/maximerevel/) |  
 | Arnaud RINGENBACH | [Github](https://github.com/newatox) | [LinkedIn](https://www.linkedin.com/in/arnaud-ringenbach-91776b153/) |  
