@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		00EF402178A187FB8996946E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF07CD3234CE34238AAF00CF /* SystemConfiguration.framework */; };
-		377F763C1FCC4A7C00DBE398 /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 377F763B1FCC4A7C00DBE398 /* LoginView.xib */; };
+		377F763C1FCC4A7C00DBE398 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 377F763B1FCC4A7C00DBE398 /* LoginViewController.xib */; };
+		3790C1591FCC5539001928E4 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3790C1571FCC5539001928E4 /* SignUpViewController.swift */; };
+		3790C15A1FCC5539001928E4 /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3790C1581FCC5539001928E4 /* SignUpViewController.xib */; };
+		3790C15C1FCC6018001928E4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3790C15B1FCC6018001928E4 /* LoginViewController.swift */; };
 		39F07E2087F6B6AE4057F0DC /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC243844D049F4A0232ECC51 /* CoreText.framework */; };
 		41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B11FCC1B1600566D10 /* AppDelegate.swift */; };
 		41E825B51FCC1B1600566D10 /* Elder_ly.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B31FCC1B1600566D10 /* Elder_ly.xcdatamodeld */; };
@@ -53,7 +56,10 @@
 		038C5BE633AE1B59909767AD /* BuddyBuildSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BuddyBuildSDK.framework; sourceTree = "<group>"; };
 		11EF9C8E822F789BD93FAFF3 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		2410B9AB82100003E207B63C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		377F763B1FCC4A7C00DBE398 /* LoginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
+		377F763B1FCC4A7C00DBE398 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		3790C1571FCC5539001928E4 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		3790C1581FCC5539001928E4 /* SignUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignUpViewController.xib; sourceTree = "<group>"; };
+		3790C15B1FCC6018001928E4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		41E825AE1FCC1B1600566D10 /* Elder.ly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elder.ly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41E825B11FCC1B1600566D10 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41E825B41FCC1B1600566D10 /* Elder_ly.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Elder_ly.xcdatamodel; sourceTree = "<group>"; };
@@ -142,17 +148,20 @@
 		41E825B01FCC1B1600566D10 /* Elder.ly */ = {
 			isa = PBXGroup;
 			children = (
-				51EC3A6E1FCC3F0E00EEE7D6 /* Providers */,
-				51EC3A6D1FCC3EFC00EEE7D6 /* Models */,
-				41E825B11FCC1B1600566D10 /* AppDelegate.swift */,
-				41E825B61FCC1B1600566D10 /* MasterViewController.swift */,
-				377F763B1FCC4A7C00DBE398 /* LoginView.xib */,
-				41E825B81FCC1B1600566D10 /* DetailViewController.swift */,
-				41E825BA1FCC1B1600566D10 /* Main.storyboard */,
-				41E825BD1FCC1B1600566D10 /* Assets.xcassets */,
-				41E825BF1FCC1B1600566D10 /* LaunchScreen.storyboard */,
 				41E825C21FCC1B1600566D10 /* Info.plist */,
+				41E825B11FCC1B1600566D10 /* AppDelegate.swift */,
+				41E825B81FCC1B1600566D10 /* DetailViewController.swift */,
+				3790C15B1FCC6018001928E4 /* LoginViewController.swift */,
+				41E825B61FCC1B1600566D10 /* MasterViewController.swift */,
+				3790C1571FCC5539001928E4 /* SignUpViewController.swift */,
+				41E825BD1FCC1B1600566D10 /* Assets.xcassets */,
+				377F763B1FCC4A7C00DBE398 /* LoginViewController.xib */,
+				3790C1581FCC5539001928E4 /* SignUpViewController.xib */,
 				41E825B31FCC1B1600566D10 /* Elder_ly.xcdatamodeld */,
+				41E825BF1FCC1B1600566D10 /* LaunchScreen.storyboard */,
+				41E825BA1FCC1B1600566D10 /* Main.storyboard */,
+				51EC3A6D1FCC3EFC00EEE7D6 /* Models */,
+				51EC3A6E1FCC3F0E00EEE7D6 /* Providers */,
 			);
 			path = Elder.ly;
 			sourceTree = "<group>";
@@ -318,7 +327,8 @@
 				F914D2AA1FCC2228008326FB /* .gitignore in Resources */,
 				41E825C11FCC1B1600566D10 /* LaunchScreen.storyboard in Resources */,
 				41E825BE1FCC1B1600566D10 /* Assets.xcassets in Resources */,
-				377F763C1FCC4A7C00DBE398 /* LoginView.xib in Resources */,
+				377F763C1FCC4A7C00DBE398 /* LoginViewController.xib in Resources */,
+				3790C15A1FCC5539001928E4 /* SignUpViewController.xib in Resources */,
 				41E825BC1FCC1B1600566D10 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -344,8 +354,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3790C15C1FCC6018001928E4 /* LoginViewController.swift in Sources */,
 				51EC3A721FCC403E00EEE7D6 /* Contact.swift in Sources */,
 				51EC3A701FCC3F3B00EEE7D6 /* WebServicesProvider.swift in Sources */,
+				3790C1591FCC5539001928E4 /* SignUpViewController.swift in Sources */,
 				41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */,
 				41E825B51FCC1B1600566D10 /* Elder_ly.xcdatamodeld in Sources */,
 				41E825B71FCC1B1600566D10 /* MasterViewController.swift in Sources */,
