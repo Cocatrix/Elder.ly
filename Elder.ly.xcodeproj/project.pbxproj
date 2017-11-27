@@ -16,6 +16,7 @@
 		41E825C11FCC1B1600566D10 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E825BF1FCC1B1600566D10 /* LaunchScreen.storyboard */; };
 		41E825CC1FCC1B1700566D10 /* Elder_lyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825CB1FCC1B1700566D10 /* Elder_lyTests.swift */; };
 		41E825D71FCC1B1700566D10 /* Elder_lyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825D61FCC1B1700566D10 /* Elder_lyUITests.swift */; };
+		F914D2AA1FCC2228008326FB /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F914D2A91FCC2228008326FB /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		41E825D21FCC1B1700566D10 /* Elder.lyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Elder.lyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		41E825D61FCC1B1700566D10 /* Elder_lyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elder_lyUITests.swift; sourceTree = "<group>"; };
 		41E825D81FCC1B1700566D10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F914D2A91FCC2228008326FB /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 		41E825A51FCC1B1600566D10 = {
 			isa = PBXGroup;
 			children = (
+				F914D2A91FCC2228008326FB /* .gitignore */,
 				41E825B01FCC1B1600566D10 /* Elder.ly */,
 				41E825CA1FCC1B1700566D10 /* Elder.lyTests */,
 				41E825D51FCC1B1700566D10 /* Elder.lyUITests */,
@@ -238,6 +241,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F914D2AA1FCC2228008326FB /* .gitignore in Resources */,
 				41E825C11FCC1B1600566D10 /* LaunchScreen.storyboard in Resources */,
 				41E825BE1FCC1B1600566D10 /* Assets.xcassets in Resources */,
 				41E825BC1FCC1B1600566D10 /* Main.storyboard in Resources */,
