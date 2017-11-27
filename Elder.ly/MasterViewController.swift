@@ -28,7 +28,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
         // Test gettoken
         let wsProvider = WebServicesProvider.sharedInstance
-        wsProvider.userLogin(phone: "0600000042", password: "0000")
+        wsProvider.userLogin(phone: "0600000042", password: "0000") {
+            print(wsProvider.token ?? "notoken")
+            wsProvider.getContacts()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
