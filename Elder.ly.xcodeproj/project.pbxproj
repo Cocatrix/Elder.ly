@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00EF402178A187FB8996946E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF07CD3234CE34238AAF00CF /* SystemConfiguration.framework */; };
+		377F763C1FCC4A7C00DBE398 /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 377F763B1FCC4A7C00DBE398 /* LoginView.xib */; };
+		39F07E2087F6B6AE4057F0DC /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC243844D049F4A0232ECC51 /* CoreText.framework */; };
 		41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B11FCC1B1600566D10 /* AppDelegate.swift */; };
 		41E825B51FCC1B1600566D10 /* Elder_ly.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B31FCC1B1600566D10 /* Elder_ly.xcdatamodeld */; };
 		41E825B71FCC1B1600566D10 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B61FCC1B1600566D10 /* MasterViewController.swift */; };
@@ -16,6 +19,16 @@
 		41E825C11FCC1B1600566D10 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E825BF1FCC1B1600566D10 /* LaunchScreen.storyboard */; };
 		41E825CC1FCC1B1700566D10 /* Elder_lyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825CB1FCC1B1700566D10 /* Elder_lyTests.swift */; };
 		41E825D71FCC1B1700566D10 /* Elder_lyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825D61FCC1B1700566D10 /* Elder_lyUITests.swift */; };
+		51CD9B54318495C701BE9BDD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABCF36C8A2D1039482C85EA7 /* AVFoundation.framework */; };
+		51EC3A701FCC3F3B00EEE7D6 /* WebServicesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EC3A6F1FCC3F3B00EEE7D6 /* WebServicesProvider.swift */; };
+		51EC3A721FCC403E00EEE7D6 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EC3A711FCC403E00EEE7D6 /* Contact.swift */; };
+		51EC3A741FCC405100EEE7D6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EC3A731FCC405100EEE7D6 /* User.swift */; };
+		595B124CFBA76185B25FBA90 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3DBE58689F165E4D44BF8CA /* QuartzCore.framework */; };
+		8E01427553D8B6117BD2CB38 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2410B9AB82100003E207B63C /* CoreMedia.framework */; };
+		8EE91305AC89D5033082BA88 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E9080D2E28AB93EA46F8392 /* AssetsLibrary.framework */; };
+		AA880F03C26CA45A3BDC0794 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11EF9C8E822F789BD93FAFF3 /* CoreTelephony.framework */; };
+		B385B40C9C2A92FA37C31679 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E8806F383D656B3CAC66950 /* CoreVideo.framework */; };
+		B854D6CD02E1A81599FC8786 /* BuddyBuildSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 038C5BE633AE1B59909767AD /* BuddyBuildSDK.framework */; };
 		F914D2AA1FCC2228008326FB /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F914D2A91FCC2228008326FB /* .gitignore */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +50,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		038C5BE633AE1B59909767AD /* BuddyBuildSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BuddyBuildSDK.framework; sourceTree = "<group>"; };
+		11EF9C8E822F789BD93FAFF3 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		2410B9AB82100003E207B63C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		377F763B1FCC4A7C00DBE398 /* LoginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
 		41E825AE1FCC1B1600566D10 /* Elder.ly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elder.ly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41E825B11FCC1B1600566D10 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41E825B41FCC1B1600566D10 /* Elder_ly.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Elder_ly.xcdatamodel; sourceTree = "<group>"; };
@@ -52,7 +69,17 @@
 		41E825D21FCC1B1700566D10 /* Elder.lyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Elder.lyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		41E825D61FCC1B1700566D10 /* Elder_lyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elder_lyUITests.swift; sourceTree = "<group>"; };
 		41E825D81FCC1B1700566D10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		51EC3A6F1FCC3F3B00EEE7D6 /* WebServicesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServicesProvider.swift; sourceTree = "<group>"; };
+		51EC3A711FCC403E00EEE7D6 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		51EC3A731FCC405100EEE7D6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		6E9080D2E28AB93EA46F8392 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		7D640F3A2E781D666777A069 /* Bridging-Header.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		9E8806F383D656B3CAC66950 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		ABCF36C8A2D1039482C85EA7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		B3DBE58689F165E4D44BF8CA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CF07CD3234CE34238AAF00CF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F914D2A91FCC2228008326FB /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		FC243844D049F4A0232ECC51 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +87,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B854D6CD02E1A81599FC8786 /* BuddyBuildSDK.framework in Frameworks */,
+				8EE91305AC89D5033082BA88 /* AssetsLibrary.framework in Frameworks */,
+				39F07E2087F6B6AE4057F0DC /* CoreText.framework in Frameworks */,
+				AA880F03C26CA45A3BDC0794 /* CoreTelephony.framework in Frameworks */,
+				00EF402178A187FB8996946E /* SystemConfiguration.framework in Frameworks */,
+				595B124CFBA76185B25FBA90 /* QuartzCore.framework in Frameworks */,
+				51CD9B54318495C701BE9BDD /* AVFoundation.framework in Frameworks */,
+				8E01427553D8B6117BD2CB38 /* CoreMedia.framework in Frameworks */,
+				B385B40C9C2A92FA37C31679 /* CoreVideo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +124,8 @@
 				41E825CA1FCC1B1700566D10 /* Elder.lyTests */,
 				41E825D51FCC1B1700566D10 /* Elder.lyUITests */,
 				41E825AF1FCC1B1600566D10 /* Products */,
+				A54B4E7AAB5119B45DA6D93C /* Frameworks */,
+				7D640F3A2E781D666777A069 /* Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,8 +142,11 @@
 		41E825B01FCC1B1600566D10 /* Elder.ly */ = {
 			isa = PBXGroup;
 			children = (
+				51EC3A6E1FCC3F0E00EEE7D6 /* Providers */,
+				51EC3A6D1FCC3EFC00EEE7D6 /* Models */,
 				41E825B11FCC1B1600566D10 /* AppDelegate.swift */,
 				41E825B61FCC1B1600566D10 /* MasterViewController.swift */,
+				377F763B1FCC4A7C00DBE398 /* LoginView.xib */,
 				41E825B81FCC1B1600566D10 /* DetailViewController.swift */,
 				41E825BA1FCC1B1600566D10 /* Main.storyboard */,
 				41E825BD1FCC1B1600566D10 /* Assets.xcassets */,
@@ -132,6 +173,39 @@
 				41E825D81FCC1B1700566D10 /* Info.plist */,
 			);
 			path = Elder.lyUITests;
+			sourceTree = "<group>";
+		};
+		51EC3A6D1FCC3EFC00EEE7D6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				51EC3A711FCC403E00EEE7D6 /* Contact.swift */,
+				51EC3A731FCC405100EEE7D6 /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		51EC3A6E1FCC3F0E00EEE7D6 /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				51EC3A6F1FCC3F3B00EEE7D6 /* WebServicesProvider.swift */,
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
+		A54B4E7AAB5119B45DA6D93C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				038C5BE633AE1B59909767AD /* BuddyBuildSDK.framework */,
+				6E9080D2E28AB93EA46F8392 /* AssetsLibrary.framework */,
+				FC243844D049F4A0232ECC51 /* CoreText.framework */,
+				11EF9C8E822F789BD93FAFF3 /* CoreTelephony.framework */,
+				CF07CD3234CE34238AAF00CF /* SystemConfiguration.framework */,
+				B3DBE58689F165E4D44BF8CA /* QuartzCore.framework */,
+				ABCF36C8A2D1039482C85EA7 /* AVFoundation.framework */,
+				2410B9AB82100003E207B63C /* CoreMedia.framework */,
+				9E8806F383D656B3CAC66950 /* CoreVideo.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,6 +318,7 @@
 				F914D2AA1FCC2228008326FB /* .gitignore in Resources */,
 				41E825C11FCC1B1600566D10 /* LaunchScreen.storyboard in Resources */,
 				41E825BE1FCC1B1600566D10 /* Assets.xcassets in Resources */,
+				377F763C1FCC4A7C00DBE398 /* LoginView.xib in Resources */,
 				41E825BC1FCC1B1600566D10 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,10 +344,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51EC3A721FCC403E00EEE7D6 /* Contact.swift in Sources */,
+				51EC3A701FCC3F3B00EEE7D6 /* WebServicesProvider.swift in Sources */,
 				41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */,
 				41E825B51FCC1B1600566D10 /* Elder_ly.xcdatamodeld in Sources */,
 				41E825B71FCC1B1600566D10 /* MasterViewController.swift in Sources */,
 				41E825B91FCC1B1600566D10 /* DetailViewController.swift in Sources */,
+				51EC3A741FCC405100EEE7D6 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,10 +517,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Elder.ly/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.formation.Elder-ly";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -453,10 +536,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Elder.ly/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.formation.Elder-ly";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
