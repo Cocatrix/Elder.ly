@@ -26,9 +26,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
-        // Test login
-        let testWebservice = WebServicesProvider.sharedInstance
-        testWebservice.userLogin(phone: "0600000042", password: "0000")
     }
 
     override func viewWillAppear(_ animated: Bool) {
