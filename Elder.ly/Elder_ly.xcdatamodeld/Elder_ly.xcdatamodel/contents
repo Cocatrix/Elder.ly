@@ -9,7 +9,12 @@
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="profile" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="wsId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wsId" attributeType="String" syncable="YES"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="wsId"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="Event" representedClassName="Event" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -23,7 +28,7 @@
     </entity>
     <elements>
         <element name="Contact" positionX="279" positionY="216" width="128" height="180"/>
-        <element name="User" positionX="306" positionY="315" width="128" height="120"/>
         <element name="Event" positionX="333" positionY="342" width="128" height="60"/>
+        <element name="User" positionX="306" positionY="315" width="128" height="120"/>
     </elements>
 </model>
