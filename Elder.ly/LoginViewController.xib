@@ -11,6 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="Elder_ly" customModuleProvider="target">
             <connections>
+                <outlet property="passwordField" destination="Wnn-Tg-N26" id="Ga6-kZ-4QV"/>
+                <outlet property="phoneNumberField" destination="f1l-gE-EaT" id="iOw-qg-Rie"/>
                 <outlet property="scrollView" destination="LU1-UP-9GA" id="KPW-Cy-ong"/>
                 <outlet property="view" destination="mQP-Im-gX6" id="eh3-f0-VqR"/>
             </connections>
@@ -54,7 +56,7 @@
                                                     </constraints>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" textContentType="tel"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="tel"/>
                                                 </textField>
                                             </subviews>
                                         </stackView>

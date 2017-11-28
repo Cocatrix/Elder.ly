@@ -11,6 +11,9 @@ import UIKit
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var phoneNumberField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +50,19 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginPressed(_ sender: Any) {
-        self.dismiss(animated: false)
+        let wsProvider = WebServicesProvider.sharedInstance
+        wsProvider.userLogin(phone: self.phoneNumberField.text!, password: self.passwordField.text!, success: {
+            self.dismiss(animated: false)
+        }) { (error) in
+            self.alertConnectionError()
+        }
+    }
+    
+    func alertConnectionError() {
+        let deleteAlertController = UIAlertController(title: "Erreur", message: "Erreur de connexion", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default)
+        deleteAlertController.addAction(OKAction)
+        self.present(deleteAlertController, animated: true)
     }
     
     /*
