@@ -15,6 +15,7 @@ class WebServicesProvider {
     let url: String = "http://familink.cleverapps.io"
     static let DATA_ERROR: Int = -1
     static let AUTH_ERROR: Int = -2
+    static let NETWORK_ERROR: Int = -3
     
     class var sharedInstance: WebServicesProvider {
         return sharedWebServices
@@ -36,25 +37,16 @@ class WebServicesProvider {
         request.httpBody = try? JSONSerialization.data(withJSONObject: login, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-type")
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    guard let data = data else {
-                        failure(NSError(domain:"Data Error", code: WebServicesProvider.DATA_ERROR, userInfo: ["Error": "no data"]))
-                        return
-                    }
-                    let jsonDict = try? JSONSerialization.jsonObject(with:
-                        data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String: Any]
-                    guard let dict = jsonDict as? [String: Any] else {
-                        return
-                    }
-                    self.token = dict["token"] as? String
-                    success()
-                } else {
-                    failure(NSError(domain:"HTTP Error", code: httpResponse.statusCode, userInfo:nil))
-                }
-            } else {
-                failure(error)
+            if let httpError = self.checkForHTTPError(response: response) {
+                failure(httpError)
+                return
             }
+            self.checkForDataError(data: data, success: { (dict) in
+                self.token = dict["token"] as? String
+                success()
+            }, failure: { (error) in
+                failure(error)
+            })
         }
         task.resume()
     }
@@ -67,15 +59,11 @@ class WebServicesProvider {
         request.httpBody = try? JSONSerialization.data(withJSONObject: jsonUser, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-type")
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    success()
-                } else {
-                    failure(NSError(domain:"HTTP Error", code: httpResponse.statusCode, userInfo:nil))
-                }
-            } else {
-                failure(error)
+            if let httpError = self.checkForHTTPError(response: response) {
+                failure(httpError)
+                return
             }
+            success()
         }
         task.resume()
     }
@@ -88,15 +76,11 @@ class WebServicesProvider {
         request.httpBody = try? JSONSerialization.data(withJSONObject: phoneNumber, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-type")
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 204 {
-                    success()
-                } else {
-                    failure(NSError(domain:"HTTP Error", code: httpResponse.statusCode, userInfo:nil))
-                }
-            } else {
-                failure(error)
+            if let httpError = self.checkForHTTPError(response: response) {
+                failure(httpError)
+                return
             }
+            success()
         }
         task.resume()
     }
@@ -113,19 +97,13 @@ class WebServicesProvider {
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             print("task initialized")
+            if let httpError = self.checkForHTTPError(response: response) {
+                failure(httpError)
+                return
+            }
             guard let data = data else {
                 failure(NSError(domain:"Data Error", code: WebServicesProvider.DATA_ERROR, userInfo: ["Error": "no data"]))
                 return
-            }
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode != 200 {
-                    if httpResponse.statusCode == 401 {
-                        failure(NSError(domain: "Auth Error", code: WebServicesProvider.AUTH_ERROR, userInfo: nil))
-                    } else {
-                        failure(NSError(domain:"HTTP Error", code: httpResponse.statusCode, userInfo:nil))
-                    }
-                    return
-                }
             }
             let jsonDict = try? JSONSerialization.jsonObject(with:
                 data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [[String: Any]]
@@ -164,27 +142,11 @@ class WebServicesProvider {
             for jsonContact in jsonDict {
                 if contactIds.contains(jsonContact["_id"] as! String) {
                     let currentContact = contacts.filter({return jsonContact["_id"] as? String == $0.wsId}).first
-                    currentContact?.email = jsonContact["email"] as? String ?? "ERROR"
-                    currentContact?.phone = jsonContact["phone"] as? String ?? "ERROR"
-                    currentContact?.firstName = jsonContact["firstName"] as? String ?? "ERROR"
-                    currentContact?.lastName = jsonContact["lastName"] as? String ?? "ERROR"
-                    currentContact?.profile = jsonContact["profile"] as? String ?? "ERROR"
-                    currentContact?.gravatar = jsonContact["gravatar"] as? String ?? "ERROR"
-                    currentContact?.isFamilinkUser = jsonContact["isFamilinkUser"] as? Bool ?? false
-                    currentContact?.isEmergencyUser = jsonContact["isEmergencyUser"] as? Bool ?? false
-                    print("updated contact \(jsonContact["lastName"] as? String ?? "Error")")
+                    self.updateLocalContactWithData(contact: currentContact!, dict: jsonContact)
                 } else {
                     let contact = Contact(context: context)
-                    contact.email = jsonContact["email"] as? String ?? "ERROR"
-                    contact.phone = jsonContact["phone"] as? String ?? "ERROR"
-                    contact.firstName = jsonContact["firstName"] as? String ?? "ERROR"
-                    contact.lastName = jsonContact["lastName"] as? String ?? "ERROR"
-                    contact.profile = jsonContact["profile"] as? String ?? "ERROR"
-                    contact.gravatar = jsonContact["gravatar"] as? String ?? "ERROR"
-                    contact.isFamilinkUser = jsonContact["isFamilinkUser"] as? Bool ?? false
-                    contact.isEmergencyUser = jsonContact["isEmergencyUser"] as? Bool ?? false
                     contact.wsId = jsonContact["_id"] as? String ?? "Error"
-                    print("added contact \(jsonContact["lastName"] as? String ?? "Error")")
+                    self.updateLocalContactWithData(contact: contact, dict: jsonContact)
                 }
             }
             do {
@@ -206,8 +168,7 @@ class WebServicesProvider {
                 failure(NSError(domain: "Auth Error", code: WebServicesProvider.AUTH_ERROR, userInfo: nil))
                 return
             }
-            let jsonContact: [String: Any] = ["email": email, "phone": phone, "firstName": firstName, "lastName": lastName, "profile": profile,
-                                              "gravatar": gravatar, "isFamilinkUser": isFamilinkUser, "isEmergencyUser": isEmergencyUser]
+            let jsonContact: [String: Any] = ["email": email, "phone": phone, "firstName": firstName, "lastName": lastName, "profile": profile, "gravatar": gravatar, "isFamilinkUser": isFamilinkUser, "isEmergencyUser": isEmergencyUser]
             let url = URL(string: self.url + "/secured/users/contacts")
             var request = URLRequest(url: url!)
             request.httpMethod = "POST"
@@ -215,43 +176,24 @@ class WebServicesProvider {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             request.httpBody = try? JSONSerialization.data(withJSONObject: jsonContact, options: .prettyPrinted)
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.statusCode != 200 {
-                        if httpResponse.statusCode == 401 {
-                            failure(NSError(domain: "Auth Error", code: WebServicesProvider.AUTH_ERROR, userInfo: nil))
-                        } else {
-                            failure(NSError(domain:"HTTP Error", code: httpResponse.statusCode, userInfo:nil))
-                        }
+                if let httpError = self.checkForHTTPError(response: response) {
+                    failure(httpError)
+                    return
+                }
+                self.checkForDataError(data: data, success: { (dict) in
+                    let contact = Contact(entity: Contact.entity(), insertInto: context)
+                    contact.wsId = dict["_id"] as? String
+                    self.updateLocalContactWithData(contact: contact, dict: dict)
+                    do {
+                        try context.save()
+                    } catch {
+                        failure(error)
                         return
                     }
-                }
-                guard let data = data else {
-                    failure(NSError(domain:"Data Error", code: WebServicesProvider.DATA_ERROR, userInfo: ["Error": "no data"]))
-                    return
-                }
-                let jsonDict = try? JSONSerialization.jsonObject(with:
-                    data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String: Any]
-                guard let dict = jsonDict as? [String: Any] else {
-                    failure(NSError(domain:"Data Error", code: WebServicesProvider.DATA_ERROR, userInfo: ["Error": "Invalid data"]))
-                    return
-                }
-                let contact = Contact(entity: Contact.entity(), insertInto: context)
-                contact.email = dict["email"] as? String
-                contact.phone = dict["phone"] as? String
-                contact.firstName = dict["firstName"] as? String
-                contact.lastName = dict["lastName"] as? String
-                contact.profile = dict["profile"] as? String
-                contact.gravatar = dict["gravatar"] as? String
-                contact.isFamilinkUser = dict["isFamilinkUser"] as? Bool ?? false
-                contact.isEmergencyUser = dict["isEmergencyUser"] as? Bool ?? false
-                contact.wsId = dict["_id"] as? String
-                do {
-                    try context.save()
-                } catch {
+                    success()
+                }, failure: { (error) in
                     failure(error)
-                    return
-                }
-                success()
+                })
             }
             task.resume()
         }
@@ -273,24 +215,8 @@ class WebServicesProvider {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             request.httpBody = try? JSONSerialization.data(withJSONObject: jsonContact, options: .prettyPrinted)
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.statusCode != 200 {
-                        if httpResponse.statusCode == 401 {
-                            failure(NSError(domain: "Auth Error", code: WebServicesProvider.AUTH_ERROR, userInfo: nil))
-                        } else {
-                            failure(NSError(domain:"HTTP Error", code: httpResponse.statusCode, userInfo:nil))
-                        }
-                        return
-                    }
-                }
-                guard let data = data else {
-                    failure(NSError(domain:"Data Error", code: WebServicesProvider.DATA_ERROR, userInfo: ["Error": "no data"]))
-                    return
-                }
-                let jsonDict = try? JSONSerialization.jsonObject(with:
-                    data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String: Any]
-                guard let dict = jsonDict as? [String: Any] else {
-                    failure(NSError(domain:"Data Error", code: WebServicesProvider.DATA_ERROR, userInfo: ["Error": "Invalid data"]))
+                if let httpError = self.checkForHTTPError(response: response) {
+                    failure(httpError)
                     return
                 }
                 let sort = NSSortDescriptor(key: "lastName", ascending: true)
@@ -298,26 +224,58 @@ class WebServicesProvider {
                 fetchRequest.sortDescriptors = [sort]
                 let contacts = try! context.fetch(fetchRequest)
                 let contact = contacts.filter({return jsonContact["_id"] as? String == $0.wsId}).first
-                contact?.email = dict["email"] as? String
-                contact?.phone = dict["phone"] as? String
-                contact?.firstName = dict["firstName"] as? String
-                contact?.lastName = dict["lastName"] as? String
-                contact?.profile = dict["profile"] as? String
-                contact?.gravatar = dict["gravatar"] as? String
-                contact?.isFamilinkUser = dict["isFamilinkUser"] as? Bool ?? false
-                contact?.isEmergencyUser = dict["isEmergencyUser"] as? Bool ?? false
-                contact?.wsId = dict["_id"] as? String
+                contact?.wsId = wsId
+                self.updateLocalContactWithData(contact: contact!, dict: jsonContact)
                 do {
                     try context.save()
                 } catch {
                     failure(error)
                     return
                 }
-                success()
             }
             task.resume()
         }
     }
     
+    func checkForHTTPError(response: URLResponse?) -> (Error?) {
+        if let httpResponse = response as? HTTPURLResponse {
+            if httpResponse.statusCode != 200 && httpResponse.statusCode != 204 {
+                if httpResponse.statusCode == 401 {
+                    return NSError(domain: "Auth Error", code: WebServicesProvider.AUTH_ERROR, userInfo: nil)
+                } else {
+                    return NSError(domain:"HTTP Error", code: httpResponse.statusCode, userInfo:nil)
+                }
+            } else {
+                return nil
+            }
+        } else {
+            return NSError(domain:"Network Error", code: WebServicesProvider.NETWORK_ERROR, userInfo:nil)
+        }
+    }
+    
+    func checkForDataError(data: Data?, success: @escaping ([String: Any]) -> (), failure: @escaping (Error?) -> ()) {
+        guard let data = data else {
+            failure(NSError(domain:"Data Error", code: WebServicesProvider.DATA_ERROR, userInfo: ["Error": "no data"]))
+            return
+        }
+        let jsonDict = try? JSONSerialization.jsonObject(with:
+            data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String: Any]
+        guard let dict = jsonDict as? [String: Any] else {
+            failure(NSError(domain:"Data Error", code: WebServicesProvider.DATA_ERROR, userInfo: ["Error": "Invalid data"]))
+            return
+        }
+        success(dict)
+    }
+    
+    func updateLocalContactWithData(contact: Contact, dict: [String: Any]) {
+        contact.email = dict["email"] as? String
+        contact.phone = dict["phone"] as? String
+        contact.firstName = dict["firstName"] as? String
+        contact.lastName = dict["lastName"] as? String
+        contact.profile = dict["profile"] as? String
+        contact.gravatar = dict["gravatar"] as? String
+        contact.isFamilinkUser = dict["isFamilinkUser"] as? Bool ?? false
+        contact.isEmergencyUser = dict["isEmergencyUser"] as? Bool ?? false
+    }
 }
 
