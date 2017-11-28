@@ -13,6 +13,8 @@ private let sharedWebServices = WebServicesProvider()
 class WebServicesProvider {
     var token: String?
     let url: String = "http://familink.cleverapps.io"
+    static let DATA_ERROR: Int = -1
+    static let AUTH_ERROR: Int = -2
     
     class var sharedInstance: WebServicesProvider {
         return sharedWebServices
@@ -26,7 +28,7 @@ class WebServicesProvider {
         persistentContainer.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
     
-    func userLogin(phone: String, password: String, callback: @escaping () -> ()) {
+    func userLogin(phone: String, password: String, success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
         let url = URL(string: self.url + "/public/login")
         var request = URLRequest(url: url!)
         let login: [String: String] = ["phone": phone, "password": password]
@@ -34,16 +36,25 @@ class WebServicesProvider {
         request.httpBody = try? JSONSerialization.data(withJSONObject: login, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-type")
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let data = data else {
-                return
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    guard let data = data else {
+                        failure(NSError(domain:"Data Error", code: WebServicesProvider.DATA_ERROR, userInfo: ["Error": "no data"]))
+                        return
+                    }
+                    let jsonDict = try? JSONSerialization.jsonObject(with:
+                        data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String: Any]
+                    guard let dict = jsonDict as? [String: Any] else {
+                        return
+                    }
+                    self.token = dict["token"] as? String
+                    success()
+                } else {
+                    failure(NSError(domain:"HTTP Error", code: httpResponse.statusCode, userInfo:nil))
+                }
+            } else {
+                failure(error)
             }
-            let jsonDict = try? JSONSerialization.jsonObject(with:
-                data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String: Any]
-            guard let dict = jsonDict as? [String: Any] else {
-                return
-            }
-            self.token = dict["token"] as? String
-            callback()
         }
         task.resume()
     }
@@ -90,8 +101,9 @@ class WebServicesProvider {
         task.resume()
     }
     
-    func getContacts() {
+    func getContacts(success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
         guard let token = self.token else {
+            failure(NSError(domain: "Auth Error", code: WebServicesProvider.AUTH_ERROR, userInfo: nil))
             return
         }
         let url = URL(string: self.url + "/secured/users/contacts")
@@ -102,26 +114,35 @@ class WebServicesProvider {
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             print("task initialized")
             guard let data = data else {
+                failure(NSError(domain:"Data Error", code: WebServicesProvider.DATA_ERROR, userInfo: ["Error": "no data"]))
                 return
             }
             if let httpResponse = response as? HTTPURLResponse {
-                print("statusCode: \(httpResponse.statusCode)")
                 if httpResponse.statusCode != 200 {
+                    if httpResponse.statusCode == 401 {
+                        failure(NSError(domain: "Auth Error", code: WebServicesProvider.AUTH_ERROR, userInfo: nil))
+                    } else {
+                        failure(NSError(domain:"HTTP Error", code: httpResponse.statusCode, userInfo:nil))
+                    }
                     return
                 }
             }
             let jsonDict = try? JSONSerialization.jsonObject(with:
                 data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [[String: Any]]
             guard let dict = jsonDict as? [[String: Any]] else {
+                failure(NSError(domain:"Data Error", code: WebServicesProvider.DATA_ERROR, userInfo: ["Error": "Invalid data"]))
                 return
             }
-            self.updateLocalData(jsonDict: dict)
-            
+            self.updateLocalData(jsonDict: dict, success: {
+                success()
+            }, failure: { (error) in
+                failure(error)
+            })
         }
         task.resume()
     }
     
-    func updateLocalData (jsonDict: [[String: Any]]) {
+    func updateLocalData (jsonDict: [[String: Any]], success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
         persistentContainer.performBackgroundTask { (context) in
             let sort = NSSortDescriptor(key: "lastName", ascending: true)
             let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
@@ -168,22 +189,21 @@ class WebServicesProvider {
             }
             do {
                 if context.hasChanges {
-                    
                     try context.save()
-                    
                 }
             } catch {
-                print(error)
-                
-                
+                failure(error)
+                return
             }
+            success()
         }
     }
     
     func createContactOnServer(email: String, phone: String, firstName: String, lastName: String,
-                               profile: String, gravatar: String, isFamilinkUser: Bool, isEmergencyUser: Bool) {
+                               profile: String, gravatar: String, isFamilinkUser: Bool, isEmergencyUser: Bool, success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
         persistentContainer.performBackgroundTask { (context) in
             guard let token = self.token else {
+                failure(NSError(domain: "Auth Error", code: WebServicesProvider.AUTH_ERROR, userInfo: nil))
                 return
             }
             let jsonContact: [String: Any] = ["email": email, "phone": phone, "firstName": firstName, "lastName": lastName, "profile": profile,
@@ -195,12 +215,24 @@ class WebServicesProvider {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             request.httpBody = try? JSONSerialization.data(withJSONObject: jsonContact, options: .prettyPrinted)
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let httpResponse = response as? HTTPURLResponse {
+                    if httpResponse.statusCode != 200 {
+                        if httpResponse.statusCode == 401 {
+                            failure(NSError(domain: "Auth Error", code: WebServicesProvider.AUTH_ERROR, userInfo: nil))
+                        } else {
+                            failure(NSError(domain:"HTTP Error", code: httpResponse.statusCode, userInfo:nil))
+                        }
+                        return
+                    }
+                }
                 guard let data = data else {
+                    failure(NSError(domain:"Data Error", code: WebServicesProvider.DATA_ERROR, userInfo: ["Error": "no data"]))
                     return
                 }
                 let jsonDict = try? JSONSerialization.jsonObject(with:
                     data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String: Any]
                 guard let dict = jsonDict as? [String: Any] else {
+                    failure(NSError(domain:"Data Error", code: WebServicesProvider.DATA_ERROR, userInfo: ["Error": "Invalid data"]))
                     return
                 }
                 let contact = Contact(entity: Contact.entity(), insertInto: context)
@@ -216,17 +248,20 @@ class WebServicesProvider {
                 do {
                     try context.save()
                 } catch {
-                    print(error)
+                    failure(error)
+                    return
                 }
+                success()
             }
             task.resume()
         }
     }
     
     func updateContactOnServer(wsId: String, email: String, phone: String, firstName: String, lastName: String,
-                               profile: String, gravatar: String, isFamilinkUser: Bool, isEmergencyUser: Bool) {
+                               profile: String, gravatar: String, isFamilinkUser: Bool, isEmergencyUser: Bool, success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
         persistentContainer.performBackgroundTask { (context) in
             guard let token = self.token else {
+                failure(NSError(domain: "Auth Error", code: WebServicesProvider.AUTH_ERROR, userInfo: nil))
                 return
             }
             let jsonContact: [String: Any] = ["email": email, "phone": phone, "firstName": firstName, "lastName": lastName, "profile": profile,
@@ -238,12 +273,24 @@ class WebServicesProvider {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             request.httpBody = try? JSONSerialization.data(withJSONObject: jsonContact, options: .prettyPrinted)
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let httpResponse = response as? HTTPURLResponse {
+                    if httpResponse.statusCode != 200 {
+                        if httpResponse.statusCode == 401 {
+                            failure(NSError(domain: "Auth Error", code: WebServicesProvider.AUTH_ERROR, userInfo: nil))
+                        } else {
+                            failure(NSError(domain:"HTTP Error", code: httpResponse.statusCode, userInfo:nil))
+                        }
+                        return
+                    }
+                }
                 guard let data = data else {
+                    failure(NSError(domain:"Data Error", code: WebServicesProvider.DATA_ERROR, userInfo: ["Error": "no data"]))
                     return
                 }
                 let jsonDict = try? JSONSerialization.jsonObject(with:
                     data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String: Any]
                 guard let dict = jsonDict as? [String: Any] else {
+                    failure(NSError(domain:"Data Error", code: WebServicesProvider.DATA_ERROR, userInfo: ["Error": "Invalid data"]))
                     return
                 }
                 let sort = NSSortDescriptor(key: "lastName", ascending: true)
@@ -263,8 +310,10 @@ class WebServicesProvider {
                 do {
                     try context.save()
                 } catch {
-                    print(error)
+                    failure(error)
+                    return
                 }
+                success()
             }
             task.resume()
         }
