@@ -108,6 +108,9 @@
                                             <state key="normal" title="Se Connecter">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="loginPressed:" destination="-1" eventType="touchUpInside" id="vB3-05-48j"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="signUpButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="48g-dS-ZkH">
                                             <rect key="frame" x="16" y="488" width="343" height="32"/>

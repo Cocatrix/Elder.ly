@@ -34,7 +34,7 @@ class LoginViewController: UIViewController {
         scrollView.contentInset = contentInset
     }
     
-    @objc func keyboardWillHide(notification:NSNotification){
+    @objc func keyboardWillHide(notification:NSNotification) {
         let contentInset:UIEdgeInsets = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
     }
@@ -45,6 +45,11 @@ class LoginViewController: UIViewController {
         let signUpViewController = SignUpViewController(nibName: "SignUpViewController", bundle: nil)
         self.present(signUpViewController, animated: true, completion: nil)
     }
+    
+    @IBAction func loginPressed(_ sender: Any) {
+        self.dismiss(animated: false)
+    }
+    
     /*
      // MARK: - Navigation
      
