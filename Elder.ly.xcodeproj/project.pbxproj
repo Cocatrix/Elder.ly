@@ -12,6 +12,8 @@
 		3790C1591FCC5539001928E4 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3790C1571FCC5539001928E4 /* SignUpViewController.swift */; };
 		3790C15A1FCC5539001928E4 /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3790C1581FCC5539001928E4 /* SignUpViewController.xib */; };
 		3790C15C1FCC6018001928E4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3790C15B1FCC6018001928E4 /* LoginViewController.swift */; };
+		37D007231FCDB76200132F68 /* AddEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D007211FCDB76200132F68 /* AddEditViewController.swift */; };
+		37D007241FCDB76200132F68 /* AddEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37D007221FCDB76200132F68 /* AddEditViewController.xib */; };
 		39F07E2087F6B6AE4057F0DC /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC243844D049F4A0232ECC51 /* CoreText.framework */; };
 		41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B11FCC1B1600566D10 /* AppDelegate.swift */; };
 		41E825B51FCC1B1600566D10 /* Elder_ly.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B31FCC1B1600566D10 /* Elder_ly.xcdatamodeld */; };
@@ -60,6 +62,8 @@
 		3790C1571FCC5539001928E4 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		3790C1581FCC5539001928E4 /* SignUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignUpViewController.xib; sourceTree = "<group>"; };
 		3790C15B1FCC6018001928E4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		37D007211FCDB76200132F68 /* AddEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditViewController.swift; sourceTree = "<group>"; };
+		37D007221FCDB76200132F68 /* AddEditViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddEditViewController.xib; sourceTree = "<group>"; };
 		41E825AE1FCC1B1600566D10 /* Elder.ly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elder.ly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41E825B11FCC1B1600566D10 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41E825B41FCC1B1600566D10 /* Elder_ly.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Elder_ly.xcdatamodel; sourceTree = "<group>"; };
@@ -149,12 +153,14 @@
 			isa = PBXGroup;
 			children = (
 				41E825C21FCC1B1600566D10 /* Info.plist */,
+				37D007211FCDB76200132F68 /* AddEditViewController.swift */,
 				41E825B11FCC1B1600566D10 /* AppDelegate.swift */,
 				41E825B81FCC1B1600566D10 /* DetailViewController.swift */,
 				3790C15B1FCC6018001928E4 /* LoginViewController.swift */,
 				41E825B61FCC1B1600566D10 /* MasterViewController.swift */,
 				3790C1571FCC5539001928E4 /* SignUpViewController.swift */,
 				41E825BD1FCC1B1600566D10 /* Assets.xcassets */,
+				37D007221FCDB76200132F68 /* AddEditViewController.xib */,
 				377F763B1FCC4A7C00DBE398 /* LoginViewController.xib */,
 				3790C1581FCC5539001928E4 /* SignUpViewController.xib */,
 				41E825B31FCC1B1600566D10 /* Elder_ly.xcdatamodeld */,
@@ -327,6 +333,7 @@
 				F914D2AA1FCC2228008326FB /* .gitignore in Resources */,
 				41E825C11FCC1B1600566D10 /* LaunchScreen.storyboard in Resources */,
 				41E825BE1FCC1B1600566D10 /* Assets.xcassets in Resources */,
+				37D007241FCDB76200132F68 /* AddEditViewController.xib in Resources */,
 				377F763C1FCC4A7C00DBE398 /* LoginViewController.xib in Resources */,
 				3790C15A1FCC5539001928E4 /* SignUpViewController.xib in Resources */,
 				41E825BC1FCC1B1600566D10 /* Main.storyboard in Resources */,
@@ -360,6 +367,7 @@
 				3790C1591FCC5539001928E4 /* SignUpViewController.swift in Sources */,
 				41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */,
 				41E825B51FCC1B1600566D10 /* Elder_ly.xcdatamodeld in Sources */,
+				37D007231FCDB76200132F68 /* AddEditViewController.swift in Sources */,
 				41E825B71FCC1B1600566D10 /* MasterViewController.swift in Sources */,
 				41E825B91FCC1B1600566D10 /* DetailViewController.swift in Sources */,
 				51EC3A741FCC405100EEE7D6 /* User.swift in Sources */,
