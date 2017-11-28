@@ -16,8 +16,10 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
 
     @IBOutlet weak var tableView: UITableView!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view, typically from a nib.
         navigationItem.leftBarButtonItem = editButtonItem
 
@@ -40,6 +42,17 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         // TODO - clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         // It is related to selected element. Should it still be selected on viewWillAppear ? I think it's not important to comment it for now.
         super.viewWillAppear(animated)
+        
+        //TODO: Check if User is Connected
+        var isUserConnected = false
+        
+        if !isUserConnected {
+            let controller = LoginViewController(nibName: nil, bundle: nil)
+            
+            self.present(controller, animated: false, completion: nil)
+            
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
