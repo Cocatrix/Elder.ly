@@ -39,7 +39,13 @@ class SignUpViewController: UIViewController {
         scrollView.contentInset = contentInset
     }
     
-
+    @IBAction func loginPressed(_ sender: Any) {
+        // Create and push LoginViewController
+        print("SignUp Pressed")
+        let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
+        self.present(loginViewController, animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 
