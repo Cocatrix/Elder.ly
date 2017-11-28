@@ -1,0 +1,30 @@
+
+/* Class = "UIButton"; normalTitle = "Ajouter"; ObjectID = "3vZ-t1-FZx"; */
+"3vZ-t1-FZx.normalTitle" = "Ajouter";
+
+/* Class = "UITextField"; placeholder = "N° de Téléphone"; ObjectID = "4iH-BG-Qna"; */
+"4iH-BG-Qna.placeholder" = "N° de Téléphone";
+
+/* Class = "UITextField"; placeholder = "Prénom"; ObjectID = "9C7-3H-kK3"; */
+"9C7-3H-kK3.placeholder" = "Prénom";
+
+/* Class = "UITextField"; placeholder = "Adresse email"; ObjectID = "EC1-Ln-LhG"; */
+"EC1-Ln-LhG.placeholder" = "Adresse email";
+
+/* Class = "UILabel"; text = "Son prénom"; ObjectID = "I3u-6F-ELv"; */
+"I3u-6F-ELv.text" = "Son prénom";
+
+/* Class = "UITextField"; placeholder = "Nom"; ObjectID = "P6c-FC-yK5"; */
+"P6c-FC-yK5.placeholder" = "Nom";
+
+/* Class = "UILabel"; text = "Ajout d'un contact"; ObjectID = "bJH-sT-NTD"; */
+"bJH-sT-NTD.text" = "Ajout d'un contact";
+
+/* Class = "UILabel"; text = "Son nom"; ObjectID = "gC8-fS-G3y"; */
+"gC8-fS-G3y.text" = "Son nom";
+
+/* Class = "UILabel"; text = "Son email"; ObjectID = "mIg-xD-ACT"; */
+"mIg-xD-ACT.text" = "Son email";
+
+/* Class = "UILabel"; text = "Son numéro de téléphone"; ObjectID = "pTK-hR-IKP"; */
+"pTK-hR-IKP.text" = "Son numéro de téléphone";

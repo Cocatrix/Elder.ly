@@ -12,7 +12,8 @@ class DetailViewController: UIViewController {
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
 
-
+    @IBOutlet weak var contactImage: UIImageView!
+    
     func configureView() {
         // Update the user interface for the detail item.
         if let detail = detailItem {
@@ -20,6 +21,8 @@ class DetailViewController: UIViewController {
                 label.text = detail.timestamp!.description
             }
         }
+        
+        self.contactImage.layer.cornerRadius = self.contactImage.frame.size.width / 2;
     }
 
     override func viewDidLoad() {
