@@ -87,7 +87,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="64" id="tez-WE-ucZ"/>
                                             </constraints>
-                                            <state key="normal" title="Se Connecter">
+                                            <state key="normal" title="Valider">
                                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             </state>
                                         </button>
@@ -100,6 +100,9 @@
                                             <state key="normal" title="J'ai déjà un compte">
                                                 <color key="titleColor" red="1" green="0.54117647059999996" blue="0.14901960780000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>
+                                            <connections>
+                                                <action selector="loginPressed:" destination="-1" eventType="touchUpInside" id="z7G-h0-tUk"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
