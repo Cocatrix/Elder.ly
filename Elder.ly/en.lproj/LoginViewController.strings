@@ -1,0 +1,27 @@
+
+/* Class = "UIButton"; normalTitle = "Je ne suis pas encore inscrit"; ObjectID = "48g-dS-ZkH"; */
+"48g-dS-ZkH.normalTitle" = "Je ne suis pas encore inscrit";
+
+/* Class = "UILabel"; text = "Votre n° de Téléphone"; ObjectID = "ImI-Cl-vKo"; */
+"ImI-Cl-vKo.text" = "Votre n° de Téléphone";
+
+/* Class = "UILabel"; text = "Votre mot de passe"; ObjectID = "Pb8-qh-VOw"; */
+"Pb8-qh-VOw.text" = "Votre mot de passe";
+
+/* Class = "UIButton"; normalTitle = "J'ai oublié mon mot de passe"; ObjectID = "SGC-Rz-DIS"; */
+"SGC-Rz-DIS.normalTitle" = "J'ai oublié mon mot de passe";
+
+/* Class = "UILabel"; text = "Se souvenir de moi"; ObjectID = "V1F-gG-cZO"; */
+"V1F-gG-cZO.text" = "Se souvenir de moi";
+
+/* Class = "UILabel"; text = "Connexion"; ObjectID = "W6l-Xy-bBZ"; */
+"W6l-Xy-bBZ.text" = "Connexion";
+
+/* Class = "UITextField"; placeholder = "Mot de passe"; ObjectID = "Wnn-Tg-N26"; */
+"Wnn-Tg-N26.placeholder" = "Mot de passe";
+
+/* Class = "UITextField"; placeholder = "N° de Téléphone"; ObjectID = "f1l-gE-EaT"; */
+"f1l-gE-EaT.placeholder" = "N° de Téléphone";
+
+/* Class = "UIButton"; normalTitle = "Se Connecter"; ObjectID = "rWb-ae-nod"; */
+"rWb-ae-nod.normalTitle" = "Se Connecter";
