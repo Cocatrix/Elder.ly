@@ -48,6 +48,48 @@ class WebServicesProvider {
         task.resume()
     }
     
+    func createUser(phone: String, password: String, firstName: String, lastName: String, email: String, profile: String, success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
+        let url = URL(string: self.url + "/public/sign-in?contactsLength=0")
+        var request = URLRequest(url: url!)
+        let jsonUser: [String: String] = ["phone": phone, "password": password, "firstName": firstName, "lastName": lastName, "email": email, "profile": profile]
+        request.httpMethod = "POST"
+        request.httpBody = try? JSONSerialization.data(withJSONObject: jsonUser, options: .prettyPrinted)
+        request.setValue("application/json", forHTTPHeaderField: "Content-type")
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    success()
+                } else {
+                    failure(NSError(domain:"HTTP Error", code: httpResponse.statusCode, userInfo:nil))
+                }
+            } else {
+                failure(error)
+            }
+        }
+        task.resume()
+    }
+    
+    func forgottenPassword(phone: String, success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
+        let url = URL(string: self.url + "/public/forgot-password")
+        var request = URLRequest(url: url!)
+        let phoneNumber: [String: String] = ["phone": phone]
+        request.httpMethod = "POST"
+        request.httpBody = try? JSONSerialization.data(withJSONObject: phoneNumber, options: .prettyPrinted)
+        request.setValue("application/json", forHTTPHeaderField: "Content-type")
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 204 {
+                    success()
+                } else {
+                    failure(NSError(domain:"HTTP Error", code: httpResponse.statusCode, userInfo:nil))
+                }
+            } else {
+                failure(error)
+            }
+        }
+        task.resume()
+    }
+    
     func getContacts() {
         guard let token = self.token else {
             return

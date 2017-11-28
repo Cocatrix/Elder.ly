@@ -29,11 +29,17 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         }
         // Test gettoken
         let wsProvider = WebServicesProvider.sharedInstance
-        wsProvider.userLogin(phone: "0600000042", password: "0000") {
-            print(wsProvider.token ?? "notoken")
-            wsProvider.getContacts()
+        wsProvider.forgottenPassword(phone: "06000000420", success: {
+            print("success")
+            }, failure: { (error) in
+                print(error ?? "unknown error")
+                })
+        
+        // wsProvider.userLogin(phone: "0600000042", password: "0000") {
+            // print(wsProvider.token ?? "notoken")
+            // wsProvider.getContacts()
             // wsProvider.createContactOnServer(email: "xxx@example.com", phone: "0647474747", firstName: "John", lastName: "Kennedy", profile: "MEDECIN", gravatar: "", isFamilinkUser: false, isEmergencyUser: false)
-        }
+        // }
     }
 
     override func viewWillAppear(_ animated: Bool) {
