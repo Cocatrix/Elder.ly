@@ -65,8 +65,12 @@ class LoginViewController: UIViewController {
     }
     
     func alertConnectionError() {
-        let deleteAlertController = UIAlertController(title: "Erreur", message: "Erreur de connexion", preferredStyle: .alert)
-        let OKAction = UIAlertAction(title: "OK", style: .default)
+        let errorTitle = NSLocalizedString("error", comment: "Error")
+        let errorConnection = NSLocalizedString("errorConnection", comment: "Erreur de connexion")
+        let okString = NSLocalizedString("OK", comment: "OK")
+        
+        let deleteAlertController = UIAlertController(title: errorTitle, message: errorConnection, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: okString, style: .default)
         deleteAlertController.addAction(OKAction)
         self.present(deleteAlertController, animated: true)
     }
