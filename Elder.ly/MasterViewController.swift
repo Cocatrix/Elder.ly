@@ -13,6 +13,8 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
 
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
+    
+    public var isAuth: Bool?
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -44,15 +46,12 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         super.viewWillAppear(animated)
         
         //TODO: Check if User is Connected
-        var isUserConnected = false
+        let isUserConnected = self.isAuth ?? false
         
         if !isUserConnected {
             let controller = LoginViewController(nibName: nil, bundle: nil)
-            
             self.present(controller, animated: false, completion: nil)
-            
         }
-        
     }
 
     override func didReceiveMemoryWarning() {
