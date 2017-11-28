@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="passwordField" destination="Wnn-Tg-N26" id="Ga6-kZ-4QV"/>
                 <outlet property="phoneNumberField" destination="f1l-gE-EaT" id="iOw-qg-Rie"/>
+                <outlet property="rememberSwitch" destination="E6z-U7-aon" id="XrM-Z6-11w"/>
                 <outlet property="scrollView" destination="LU1-UP-9GA" id="KPW-Cy-ong"/>
                 <outlet property="view" destination="mQP-Im-gX6" id="eh3-f0-VqR"/>
             </connections>
