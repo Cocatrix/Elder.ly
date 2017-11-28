@@ -11,11 +11,17 @@ import UIKit
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var phoneNumberField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var rememberSwitch: UISwitch!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil) // Do any additional setup after loading the view.
+        // Setup default phone number
+        phoneNumberField.text = UserDefaults.standard.getUserPhoneNumber()
     }
     
     override func didReceiveMemoryWarning() {
@@ -47,7 +53,22 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginPressed(_ sender: Any) {
-        self.dismiss(animated: false)
+        let wsProvider = WebServicesProvider.sharedInstance
+        wsProvider.userLogin(phone: self.phoneNumberField.text!, password: self.passwordField.text!, success: {
+            self.dismiss(animated: false)
+        }) { (error) in
+            self.alertConnectionError()
+        }
+        if self.rememberSwitch.isOn {
+            UserDefaults.standard.setUserPhoneNumber(phone: self.phoneNumberField.text!)
+        }
+    }
+    
+    func alertConnectionError() {
+        let deleteAlertController = UIAlertController(title: "Erreur", message: "Erreur de connexion", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default)
+        deleteAlertController.addAction(OKAction)
+        self.present(deleteAlertController, animated: true)
     }
     
     /*
