@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource {
-
+    var resultController: NSFetchedResultsController<Contact>?
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
 
@@ -52,6 +52,18 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         }, failure: { (error) in
             print(wsProvider.token ?? "notoken")
         })
+        
+        // Setup fetched resultController
+        let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
+        let sortFirstName = NSSortDescriptor(key: "firstName", ascending: true)
+        let sortLastName = NSSortDescriptor(key: "lastName", ascending: true)
+        fetchRequest.sortDescriptors = [sortFirstName, sortLastName]
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                             managedObjectContext: self.appDelegate().persistentContainer.viewContext,
+                                             sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
+        try? frc.performFetch()
+        self.resultController = frc
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -78,15 +90,15 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
 
     @objc
     func insertNewObject(_ sender: Any) {
-        let context = self.fetchedResultsController.managedObjectContext
-        let newEvent = Event(context: context)
+        let context = self.resultController?.managedObjectContext
+        let newEvent = Event(context: context!)
              
         // If appropriate, configure the new managed object.
         newEvent.timestamp = Date()
 
         // Save the context.
         do {
-            try context.save()
+            try context?.save()
         } catch {
             // Replace this implementation with code to handle the error appropriately.
             // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -100,7 +112,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
-            let object = fetchedResultsController.object(at: indexPath)
+            let object = resultController?.object(at: indexPath)
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                 controller.detailItem = object
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
@@ -112,21 +124,24 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     // MARK: - Table View
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard let numberSections = fetchedResultsController.sections?.count else {
-            return 0
+        if let frc = self.resultController {
+            return frc.sections!.count
         }
-        return numberSections
+        return 0
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionInfo = fetchedResultsController.sections![section]
+        guard let sections = self.resultController?.sections else {
+            fatalError("No sections in fetchedResultsController")
+        }
+        let sectionInfo = sections[section]
         return sectionInfo.numberOfObjects
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let contact = fetchedResultsController.object(at: indexPath)
-        configureCell(cell, withContact: contact)
+        let contact = resultController?.object(at: indexPath)
+        configureCell(cell, withContact: contact!)
         return cell
     }
 
@@ -137,11 +152,11 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let context = fetchedResultsController.managedObjectContext
-            context.delete(fetchedResultsController.object(at: indexPath))
+            let context = self.resultController?.managedObjectContext
+            context?.delete((self.resultController?.object(at: indexPath))!)
                 
             do {
-                try context.save()
+                try context?.save()
             } catch {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -157,39 +172,39 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
 
     // MARK: - Fetched results controller
 
-    var fetchedResultsController: NSFetchedResultsController<Contact> {
-        if _fetchedResultsController != nil {
-            return _fetchedResultsController!
-        }
-        
-        let fetchRequest: NSFetchRequest<Contact> = Contact.fetchRequest()
-        
-        // Set the batch size to a suitable number.
-        fetchRequest.fetchBatchSize = 20
-        
-        // Edit the sort key as appropriate.
-        let sortDescriptor = NSSortDescriptor(key: "firstName", ascending: false)
-        
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        
-        // Edit the section name key path and cache name if appropriate.
-        // nil for section name key path means "no sections".
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: "Master")
-        aFetchedResultsController.delegate = self
-        _fetchedResultsController = aFetchedResultsController
-        
-        do {
-            try _fetchedResultsController!.performFetch()
-        } catch {
-             // Replace this implementation with code to handle the error appropriately.
-             // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-             let nserror = error as NSError
-             fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-        }
-        
-        return _fetchedResultsController!
-    }    
-    var _fetchedResultsController: NSFetchedResultsController<Contact>? = nil
+//    var fetchedResultsController: NSFetchedResultsController<Contact> {
+//        if _fetchedResultsController != nil {
+//            return _fetchedResultsController!
+//        }
+//
+//        let fetchRequest: NSFetchRequest<Contact> = Contact.fetchRequest()
+//
+//        // Set the batch size to a suitable number.
+//        fetchRequest.fetchBatchSize = 20
+//
+//        // Edit the sort key as appropriate.
+//        let sortDescriptor = NSSortDescriptor(key: "firstName", ascending: false)
+//
+//        fetchRequest.sortDescriptors = [sortDescriptor]
+//
+//        // Edit the section name key path and cache name if appropriate.
+//        // nil for section name key path means "no sections".
+//        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: "Master")
+//        aFetchedResultsController.delegate = self
+//        _fetchedResultsController = aFetchedResultsController
+//
+//        do {
+//            try _fetchedResultsController!.performFetch()
+//        } catch {
+//             // Replace this implementation with code to handle the error appropriately.
+//             // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//             let nserror = error as NSError
+//             fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//        }
+//
+//        return _fetchedResultsController!
+//    }
+//    var _fetchedResultsController: NSFetchedResultsController<Contact>? = nil
 
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
@@ -222,6 +237,10 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
+    }
+    
+    func appDelegate() -> AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
     }
 
     /*

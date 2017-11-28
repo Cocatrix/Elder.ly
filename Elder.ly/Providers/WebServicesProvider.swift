@@ -134,8 +134,9 @@ class WebServicesProvider {
             }
             // Delete data that is not on server
             for contact in contacts {
-                if serverIds.contains(contact.wsId!) {
+                if !serverIds.contains(contact.wsId!) {
                     context.delete(contact)
+                    print("removecontact")
                 }
             }
             // Update or create contact
@@ -143,10 +144,12 @@ class WebServicesProvider {
                 if contactIds.contains(jsonContact["_id"] as! String) {
                     let currentContact = contacts.filter({return jsonContact["_id"] as? String == $0.wsId}).first
                     self.updateLocalContactWithData(contact: currentContact!, dict: jsonContact)
+                    print("updated contact")
                 } else {
                     let contact = Contact(context: context)
                     contact.wsId = jsonContact["_id"] as? String ?? "Error"
                     self.updateLocalContactWithData(contact: contact, dict: jsonContact)
+                    print("added contact")
                 }
             }
             do {
