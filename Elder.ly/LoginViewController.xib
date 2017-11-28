@@ -21,7 +21,7 @@
                         <constraint firstAttribute="height" constant="32" id="GMB-9B-Fiw"/>
                     </constraints>
                     <state key="normal" title="J'ai oublié mon mot de passe">
-                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" red="1" green="0.54117647058823526" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                 </button>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="aOG-jh-bmT">
@@ -29,6 +29,7 @@
                     <subviews>
                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" restorationIdentifier="rememberMeSwitch" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E6z-U7-aon">
                             <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
+                            <color key="onTintColor" red="1" green="0.54117647058823526" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                         </switch>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Se souvenir de moi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V1F-gG-cZO">
                             <rect key="frame" x="65" y="0.0" width="145.5" height="31"/>
@@ -69,7 +70,7 @@
                         <constraint firstAttribute="height" constant="32" id="cJY-W9-Wyu"/>
                     </constraints>
                     <state key="normal" title="Je ne suis pas encore inscrit">
-                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" red="1" green="0.54117647058823526" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connexion" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W6l-Xy-bBZ">
@@ -83,7 +84,7 @@
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rWb-ae-nod">
                     <rect key="frame" x="16" y="387" width="343" height="64"/>
-                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.22352941176470587" green="0.18823529411764706" blue="0.29019607843137252" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="64" id="5xQ-cJ-xhe"/>
                     </constraints>
