@@ -1,0 +1,21 @@
+
+/* Class = "UIButton"; normalTitle = "J'ai déjà un compte"; ObjectID = "R5L-hI-vUr"; */
+"R5L-hI-vUr.normalTitle" = "J'ai déjà un compte";
+
+/* Class = "UITextField"; placeholder = "Prénom"; ObjectID = "c5Y-sw-dTW"; */
+"c5Y-sw-dTW.placeholder" = "Prénom";
+
+/* Class = "UIButton"; normalTitle = "Valider"; ObjectID = "cT9-1b-6xx"; */
+"cT9-1b-6xx.normalTitle" = "Valider";
+
+/* Class = "UITextField"; placeholder = "Nom"; ObjectID = "dBg-LO-hbj"; */
+"dBg-LO-hbj.placeholder" = "Nom";
+
+/* Class = "UITextField"; placeholder = "eMail"; ObjectID = "kn7-bq-rAf"; */
+"kn7-bq-rAf.placeholder" = "eMail";
+
+/* Class = "UILabel"; text = "S'inscrire"; ObjectID = "x1C-1y-Sjv"; */
+"x1C-1y-Sjv.text" = "S'inscrire";
+
+/* Class = "UITextField"; placeholder = "N° de Téléphone"; ObjectID = "ysc-9s-7Lf"; */
+"ysc-9s-7Lf.placeholder" = "N° de Téléphone";
