@@ -28,21 +28,28 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil) // Do any additional setup after loading the view.
         
-        // TODO Récupérer depuis WS
-        profilesList = [
-            "FAMILLE",
-            "SENIOR",
-            "MEDECIN"
-        ]
+        let group = DispatchGroup()
+        group.enter()
+        WebServicesProvider.sharedInstance.getProfiles(success: { (profiles) in
+            self.profilesList = profiles
+            self.selectedProfile = self.profilesList[0]
+            
+            group.leave()
+        }) { (error) in
+            print(error ?? "Error")
+            
+            group.leave()
+        }
+        group.wait()
+        
         profileView.dataSource = self
         profileView.delegate = self
-        selectedProfile = profilesList[0]
         
-        phoneView.text = "0123456789"
-        firstnameView.text = "John"
-        lastnameView.text = "Doe"
-        emailView.text = "john.doe@nobody.net"
-        passwordView.text = "0000"
+//        phoneView.text = "0123456789"
+//        firstnameView.text = "John"
+//        lastnameView.text = "Doe"
+//        emailView.text = "john.doe@nobody.net"
+//        passwordView.text = "0000"
     }
     
     override func didReceiveMemoryWarning() {
