@@ -12,10 +12,9 @@ import CoreData
 class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var resultController: NSFetchedResultsController<Contact>?
     var detailViewController: DetailViewController? = nil
-    var managedObjectContext: NSManagedObjectContext? = nil // Called by AppDelegate. But useful ?
+    var managedObjectContext: NSManagedObjectContext? = nil // Called by AppDelegate.
 
     @IBOutlet weak var tableView: UITableView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,22 +40,17 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let wsProvider = WebServicesProvider.sharedInstance
         
         // Fake login to test list printing
-        DispatchQueue.global(qos: .background).async {
-            wsProvider.userLogin(phone: "0600000042", password: "0000", success: {
-                print("Fake login : success")
-                // Load contacts in local DB
-                wsProvider.getContacts(success: {
-                    print("Load data : success")
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                }, failure: { (error) in
-                    print(error ?? "unknown error")
-                })
+        wsProvider.userLogin(phone: "0600000042", password: "0000", success: {
+            print("Fake login : success")
+            // Load contacts in local DB
+            wsProvider.getContacts(success: {
+                print("Load data : success")
             }, failure: { (error) in
-                print(wsProvider.token ?? "notoken")
+                print(error ?? "unknown error")
             })
-        }
+        }, failure: { (error) in
+            print(wsProvider.token ?? "notoken")
+        })
         
         // Setup fetched resultController
         let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
@@ -70,7 +64,6 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         frc.delegate = self
         try? frc.performFetch()
         self.resultController = frc
-        self.tableView.reloadData() // Should not be useful
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -97,8 +90,9 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func insertNewObject(_ sender: Any) {
         let context = self.resultController?.managedObjectContext
         
-        // Use WebService to identify and load data
+        // Use WebService to load data
         let wsProvider = WebServicesProvider.sharedInstance
+        // TODO - Other method which navigates to add/edit form // Until now : Load fake data for now
         wsProvider.createContactOnServer(email: "xxx@example.com", phone: "0647474747", firstName: "Dad", lastName: "Kennedy", profile: "MEDECIN", gravatar: "", isFamilinkUser: false, isEmergencyUser: false, success: {
             print("Create contact : success")
          }, failure: { (error) in
@@ -150,10 +144,9 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let contact = resultController?.object(at: indexPath)
-        print("Configuring cell at index : ", indexPath)
         // Displaying with grey background on half cells
         if (indexPath.row+1)%2 == 0 {
-            cell.contentView.backgroundColor = UIColor(red: 244/255, green: 244/255, blue: 244/255, alpha: 1.0)
+            cell.contentView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
         } else {
             cell.contentView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
         }
@@ -183,45 +176,9 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     func configureCell(_ cell: UITableViewCell, withContact contact: Contact) {
-        print("Called configureCell")
         cell.textLabel!.text = contact.firstName
     }
-    /*
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-        print("Inserting ? : ", type)
-        switch type {
-            case .insert:
-                tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
-            case .delete:
-                tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
-            default:
-                return
-        }
-    }
 
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-         print("Updating ? : ", type)
-        switch type {
-            case .insert:
-                tableView.insertRows(at: [newIndexPath!], with: .fade)
-            case .delete:
-                tableView.deleteRows(at: [indexPath!], with: .fade)
-            case .update:
-                configureCell(tableView.cellForRow(at: indexPath!)!, withContact: anObject as! Contact)
-            case .move:
-                configureCell(tableView.cellForRow(at: indexPath!)!, withContact: anObject as! Contact)
-                tableView.moveRow(at: indexPath!, to: newIndexPath!)
-        }
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
-    }
-    */
     func appDelegate() -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
@@ -231,10 +188,46 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 }
 
 extension MasterViewController : NSFetchedResultsControllerDelegate{
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        print("Did change content")
+    // BASIC METHOD :
+     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.reloadData()
+     }
+    // Could be replaced by following methods :
+    /*
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
     }
     
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        print("Inserting ? : ", type)
+        switch type {
+        case .insert:
+            tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+        case .delete:
+            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+        default:
+            return
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        print("Updating ? : ", type)
+        switch type {
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+        case .update:
+            configureCell(tableView.cellForRow(at: indexPath!)!, withContact: anObject as! Contact)
+        case .move:
+            configureCell(tableView.cellForRow(at: indexPath!)!, withContact: anObject as! Contact)
+            tableView.moveRow(at: indexPath!, to: newIndexPath!)
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    */
 }
 
