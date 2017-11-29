@@ -15,6 +15,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var lastnameView: UITextField!
     @IBOutlet weak var firstnameView: UITextField!
     @IBOutlet weak var emailView: UITextField!
+    @IBOutlet weak var passwordView: UITextField!
     @IBOutlet weak var profileView: UIPickerView!
     
     override func viewDidLoad() {
@@ -22,10 +23,11 @@ class SignUpViewController: UIViewController {
         self.hideKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil) // Do any additional setup after loading the view.
-//        phoneView.text = "0123456789"
-//        firstnameView.text = "John"
-//        lastnameView.text = "Doe"
-//        emailView.text = "john.doe@nobody.net"
+        phoneView.text = "0123456789"
+        firstnameView.text = "John"
+        lastnameView.text = "Doe"
+        emailView.text = "john.doe@nobody.net"
+        passwordView.text = "0000"
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,21 +59,23 @@ class SignUpViewController: UIViewController {
     
     @IBAction func registerPressed(_ sender: Any) {
         print("Register pressed")
-        if (!UserValidationUtil.validatePhone(phone: phoneView.text!)) {
+        let phone = phoneView.text!
+        let password = passwordView.text!
+        let firstname = firstnameView.text!
+        let lastname = lastnameView.text!
+        let email = emailView.text!
+        let profile = "FAMILLE"
+        if (!UserValidationUtil.validatePhone(phone: phone)) {
             phoneView.becomeFirstResponder()
-        } else if (!UserValidationUtil.validateFirstname(firstname: firstnameView.text!)) {
+        } else if (!UserValidationUtil.validateFirstname(firstname: firstname)) {
             firstnameView.becomeFirstResponder()
-        } else if (!UserValidationUtil.validateLastname(lastname: lastnameView.text!)) {
+        } else if (!UserValidationUtil.validateLastname(lastname: lastname)) {
             lastnameView.becomeFirstResponder()
-        } else if (!UserValidationUtil.validateEmail(email: emailView.text!)) {
+        } else if (!UserValidationUtil.validateEmail(email: email)) {
             emailView.becomeFirstResponder()
+        } else if (!UserValidationUtil.validatePassword(password: password)) {
+            passwordView.becomeFirstResponder()
         } else {
-            let phone = phoneView.text!
-            let password = "0000"
-            let firstname = firstnameView.text!
-            let lastname = lastnameView.text!
-            let email = emailView.text!
-            let profile = "FAMILLE"
             WebServicesProvider.sharedInstance.createUser(phone: phone, password: password, firstName: firstname, lastName: lastname, email: email, profile: profile, success: {
                 print("User created")
                 self.dismiss(animated: true, completion: {
