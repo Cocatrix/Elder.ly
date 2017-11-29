@@ -4,7 +4,9 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -37,12 +39,51 @@
                                 <rect key="frame" x="0.0" y="120" width="320" height="399"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="pEW-Lk-hTr">
-                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="64" id="pEW-Lk-hTr" customClass="ContactTableCellController" customModule="Elder_ly" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pEW-Lk-hTr" id="z4w-8U-5Rx">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="63.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="mWS-gs-4q4">
+                                                    <rect key="frame" x="8" y="14.5" width="304" height="50"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="avatarImageView" translatesAutoresizingMaskIntoConstraints="NO" id="kht-6x-VEi">
+                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="kht-6x-VEi" secondAttribute="height" multiplier="1:1" id="IYD-Dp-sGg"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Azerty azerty azerty azerty" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="28D-Nm-ki9">
+                                                            <rect key="frame" x="58" y="0.0" width="184" height="50"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C1H-yd-cU7">
+                                                            <rect key="frame" x="250" y="0.0" width="54" height="50"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="60" id="q1u-Gi-RW9"/>
+                                                            </constraints>
+                                                            <state key="normal" title="Appeler">
+                                                                <color key="titleColor" red="1" green="0.54117647058823526" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </state>
+                                                        </button>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="kht-6x-VEi" firstAttribute="height" secondItem="mWS-gs-4q4" secondAttribute="height" id="DSY-3v-fAT"/>
+                                                        <constraint firstItem="C1H-yd-cU7" firstAttribute="height" secondItem="mWS-gs-4q4" secondAttribute="height" id="efy-mW-qNK"/>
+                                                        <constraint firstItem="28D-Nm-ki9" firstAttribute="height" secondItem="mWS-gs-4q4" secondAttribute="height" id="k2B-1L-VF3"/>
+                                                    </constraints>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="mWS-gs-4q4" firstAttribute="leading" secondItem="z4w-8U-5Rx" secondAttribute="leading" constant="8" id="3YJ-w4-E3z"/>
+                                                <constraint firstAttribute="trailing" secondItem="mWS-gs-4q4" secondAttribute="trailing" constant="8" id="RPL-Vr-DdD"/>
+                                                <constraint firstItem="mWS-gs-4q4" firstAttribute="centerX" secondItem="z4w-8U-5Rx" secondAttribute="centerX" id="eTx-Sz-Bv3"/>
+                                                <constraint firstAttribute="bottom" secondItem="mWS-gs-4q4" secondAttribute="bottom" id="oex-9G-o35"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
