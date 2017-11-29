@@ -35,23 +35,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
-        
-        // Use WebService to identify and load data
-        let wsProvider = WebServicesProvider.sharedInstance
-        
-        // Fake login to test list printing
-        wsProvider.userLogin(phone: "0600000042", password: "0000", success: {
-            print("Fake login : success")
-            // Load contacts in local DB
-            wsProvider.getContacts(success: {
-                print("Load data : success")
-            }, failure: { (error) in
-                print(error ?? "unknown error")
-            })
-        }, failure: { (error) in
-            print(wsProvider.token ?? "notoken")
-        })
-        
+   
         // Setup fetched resultController
         let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
         let sortFirstName = NSSortDescriptor(key: "firstName", ascending: true)
@@ -78,6 +62,15 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let controller = LoginViewController(nibName: nil, bundle: nil)
             self.present(controller, animated: false, completion: nil)
         }
+        
+        // Use WebService to identify and load data
+        let wsProvider = WebServicesProvider.sharedInstance
+        
+        wsProvider.getContacts(success: {
+            print("Load data : success")
+        }, failure: { (error) in
+            print(error ?? "unknown error")
+        })
     }
 
     override func didReceiveMemoryWarning() {
