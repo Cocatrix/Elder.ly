@@ -48,7 +48,6 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 wsProvider.getContacts(success: {
                     print("Load data : success")
                     DispatchQueue.main.async {
-                        print("Reloading data")
                         self.tableView.reloadData()
                     }
                 }, failure: { (error) in
@@ -69,9 +68,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                                              managedObjectContext: self.appDelegate().persistentContainer.viewContext,
                                              sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self
-        print("Trying to perform fetch")
         try? frc.performFetch()
-        print("Fetch done")
         self.resultController = frc
         self.tableView.reloadData() // Should not be useful
     }
@@ -122,7 +119,6 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: - Segues
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("Called prepare")
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
             let object = resultController?.object(at: indexPath)
@@ -137,7 +133,6 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: - Table View
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        print("Called numberOfSections")
         if let frc = self.resultController {
             return frc.sections!.count
         }
@@ -145,17 +140,14 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("Called numberOfRowsInSection")
         guard let sections = self.resultController?.sections else {
             fatalError("No sections in fetchedResultsController")
         }
         let sectionInfo = sections[section]
-        print("Number of objects : ", sectionInfo.numberOfObjects)
         return sectionInfo.numberOfObjects
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("Called cellForRowAt")
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let contact = resultController?.object(at: indexPath)
         print("Configuring cell at index : ", indexPath)
@@ -170,13 +162,11 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        print("Called canEditRowAt")
         // Return false if you do not want the specified item to be editable.
         return true
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        print("Called UITableViewCellEditingStyle")
         if editingStyle == .delete {
             let context = self.resultController?.managedObjectContext
             context?.delete((self.resultController?.object(at: indexPath))!)
@@ -200,7 +190,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
-     */
+    
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         print("Inserting ? : ", type)
         switch type {
@@ -227,7 +217,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 tableView.moveRow(at: indexPath!, to: newIndexPath!)
         }
     }
-    /*
+    
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
