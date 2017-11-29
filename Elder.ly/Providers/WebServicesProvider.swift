@@ -134,8 +134,9 @@ class WebServicesProvider {
             }
             // Delete data that is not on server
             for contact in contacts {
-                if serverIds.contains(contact.wsId!) {
+                if !serverIds.contains(contact.wsId!) {
                     context.delete(contact)
+                    print("removecontact")
                 }
             }
             // Update or create contact
@@ -143,21 +144,23 @@ class WebServicesProvider {
                 if contactIds.contains(jsonContact["_id"] as! String) {
                     let currentContact = contacts.filter({return jsonContact["_id"] as? String == $0.wsId}).first
                     self.updateLocalContactWithData(contact: currentContact!, dict: jsonContact)
+                    print("updated contact")
                 } else {
                     let contact = Contact(context: context)
                     contact.wsId = jsonContact["_id"] as? String ?? "Error"
                     self.updateLocalContactWithData(contact: contact, dict: jsonContact)
+                    print("added contact")
                 }
             }
             do {
                 if context.hasChanges {
                     try context.save()
+                    success()
                 }
             } catch {
                 failure(error)
                 return
             }
-            success()
         }
     }
     
@@ -235,6 +238,32 @@ class WebServicesProvider {
             }
             task.resume()
         }
+    }
+    
+    func getProfiles(success: @escaping ([String]) -> (), failure: @escaping (Error?) -> ()) {
+        let url = URL(string: self.url + "/public/profiles")
+        var request = URLRequest(url: url!)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-type")
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            print("task initialized")
+            if let httpError = self.checkForHTTPError(response: response) {
+                failure(httpError)
+                return
+            }
+            guard let data = data else {
+                failure(NSError(domain:"Data Error", code: WebServicesProvider.DATA_ERROR, userInfo: ["Error": "no data"]))
+                return
+            }
+            let jsonDict = try? JSONSerialization.jsonObject(with:
+                data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String]
+            guard let dict = jsonDict as? [String] else {
+                failure(NSError(domain:"Data Error", code: WebServicesProvider.DATA_ERROR, userInfo: ["Error": "Invalid data"]))
+                return
+            }
+            success(dict)
+        }
+        task.resume()
     }
     
     func checkForHTTPError(response: URLResponse?) -> (Error?) {
