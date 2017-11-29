@@ -88,6 +88,7 @@
                                         <connections>
                                             <outlet property="avatarImageView" destination="kht-6x-VEi" id="7aX-AN-39Z"/>
                                             <outlet property="nameLabel" destination="28D-Nm-ki9" id="6UA-t3-N1c"/>
+                                            <segue destination="vC3-pB-5Vb" kind="showDetail" id="jbU-mD-Mpv"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -273,4 +274,7 @@
             <point key="canvasLocation" x="-45" y="129"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="jbU-mD-Mpv"/>
+    </inferredMetricsTieBreakers>
 </document>
