@@ -184,13 +184,19 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
 extension MasterViewController : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        //print("search")
-        let scdProvider = SearchCoreDataProvider.sharedInstance
-        let searchPredicate = scdProvider.searchContact(content: searchText)
+        
         guard let frc = self.resultController else {
             return
         }
-        frc.fetchRequest.predicate = searchPredicate
+        if(searchText == ""){
+            frc.fetchRequest.predicate = nil
+        } else {
+            let scdProvider = SearchCoreDataProvider.sharedInstance
+            // Get predicate corresponding to research
+            let searchPredicate = scdProvider.getSearchPredicate(content: searchText)
+            
+            frc.fetchRequest.predicate = searchPredicate
+        }
         try? frc.performFetch()
         self.tableView.reloadData()
     }

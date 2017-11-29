@@ -23,18 +23,18 @@ class SearchCoreDataProvider {
         return sharedSearchCoreData
     }
     
-    func searchContact(content: String) -> NSPredicate {
-        let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
-        fetchRequest.predicate = NSPredicate(format: "firstName CONTAINS[c] %@", content)
-        let sortFirstName = NSSortDescriptor(key: "firstName", ascending: true)
-        let sortLastName = NSSortDescriptor(key: "lastName", ascending: true)
-        // Sort by first name, then by last name
-        fetchRequest.sortDescriptors = [sortFirstName, sortLastName]
-        /*
-         An idea of the fields to look at :
-         
-         if ((contact.firstName?.lowercased().range(of: content)) != nil) || ((contact.lastName?.lowercased().range(of: content)) != nil) || ((contact.phone?.range(of: content)) != nil) || ((contact.email?.lowercased().range(of: content)) != nil) {
+    func getSearchPredicate(content: String) -> NSPredicate {
+        /**
+         * Returns a predicate that filters the results with data corresponding to "content"
+         * Works with firstName only.
+         * TODO - Find a way to tell predicate : (firstName CONTAINS X) OR (lastName CONTAINS X) OR ... (with firstName, lastName, phone, email)
          */
-        return fetchRequest.predicate!
+        let searchPredicate: NSPredicate
+        guard content != "" else {
+            print("Search error")
+            return NSPredicate() // TODO - Find better catching
+        }
+        searchPredicate = NSPredicate(format: "firstName CONTAINS[c] %@", content)
+        return searchPredicate
     }
 }
