@@ -38,6 +38,7 @@
 		B385B40C9C2A92FA37C31679 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E8806F383D656B3CAC66950 /* CoreVideo.framework */; };
 		B854D6CD02E1A81599FC8786 /* BuddyBuildSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 038C5BE633AE1B59909767AD /* BuddyBuildSDK.framework */; };
 		F914D2AA1FCC2228008326FB /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F914D2A91FCC2228008326FB /* .gitignore */; };
+		F914D2AC1FCEC912008326FB /* UserValidationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = F914D2AB1FCEC911008326FB /* UserValidationUtil.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,7 @@
 		B3DBE58689F165E4D44BF8CA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CF07CD3234CE34238AAF00CF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F914D2A91FCC2228008326FB /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		F914D2AB1FCEC911008326FB /* UserValidationUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserValidationUtil.swift; sourceTree = "<group>"; };
 		FC243844D049F4A0232ECC51 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -182,6 +184,7 @@
 				5118D7DF1FCDBE710015E2F8 /* UserDefaultUtils.swift */,
 				37D007371FCDC95200132F68 /* Localizable.strings */,
 				37F562071FCEBE1A0083C0CC /* KeyboardUtil.swift */,
+				F914D2AB1FCEC911008326FB /* UserValidationUtil.swift */,
 			);
 			path = Elder.ly;
 			sourceTree = "<group>";
@@ -387,6 +390,7 @@
 				37D007231FCDB76200132F68 /* AddEditViewController.swift in Sources */,
 				37F562081FCEBE1A0083C0CC /* KeyboardUtil.swift in Sources */,
 				41E825B71FCC1B1600566D10 /* MasterViewController.swift in Sources */,
+				F914D2AC1FCEC912008326FB /* UserValidationUtil.swift in Sources */,
 				41E825B91FCC1B1600566D10 /* DetailViewController.swift in Sources */,
 				51EC3A741FCC405100EEE7D6 /* User.swift in Sources */,
 			);

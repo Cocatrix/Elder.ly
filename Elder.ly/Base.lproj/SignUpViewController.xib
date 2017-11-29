@@ -11,6 +11,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SignUpViewController" customModule="Elder_ly" customModuleProvider="target">
             <connections>
+                <outlet property="emailView" destination="kn7-bq-rAf" id="OeL-uA-XHU"/>
+                <outlet property="firstnameView" destination="c5Y-sw-dTW" id="gSj-cO-Wrm"/>
+                <outlet property="lastnameView" destination="dBg-LO-hbj" id="WsA-N5-1bP"/>
+                <outlet property="phoneView" destination="ysc-9s-7Lf" id="xmp-x0-rEp"/>
+                <outlet property="profileView" destination="DSk-C3-QaC" id="V4D-od-Ree"/>
                 <outlet property="scrollView" destination="pbV-TT-VlR" id="M6S-XV-Cch"/>
                 <outlet property="view" destination="anX-9d-vnM" id="q4e-DG-trC"/>
             </connections>
@@ -45,7 +50,7 @@
                                             </constraints>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" textContentType="tel"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="phonePad" returnKeyType="next" textContentType="tel"/>
                                         </textField>
                                         <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="firstnameTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Prénom" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c5Y-sw-dTW">
                                             <rect key="frame" x="16" y="160" width="288" height="64"/>
@@ -54,7 +59,7 @@
                                             </constraints>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" textContentType="name"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" textContentType="name"/>
                                         </textField>
                                         <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="lastnameTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nom" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dBg-LO-hbj">
                                             <rect key="frame" x="16" y="240" width="288" height="64"/>
@@ -63,7 +68,7 @@
                                             </constraints>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" textContentType="family-name"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" textContentType="family-name"/>
                                         </textField>
                                         <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="emailTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="eMail" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kn7-bq-rAf">
                                             <rect key="frame" x="16" y="320" width="288" height="64"/>
@@ -72,7 +77,7 @@
                                             </constraints>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" textContentType="email"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="continue" textContentType="email"/>
                                         </textField>
                                         <pickerView contentMode="scaleToFill" restorationIdentifier="profilePicker" translatesAutoresizingMaskIntoConstraints="NO" id="DSk-C3-QaC">
                                             <rect key="frame" x="16" y="400" width="288" height="76"/>
@@ -90,6 +95,9 @@
                                             <state key="normal" title="Valider">
                                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             </state>
+                                            <connections>
+                                                <action selector="registerPressed:" destination="-1" eventType="touchUpInside" id="0uk-e2-PKe"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="logInButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R5L-hI-vUr">
                                             <rect key="frame" x="16" y="572" width="288" height="32"/>
