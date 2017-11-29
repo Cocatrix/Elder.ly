@@ -18,6 +18,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil) // Do any additional setup after loading the view.
         // Setup default phone number
@@ -69,10 +70,10 @@ class LoginViewController: UIViewController {
         let errorConnection = NSLocalizedString("errorConnection", comment: "Erreur de connexion")
         let okString = NSLocalizedString("OK", comment: "OK")
         
-        let deleteAlertController = UIAlertController(title: errorTitle, message: errorConnection, preferredStyle: .alert)
+        let errorAlertController = UIAlertController(title: errorTitle, message: errorConnection, preferredStyle: .alert)
         let OKAction = UIAlertAction(title: okString, style: .default)
-        deleteAlertController.addAction(OKAction)
-        self.present(deleteAlertController, animated: true)
+        errorAlertController.addAction(OKAction)
+        self.present(errorAlertController, animated: true)
     }
     
     /*
