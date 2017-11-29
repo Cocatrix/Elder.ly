@@ -15,12 +15,15 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var managedObjectContext: NSManagedObjectContext? = nil // Called by AppDelegate.
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
+        self.searchBar.delegate = self
         
         /*
          * Handle navigation bar :
@@ -179,7 +182,21 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
 }
 
-extension MasterViewController : NSFetchedResultsControllerDelegate{
+extension MasterViewController : UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        //print("search")
+        let scdProvider = SearchCoreDataProvider.sharedInstance
+        let searchPredicate = scdProvider.searchContact(content: searchText)
+        guard let frc = self.resultController else {
+            return
+        }
+        frc.fetchRequest.predicate = searchPredicate
+        try? frc.performFetch()
+        self.tableView.reloadData()
+    }
+}
+
+extension MasterViewController : NSFetchedResultsControllerDelegate {
     // BASIC METHOD :
      func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.reloadData()

@@ -23,18 +23,18 @@ class SearchCoreDataProvider {
         return sharedSearchCoreData
     }
     
-    func searchContact(content: String) -> [Contact] {
-        var matchingContacts = [Contact]()
-        let context = self.persistentContainer.viewContext
+    func searchContact(content: String) -> NSPredicate {
         let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
-        let contacts = try! context.fetch(fetchRequest)
-        for contact in contacts {
-            if ((contact.firstName?.lowercased().range(of: content)) != nil) || ((contact.lastName?.lowercased().range(of: content)) != nil) || ((contact.phone?.range(of: content)) != nil) || ((contact.email?.lowercased().range(of: content)) != nil) {
-                matchingContacts.append(contact)
-            }
-        }
-        return matchingContacts
+        fetchRequest.predicate = NSPredicate(format: "firstName CONTAINS[c] %@", content)
+        let sortFirstName = NSSortDescriptor(key: "firstName", ascending: true)
+        let sortLastName = NSSortDescriptor(key: "lastName", ascending: true)
+        // Sort by first name, then by last name
+        fetchRequest.sortDescriptors = [sortFirstName, sortLastName]
+        /*
+         An idea of the fields to look at :
+         
+         if ((contact.firstName?.lowercased().range(of: content)) != nil) || ((contact.lastName?.lowercased().range(of: content)) != nil) || ((contact.phone?.range(of: content)) != nil) || ((contact.email?.lowercased().range(of: content)) != nil) {
+         */
+        return fetchRequest.predicate!
     }
-    
 }
-
