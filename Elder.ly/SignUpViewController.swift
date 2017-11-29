@@ -21,6 +21,10 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil) // Do any additional setup after loading the view.
+        phoneView.text = "0123456789"
+        firstnameView.text = "John"
+        lastnameView.text = "Doe"
+        emailView.text = "john.doe@nobody.net"
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,8 +61,33 @@ class SignUpViewController: UIViewController {
             && validateFirstname(firstname: firstnameView.text!)
             && validateLastname(lastname: lastnameView.text!)
             && validateEmail(email: emailView.text!)) {
-            
+            let phone = phoneView.text!
+            let password = "0000"
+            let firstname = firstnameView.text!
+            let lastname = lastnameView.text!
+            let email = emailView.text!
+            let profile = "FAMILLE"
+            WebServicesProvider.sharedInstance.createUser(phone: phone, password: password, firstName: firstname, lastName: lastname, email: email, profile: profile, success: {
+                print("User created")
+                self.dismiss(animated: true, completion: {
+                    
+                })
+            }, failure: { (error) in
+                print(error)
+                DispatchQueue.main.async {
+                    self.view.endEditing(true)
+                    self.alertErrorSignup(message: (error?.localizedDescription)!)
+                }
+                print("Phone : " + phone + ", Password : " + password + ", Firstname : " + firstname + ", Lastname : " + lastname + ", Email : " + email + ", Profile : " + profile)
+            })
         }
+    }
+    
+    func alertErrorSignup(message: String) {
+        let alert = UIAlertController(title: "User not created", message: message, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Click", style: UIAlertActionStyle.default)
+        alert.addAction(alertAction)
+        self.present(alert, animated: true)
     }
     
     func validatePhone(phone: String) -> Bool {
