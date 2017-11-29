@@ -19,6 +19,11 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+<<<<<<< HEAD
+=======
+        // Do any additional setup after loading the view, typically from a nib.
+        navigationItem.leftBarButtonItem = editButtonItem
+>>>>>>> listview
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -176,6 +181,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         cell.textLabel!.text = contact.firstName
     }
 
+<<<<<<< HEAD
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
@@ -208,19 +214,56 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
+=======
+//    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+//        tableView.beginUpdates()
+//    }
+//
+//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+//        switch type {
+//            case .insert:
+//                tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+//            case .delete:
+//                tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+//            case .move:
+//                break
+//            case .update:
+//                break
+//        }
+//    }
+//
+//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+//        switch type {
+//            case .insert:
+//                tableView.insertRows(at: [newIndexPath!], with: .fade)
+//            case .delete:
+//                tableView.deleteRows(at: [indexPath!], with: .fade)
+//            case .update:
+//                configureCell(tableView.cellForRow(at: indexPath!)!, withContact: anObject as! Contact)
+//                tableView.reloadRows(at: [indexPath!], with: .fade)
+//            case .move:
+//                configureCell(tableView.cellForRow(at: indexPath!)!, withContact: anObject as! Contact)
+//                tableView.moveRow(at: indexPath!, to: newIndexPath!)
+//        }
+//    }
+
+//    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+//        tableView.endUpdates()
+//    }
+>>>>>>> listview
     
     func appDelegate() -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
 
-    /*
+    
      // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
      
-     func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(controller: NSFetchedResultsController<NSFetchRequestResult>) {
          // In the simplest, most efficient, case, reload the table view.
          tableView.reloadData()
      }
-     */
+    
 
 }
 
