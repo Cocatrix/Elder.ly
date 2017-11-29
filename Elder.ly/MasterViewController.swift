@@ -42,20 +42,13 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         
         // Fake login to test list printing
         wsProvider.userLogin(phone: "0600000042", password: "0000", success: {
-            print("success")
+            print("Fake login : success")
             // Load contacts in local DB
             wsProvider.getContacts(success: {
-                print("success")
+                print("Load data : success")
             }, failure: { (error) in
                 print(error ?? "unknown error")
             })
-            /*
-             // Test : create contact // TODO - Move in insertNewObject method
-            wsProvider.createContactOnServer(email: "xxx@example.com", phone: "0647474747", firstName: "John", lastName: "Kennedy", profile: "MEDECIN", gravatar: "", isFamilinkUser: false, isEmergencyUser: false, success: {
-                print("success")
-            }, failure: { (error) in
-                print(error ?? "unknown error")
-            })*/
         }, failure: { (error) in
             print(wsProvider.token ?? "notoken")
         })
@@ -70,7 +63,9 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
                                              managedObjectContext: self.appDelegate().persistentContainer.viewContext,
                                              sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self
+        print("Trying to perform fetch")
         try? frc.performFetch()
+        print("Fetch done")
         self.resultController = frc
     }
 
@@ -93,15 +88,19 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     @objc
     func insertNewObject(_ sender: Any) {
         let context = self.resultController?.managedObjectContext
-        let newEvent = Event(context: context!)
-             
-        // If appropriate, configure the new managed object.
-        newEvent.timestamp = Date()
-
+        
+        // Use WebService to identify and load data
+        let wsProvider = WebServicesProvider.sharedInstance
+        wsProvider.createContactOnServer(email: "xxx@example.com", phone: "0647474747", firstName: "Mama", lastName: "Kennedy", profile: "MEDECIN", gravatar: "", isFamilinkUser: false, isEmergencyUser: false, success: {
+            print("Create contact : success")
+         }, failure: { (error) in
+            print(error ?? "unknown error")
+         })
+        
         // Save the context.
         do {
             try context?.save()
@@ -147,6 +146,13 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let contact = resultController?.object(at: indexPath)
+        print("Configuring cell at index : ", indexPath)
+        // Displaying with grey background on half cells
+        if (indexPath.row+1)%2 == 0 {
+            cell.contentView.backgroundColor = UIColor(red: 244/255, green: 244/255, blue: 244/255, alpha: 1.0)
+        } else {
+            cell.contentView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
+        }
         configureCell(cell, withContact: contact!)
         return cell
     }
@@ -157,6 +163,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        print("Called weird function")
         if editingStyle == .delete {
             let context = self.resultController?.managedObjectContext
             context?.delete((self.resultController?.object(at: indexPath))!)
@@ -175,12 +182,13 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     func configureCell(_ cell: UITableViewCell, withContact contact: Contact) {
         cell.textLabel!.text = contact.firstName
     }
-
+    /*
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
-
+     */
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        print("Inserting ? : ", type)
         switch type {
             case .insert:
                 tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
@@ -192,6 +200,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+         print("Updating ? : ", type)
         switch type {
             case .insert:
                 tableView.insertRows(at: [newIndexPath!], with: .fade)
@@ -204,23 +213,21 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
                 tableView.moveRow(at: indexPath!, to: newIndexPath!)
         }
     }
-
+    /*
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
-    
+    */
     func appDelegate() -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
-
     
      // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
      
-    func controllerDidChangeContent(controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
          // In the simplest, most efficient, case, reload the table view.
-         tableView.reloadData()
+        print("Did change content")
+        tableView.reloadData()
      }
-    
-
 }
 
