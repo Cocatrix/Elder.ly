@@ -9,10 +9,10 @@
 import UIKit
 import CoreData
 
-class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var resultController: NSFetchedResultsController<Contact>?
     var detailViewController: DetailViewController? = nil
-    var managedObjectContext: NSManagedObjectContext? = nil // Useless - Remove in next commit
+    var managedObjectContext: NSManagedObjectContext? = nil // Called by AppDelegate. But useful ?
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -41,17 +41,23 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         let wsProvider = WebServicesProvider.sharedInstance
         
         // Fake login to test list printing
-        wsProvider.userLogin(phone: "0600000042", password: "0000", success: {
-            print("Fake login : success")
-            // Load contacts in local DB
-            wsProvider.getContacts(success: {
-                print("Load data : success")
+        DispatchQueue.global(qos: .background).async {
+            wsProvider.userLogin(phone: "0600000042", password: "0000", success: {
+                print("Fake login : success")
+                // Load contacts in local DB
+                wsProvider.getContacts(success: {
+                    print("Load data : success")
+                    DispatchQueue.main.async {
+                        print("Reloading data")
+                        self.tableView.reloadData()
+                    }
+                }, failure: { (error) in
+                    print(error ?? "unknown error")
+                })
             }, failure: { (error) in
-                print(error ?? "unknown error")
+                print(wsProvider.token ?? "notoken")
             })
-        }, failure: { (error) in
-            print(wsProvider.token ?? "notoken")
-        })
+        }
         
         // Setup fetched resultController
         let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
@@ -67,6 +73,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         try? frc.performFetch()
         print("Fetch done")
         self.resultController = frc
+        self.tableView.reloadData() // Should not be useful
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -95,7 +102,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         
         // Use WebService to identify and load data
         let wsProvider = WebServicesProvider.sharedInstance
-        wsProvider.createContactOnServer(email: "xxx@example.com", phone: "0647474747", firstName: "Mama", lastName: "Kennedy", profile: "MEDECIN", gravatar: "", isFamilinkUser: false, isEmergencyUser: false, success: {
+        wsProvider.createContactOnServer(email: "xxx@example.com", phone: "0647474747", firstName: "Dad", lastName: "Kennedy", profile: "MEDECIN", gravatar: "", isFamilinkUser: false, isEmergencyUser: false, success: {
             print("Create contact : success")
          }, failure: { (error) in
             print(error ?? "unknown error")
@@ -115,6 +122,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     // MARK: - Segues
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("Called prepare")
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
             let object = resultController?.object(at: indexPath)
@@ -129,6 +137,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     // MARK: - Table View
 
     func numberOfSections(in tableView: UITableView) -> Int {
+        print("Called numberOfSections")
         if let frc = self.resultController {
             return frc.sections!.count
         }
@@ -136,14 +145,17 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("Called numberOfRowsInSection")
         guard let sections = self.resultController?.sections else {
             fatalError("No sections in fetchedResultsController")
         }
         let sectionInfo = sections[section]
+        print("Number of objects : ", sectionInfo.numberOfObjects)
         return sectionInfo.numberOfObjects
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("Called cellForRowAt")
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let contact = resultController?.object(at: indexPath)
         print("Configuring cell at index : ", indexPath)
@@ -158,12 +170,13 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        print("Called canEditRowAt")
         // Return false if you do not want the specified item to be editable.
         return true
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        print("Called weird function")
+        print("Called UITableViewCellEditingStyle")
         if editingStyle == .delete {
             let context = self.resultController?.managedObjectContext
             context?.delete((self.resultController?.object(at: indexPath))!)
@@ -180,6 +193,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
 
     func configureCell(_ cell: UITableViewCell, withContact contact: Contact) {
+        print("Called configureCell")
         cell.textLabel!.text = contact.firstName
     }
     /*
@@ -223,11 +237,14 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
     
      // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
-     
+    
+}
+
+extension MasterViewController : NSFetchedResultsControllerDelegate{
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-         // In the simplest, most efficient, case, reload the table view.
         print("Did change content")
-        tableView.reloadData()
-     }
+        self.tableView.reloadData()
+    }
+    
 }
 
