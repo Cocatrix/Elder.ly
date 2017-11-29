@@ -151,6 +151,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return true
     }
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 64
+    }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let context = self.resultController?.managedObjectContext
@@ -168,7 +172,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     func configureCell(_ cell: UITableViewCell, withContact contact: Contact) {
-        cell.textLabel!.text = contact.firstName
+        if let contactCell = cell as? ContactTableViewCell {
+            contactCell.nameLabel.text = (
+                contact.firstName! + " " + contact.lastName!)
+        }
     }
 
     func appDelegate() -> AppDelegate {
