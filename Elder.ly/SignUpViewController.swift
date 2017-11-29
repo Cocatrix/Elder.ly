@@ -104,7 +104,7 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     
                 })
             }, failure: { (error) in
-                print(error)
+                print(error ?? "ERROR")
                 DispatchQueue.main.async {
                     self.view.endEditing(true)
                     self.alertErrorSignup(message: (error?.localizedDescription)!)
