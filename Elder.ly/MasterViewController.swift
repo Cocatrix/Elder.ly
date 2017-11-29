@@ -72,11 +72,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewWillAppear(animated)
         
         //TODO: Check if User is Connected
-        var isUserConnected = true
+        let isUserConnected = UserDefaults.standard.isAuth()
         
         if !isUserConnected {
             let controller = LoginViewController(nibName: nil, bundle: nil)
-            
             self.present(controller, animated: false, completion: nil)
         }
     }

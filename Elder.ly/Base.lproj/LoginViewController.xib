@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,6 +12,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="Elder_ly" customModuleProvider="target">
             <connections>
+                <outlet property="passwordField" destination="Wnn-Tg-N26" id="Ga6-kZ-4QV"/>
+                <outlet property="phoneNumberField" destination="f1l-gE-EaT" id="iOw-qg-Rie"/>
+                <outlet property="rememberSwitch" destination="E6z-U7-aon" id="XrM-Z6-11w"/>
                 <outlet property="scrollView" destination="LU1-UP-9GA" id="KPW-Cy-ong"/>
                 <outlet property="view" destination="mQP-Im-gX6" id="eh3-f0-VqR"/>
             </connections>
@@ -54,7 +58,7 @@
                                                     </constraints>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" textContentType="tel"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="tel"/>
                                                 </textField>
                                             </subviews>
                                         </stackView>
@@ -74,7 +78,7 @@
                                                     </constraints>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" textContentType="password"/>
+                                                    <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -108,6 +112,9 @@
                                             <state key="normal" title="Se Connecter">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="loginPressed:" destination="-1" eventType="touchUpInside" id="vB3-05-48j"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="signUpButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="48g-dS-ZkH">
                                             <rect key="frame" x="16" y="488" width="343" height="32"/>

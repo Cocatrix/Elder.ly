@@ -11,11 +11,18 @@ import UIKit
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var phoneNumberField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var rememberSwitch: UISwitch!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil) // Do any additional setup after loading the view.
+        // Setup default phone number
+        phoneNumberField.text = UserDefaults.standard.getUserPhoneNumber()
     }
     
     override func didReceiveMemoryWarning() {
@@ -34,7 +41,7 @@ class LoginViewController: UIViewController {
         scrollView.contentInset = contentInset
     }
     
-    @objc func keyboardWillHide(notification:NSNotification){
+    @objc func keyboardWillHide(notification:NSNotification) {
         let contentInset:UIEdgeInsets = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
     }
@@ -45,6 +52,32 @@ class LoginViewController: UIViewController {
         let signUpViewController = SignUpViewController(nibName: "SignUpViewController", bundle: nil)
         self.present(signUpViewController, animated: true, completion: nil)
     }
+    
+    @IBAction func loginPressed(_ sender: Any) {
+        let wsProvider = WebServicesProvider.sharedInstance
+        wsProvider.userLogin(phone: self.phoneNumberField.text!, password: self.passwordField.text!, success: {
+            UserDefaults.standard.setAuth()
+            self.dismiss(animated: true)
+        }) { (error) in
+            UserDefaults.standard.unsetAuth()
+            self.alertConnectionError()
+        }
+        if self.rememberSwitch.isOn {
+            UserDefaults.standard.setUserPhoneNumber(phone: self.phoneNumberField.text!)
+        }
+    }
+    
+    func alertConnectionError() {
+        let errorTitle = NSLocalizedString("error", comment: "Error")
+        let errorConnection = NSLocalizedString("errorConnection", comment: "Erreur de connexion")
+        let okString = NSLocalizedString("OK", comment: "OK")
+        
+        let errorAlertController = UIAlertController(title: errorTitle, message: errorConnection, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: okString, style: .default)
+        errorAlertController.addAction(OKAction)
+        self.present(errorAlertController, animated: true)
+    }
+    
     /*
      // MARK: - Navigation
      

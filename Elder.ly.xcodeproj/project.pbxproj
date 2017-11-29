@@ -8,10 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		00EF402178A187FB8996946E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF07CD3234CE34238AAF00CF /* SystemConfiguration.framework */; };
-		377F763C1FCC4A7C00DBE398 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 377F763B1FCC4A7C00DBE398 /* LoginViewController.xib */; };
 		3790C1591FCC5539001928E4 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3790C1571FCC5539001928E4 /* SignUpViewController.swift */; };
-		3790C15A1FCC5539001928E4 /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3790C1581FCC5539001928E4 /* SignUpViewController.xib */; };
 		3790C15C1FCC6018001928E4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3790C15B1FCC6018001928E4 /* LoginViewController.swift */; };
+		37D007231FCDB76200132F68 /* AddEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D007211FCDB76200132F68 /* AddEditViewController.swift */; };
+		37D007251FCDC5C500132F68 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37D007271FCDC5C500132F68 /* LoginViewController.xib */; };
+		37D0072D1FCDC68300132F68 /* AddEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37D0072F1FCDC68300132F68 /* AddEditViewController.xib */; };
+		37D007321FCDC71000132F68 /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37D007341FCDC71000132F68 /* SignUpViewController.xib */; };
+		37D007391FCDC95200132F68 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 37D007371FCDC95200132F68 /* Localizable.strings */; };
+		37F562081FCEBE1A0083C0CC /* KeyboardUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F562071FCEBE1A0083C0CC /* KeyboardUtil.swift */; };
 		39F07E2087F6B6AE4057F0DC /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC243844D049F4A0232ECC51 /* CoreText.framework */; };
 		41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B11FCC1B1600566D10 /* AppDelegate.swift */; };
 		41E825B51FCC1B1600566D10 /* Elder_ly.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B31FCC1B1600566D10 /* Elder_ly.xcdatamodeld */; };
@@ -22,6 +26,8 @@
 		41E825C11FCC1B1600566D10 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E825BF1FCC1B1600566D10 /* LaunchScreen.storyboard */; };
 		41E825CC1FCC1B1700566D10 /* Elder_lyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825CB1FCC1B1700566D10 /* Elder_lyTests.swift */; };
 		41E825D71FCC1B1700566D10 /* Elder_lyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825D61FCC1B1700566D10 /* Elder_lyUITests.swift */; };
+		5118D7E01FCDBE710015E2F8 /* UserDefaultUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118D7DF1FCDBE710015E2F8 /* UserDefaultUtils.swift */; };
+		5133E0AC1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5133E0AB1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift */; };
 		51CD9B54318495C701BE9BDD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABCF36C8A2D1039482C85EA7 /* AVFoundation.framework */; };
 		51EC3A701FCC3F3B00EEE7D6 /* WebServicesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EC3A6F1FCC3F3B00EEE7D6 /* WebServicesProvider.swift */; };
 		51EC3A721FCC403E00EEE7D6 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EC3A711FCC403E00EEE7D6 /* Contact.swift */; };
@@ -33,6 +39,7 @@
 		B385B40C9C2A92FA37C31679 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E8806F383D656B3CAC66950 /* CoreVideo.framework */; };
 		B854D6CD02E1A81599FC8786 /* BuddyBuildSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 038C5BE633AE1B59909767AD /* BuddyBuildSDK.framework */; };
 		F914D2AA1FCC2228008326FB /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F914D2A91FCC2228008326FB /* .gitignore */; };
+		F914D2AC1FCEC912008326FB /* UserValidationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = F914D2AB1FCEC911008326FB /* UserValidationUtil.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,10 +63,19 @@
 		038C5BE633AE1B59909767AD /* BuddyBuildSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BuddyBuildSDK.framework; sourceTree = "<group>"; };
 		11EF9C8E822F789BD93FAFF3 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		2410B9AB82100003E207B63C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		377F763B1FCC4A7C00DBE398 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		3790C1571FCC5539001928E4 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		3790C1581FCC5539001928E4 /* SignUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignUpViewController.xib; sourceTree = "<group>"; };
 		3790C15B1FCC6018001928E4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		37D007211FCDB76200132F68 /* AddEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditViewController.swift; sourceTree = "<group>"; };
+		37D007261FCDC5C500132F68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LoginViewController.xib; sourceTree = "<group>"; };
+		37D0072A1FCDC63D00132F68 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LoginViewController.strings; sourceTree = "<group>"; };
+		37D0072B1FCDC63D00132F68 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		37D0072C1FCDC63D00132F68 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		37D0072E1FCDC68300132F68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddEditViewController.xib; sourceTree = "<group>"; };
+		37D007331FCDC71000132F68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SignUpViewController.xib; sourceTree = "<group>"; };
+		37D007361FCDC71300132F68 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SignUpViewController.strings; sourceTree = "<group>"; };
+		37D007381FCDC95200132F68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		37D0073B1FCDCA0900132F68 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/AddEditViewController.strings; sourceTree = "<group>"; };
+		37F562071FCEBE1A0083C0CC /* KeyboardUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardUtil.swift; sourceTree = "<group>"; };
 		41E825AE1FCC1B1600566D10 /* Elder.ly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elder.ly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41E825B11FCC1B1600566D10 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41E825B41FCC1B1600566D10 /* Elder_ly.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Elder_ly.xcdatamodel; sourceTree = "<group>"; };
@@ -75,6 +91,8 @@
 		41E825D21FCC1B1700566D10 /* Elder.lyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Elder.lyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		41E825D61FCC1B1700566D10 /* Elder_lyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elder_lyUITests.swift; sourceTree = "<group>"; };
 		41E825D81FCC1B1700566D10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5118D7DF1FCDBE710015E2F8 /* UserDefaultUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultUtils.swift; sourceTree = "<group>"; };
+		5133E0AB1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoreDataProvider.swift; sourceTree = "<group>"; };
 		51EC3A6F1FCC3F3B00EEE7D6 /* WebServicesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServicesProvider.swift; sourceTree = "<group>"; };
 		51EC3A711FCC403E00EEE7D6 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		51EC3A731FCC405100EEE7D6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -85,6 +103,7 @@
 		B3DBE58689F165E4D44BF8CA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CF07CD3234CE34238AAF00CF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F914D2A91FCC2228008326FB /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		F914D2AB1FCEC911008326FB /* UserValidationUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserValidationUtil.swift; sourceTree = "<group>"; };
 		FC243844D049F4A0232ECC51 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -149,19 +168,25 @@
 			isa = PBXGroup;
 			children = (
 				41E825C21FCC1B1600566D10 /* Info.plist */,
+				37D007211FCDB76200132F68 /* AddEditViewController.swift */,
 				41E825B11FCC1B1600566D10 /* AppDelegate.swift */,
 				41E825B81FCC1B1600566D10 /* DetailViewController.swift */,
 				3790C15B1FCC6018001928E4 /* LoginViewController.swift */,
 				41E825B61FCC1B1600566D10 /* MasterViewController.swift */,
 				3790C1571FCC5539001928E4 /* SignUpViewController.swift */,
 				41E825BD1FCC1B1600566D10 /* Assets.xcassets */,
-				377F763B1FCC4A7C00DBE398 /* LoginViewController.xib */,
-				3790C1581FCC5539001928E4 /* SignUpViewController.xib */,
+				37D0072F1FCDC68300132F68 /* AddEditViewController.xib */,
+				37D007271FCDC5C500132F68 /* LoginViewController.xib */,
+				37D007341FCDC71000132F68 /* SignUpViewController.xib */,
 				41E825B31FCC1B1600566D10 /* Elder_ly.xcdatamodeld */,
 				41E825BF1FCC1B1600566D10 /* LaunchScreen.storyboard */,
 				41E825BA1FCC1B1600566D10 /* Main.storyboard */,
 				51EC3A6D1FCC3EFC00EEE7D6 /* Models */,
 				51EC3A6E1FCC3F0E00EEE7D6 /* Providers */,
+				5118D7DF1FCDBE710015E2F8 /* UserDefaultUtils.swift */,
+				37D007371FCDC95200132F68 /* Localizable.strings */,
+				37F562071FCEBE1A0083C0CC /* KeyboardUtil.swift */,
+				F914D2AB1FCEC911008326FB /* UserValidationUtil.swift */,
 			);
 			path = Elder.ly;
 			sourceTree = "<group>";
@@ -197,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				51EC3A6F1FCC3F3B00EEE7D6 /* WebServicesProvider.swift */,
+				5133E0AB1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -285,7 +311,7 @@
 				TargetAttributes = {
 					41E825AD1FCC1B1600566D10 = {
 						CreatedOnToolsVersion = 9.0;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					41E825C61FCC1B1700566D10 = {
 						CreatedOnToolsVersion = 9.0;
@@ -306,6 +332,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = 41E825A51FCC1B1600566D10;
 			productRefGroup = 41E825AF1FCC1B1600566D10 /* Products */;
@@ -327,8 +354,10 @@
 				F914D2AA1FCC2228008326FB /* .gitignore in Resources */,
 				41E825C11FCC1B1600566D10 /* LaunchScreen.storyboard in Resources */,
 				41E825BE1FCC1B1600566D10 /* Assets.xcassets in Resources */,
-				377F763C1FCC4A7C00DBE398 /* LoginViewController.xib in Resources */,
-				3790C15A1FCC5539001928E4 /* SignUpViewController.xib in Resources */,
+				37D0072D1FCDC68300132F68 /* AddEditViewController.xib in Resources */,
+				37D007251FCDC5C500132F68 /* LoginViewController.xib in Resources */,
+				37D007391FCDC95200132F68 /* Localizable.strings in Resources */,
+				37D007321FCDC71000132F68 /* SignUpViewController.xib in Resources */,
 				41E825BC1FCC1B1600566D10 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,11 +385,16 @@
 			files = (
 				3790C15C1FCC6018001928E4 /* LoginViewController.swift in Sources */,
 				51EC3A721FCC403E00EEE7D6 /* Contact.swift in Sources */,
+				5118D7E01FCDBE710015E2F8 /* UserDefaultUtils.swift in Sources */,
+				5133E0AC1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift in Sources */,
 				51EC3A701FCC3F3B00EEE7D6 /* WebServicesProvider.swift in Sources */,
 				3790C1591FCC5539001928E4 /* SignUpViewController.swift in Sources */,
 				41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */,
 				41E825B51FCC1B1600566D10 /* Elder_ly.xcdatamodeld in Sources */,
+				37D007231FCDB76200132F68 /* AddEditViewController.swift in Sources */,
+				37F562081FCEBE1A0083C0CC /* KeyboardUtil.swift in Sources */,
 				41E825B71FCC1B1600566D10 /* MasterViewController.swift in Sources */,
+				F914D2AC1FCEC912008326FB /* UserValidationUtil.swift in Sources */,
 				41E825B91FCC1B1600566D10 /* DetailViewController.swift in Sources */,
 				51EC3A741FCC405100EEE7D6 /* User.swift in Sources */,
 			);
@@ -398,10 +432,46 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		37D007271FCDC5C500132F68 /* LoginViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				37D007261FCDC5C500132F68 /* Base */,
+				37D0072A1FCDC63D00132F68 /* fr */,
+			);
+			name = LoginViewController.xib;
+			sourceTree = "<group>";
+		};
+		37D0072F1FCDC68300132F68 /* AddEditViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				37D0072E1FCDC68300132F68 /* Base */,
+				37D0073B1FCDCA0900132F68 /* fr */,
+			);
+			name = AddEditViewController.xib;
+			sourceTree = "<group>";
+		};
+		37D007341FCDC71000132F68 /* SignUpViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				37D007331FCDC71000132F68 /* Base */,
+				37D007361FCDC71300132F68 /* fr */,
+			);
+			name = SignUpViewController.xib;
+			sourceTree = "<group>";
+		};
+		37D007371FCDC95200132F68 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				37D007381FCDC95200132F68 /* Base */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		41E825BA1FCC1B1600566D10 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				41E825BB1FCC1B1600566D10 /* Base */,
+				37D0072C1FCDC63D00132F68 /* fr */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -410,6 +480,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				41E825C01FCC1B1600566D10 /* Base */,
+				37D0072B1FCDC63D00132F68 /* fr */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -421,6 +492,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -478,6 +550,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -528,15 +601,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = K4BW9785S4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Elder.ly/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.formation.Elder-ly";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "7d7fdd9c-d2e4-4ba2-8600-b6c7886f31ce";
+				PROVISIONING_PROFILE_SPECIFIER = ProvisioningProfileDevProjet;
 				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -547,15 +624,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Elder.ly/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.formation.Elder-ly";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
