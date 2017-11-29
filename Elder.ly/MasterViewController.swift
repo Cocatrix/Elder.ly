@@ -80,26 +80,8 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @objc
     func insertNewObject(_ sender: Any) {
-        let context = self.resultController?.managedObjectContext
-        
-        // Use WebService to load data
-        let wsProvider = WebServicesProvider.sharedInstance
-        // TODO - Other method which navigates to add/edit form // Until now : Load fake data for now
-        wsProvider.createContactOnServer(email: "xxx@example.com", phone: "0647474747", firstName: "Dad", lastName: "Kennedy", profile: "MEDECIN", gravatar: "", isFamilinkUser: false, isEmergencyUser: false, success: {
-            print("Create contact : success")
-         }, failure: { (error) in
-            print(error ?? "unknown error")
-         })
-        
-        // Save the context.
-        do {
-            try context?.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-        }
+        let controller = AddEditViewController(nibName: nil, bundle: nil)
+        self.present(controller, animated: false, completion: nil)
     }
 
     // MARK: - Segues
