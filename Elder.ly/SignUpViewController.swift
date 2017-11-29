@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController {
+class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var phoneView: UITextField!
@@ -16,13 +16,28 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var firstnameView: UITextField!
     @IBOutlet weak var emailView: UITextField!
     @IBOutlet weak var passwordView: UITextField!
+    
     @IBOutlet weak var profileView: UIPickerView!
+    var selectedProfile: String = ""
+    
+    var profilesList: [String] = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil) // Do any additional setup after loading the view.
+        
+        // TODO Récupérer depuis WS
+        profilesList = [
+            "FAMILLE",
+            "SENIOR",
+            "MEDECIN"
+        ]
+        profileView.dataSource = self
+        profileView.delegate = self
+        selectedProfile = profilesList[0]
+        
         phoneView.text = "0123456789"
         firstnameView.text = "John"
         lastnameView.text = "Doe"
@@ -64,7 +79,7 @@ class SignUpViewController: UIViewController {
         let firstname = firstnameView.text!
         let lastname = lastnameView.text!
         let email = emailView.text!
-        let profile = "FAMILLE"
+        let profile = selectedProfile
         if (!UserValidationUtil.validatePhone(phone: phone)) {
             phoneView.becomeFirstResponder()
         } else if (!UserValidationUtil.validateFirstname(firstname: firstname)) {
@@ -97,6 +112,26 @@ class SignUpViewController: UIViewController {
         let alertAction = UIAlertAction(title: "Click", style: UIAlertActionStyle.default)
         alert.addAction(alertAction)
         self.present(alert, animated: true)
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return profilesList.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return profilesList[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedProfile = profilesList[row]
     }
     
     /*
