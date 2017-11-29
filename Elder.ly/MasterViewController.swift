@@ -13,8 +13,6 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
 
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
-    
-    public var isAuth: Bool?
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -42,7 +40,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         super.viewWillAppear(animated)
         
         //TODO: Check if User is Connected
-        let isUserConnected = self.isAuth ?? false
+        let isUserConnected = UserDefaults.standard.isAuth()
         
         if !isUserConnected {
             let controller = LoginViewController(nibName: nil, bundle: nil)
