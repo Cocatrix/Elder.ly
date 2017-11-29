@@ -14,6 +14,7 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil) // Do any additional setup after loading the view.
     }
@@ -41,9 +42,8 @@ class SignUpViewController: UIViewController {
     
     @IBAction func loginPressed(_ sender: Any) {
         // Create and push LoginViewController
-        print("SignUp Pressed")
-        let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
-        self.present(loginViewController, animated: true, completion: nil)
+        print("Login Pressed")
+        self.dismiss(animated: true)
     }
     
     /*
