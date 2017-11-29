@@ -16,9 +16,9 @@ class DetailViewController: UIViewController {
     
     func configureView() {
         // Update the user interface for the detail item.
-        if let detail = detailItem {
+        if let contact = detailItem {
             if let label = detailDescriptionLabel {
-                label.text = detail.timestamp!.description
+                label.text = contact.firstName
             }
         }
         
@@ -36,7 +36,7 @@ class DetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    var detailItem: Event? {
+    var detailItem: Contact? {
         didSet {
             // Update the view.
             configureView()
