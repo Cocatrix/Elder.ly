@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00EF402178A187FB8996946E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF07CD3234CE34238AAF00CF /* SystemConfiguration.framework */; };
+		37016E421FCF153400AB82C9 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37016E411FCF153400AB82C9 /* ContactTableViewCell.swift */; };
 		3790C1591FCC5539001928E4 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3790C1571FCC5539001928E4 /* SignUpViewController.swift */; };
 		3790C15C1FCC6018001928E4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3790C15B1FCC6018001928E4 /* LoginViewController.swift */; };
 		37D007231FCDB76200132F68 /* AddEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D007211FCDB76200132F68 /* AddEditViewController.swift */; };
@@ -63,6 +64,7 @@
 		038C5BE633AE1B59909767AD /* BuddyBuildSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BuddyBuildSDK.framework; sourceTree = "<group>"; };
 		11EF9C8E822F789BD93FAFF3 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		2410B9AB82100003E207B63C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		37016E411FCF153400AB82C9 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
 		3790C1571FCC5539001928E4 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		3790C15B1FCC6018001928E4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		37D007211FCDB76200132F68 /* AddEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditViewController.swift; sourceTree = "<group>"; };
@@ -173,11 +175,11 @@
 				41E825B81FCC1B1600566D10 /* DetailViewController.swift */,
 				3790C15B1FCC6018001928E4 /* LoginViewController.swift */,
 				41E825B61FCC1B1600566D10 /* MasterViewController.swift */,
-				3790C1571FCC5539001928E4 /* SignUpViewController.swift */,
 				41E825BD1FCC1B1600566D10 /* Assets.xcassets */,
 				37D0072F1FCDC68300132F68 /* AddEditViewController.xib */,
 				37D007271FCDC5C500132F68 /* LoginViewController.xib */,
 				37D007341FCDC71000132F68 /* SignUpViewController.xib */,
+				3790C1571FCC5539001928E4 /* SignUpViewController.swift */,
 				41E825B31FCC1B1600566D10 /* Elder_ly.xcdatamodeld */,
 				41E825BF1FCC1B1600566D10 /* LaunchScreen.storyboard */,
 				41E825BA1FCC1B1600566D10 /* Main.storyboard */,
@@ -187,6 +189,7 @@
 				37D007371FCDC95200132F68 /* Localizable.strings */,
 				37F562071FCEBE1A0083C0CC /* KeyboardUtil.swift */,
 				F914D2AB1FCEC911008326FB /* UserValidationUtil.swift */,
+				37016E411FCF153400AB82C9 /* ContactTableViewCell.swift */,
 			);
 			path = Elder.ly;
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 				5133E0AC1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift in Sources */,
 				51EC3A701FCC3F3B00EEE7D6 /* WebServicesProvider.swift in Sources */,
 				3790C1591FCC5539001928E4 /* SignUpViewController.swift in Sources */,
+				37016E421FCF153400AB82C9 /* ContactTableViewCell.swift in Sources */,
 				41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */,
 				41E825B51FCC1B1600566D10 /* Elder_ly.xcdatamodeld in Sources */,
 				37D007231FCDB76200132F68 /* AddEditViewController.swift in Sources */,
