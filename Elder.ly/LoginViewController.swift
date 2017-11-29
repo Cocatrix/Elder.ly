@@ -56,8 +56,10 @@ class LoginViewController: UIViewController {
     @IBAction func loginPressed(_ sender: Any) {
         let wsProvider = WebServicesProvider.sharedInstance
         wsProvider.userLogin(phone: self.phoneNumberField.text!, password: self.passwordField.text!, success: {
-            self.dismiss(animated: false)
+            UserDefaults.standard.setAuth()
+            self.dismiss(animated: true)
         }) { (error) in
+            UserDefaults.standard.unsetAuth()
             self.alertConnectionError()
         }
         if self.rememberSwitch.isOn {

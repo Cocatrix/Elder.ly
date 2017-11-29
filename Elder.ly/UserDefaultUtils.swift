@@ -18,4 +18,13 @@ extension UserDefaults {
     func deleteUserPhoneNumber () {
         UserDefaults.standard.removeObject(forKey: "userPhoneNumber")
     }
+    func isAuth () -> Bool {
+        return (UserDefaults.standard.value(forKey: "isAuth") as? Bool) ?? false
+    }
+    func setAuth () {
+        UserDefaults.standard.set(true, forKey: "isAuth")
+    }
+    func unsetAuth () {
+        UserDefaults.standard.set(false, forKey: "isAuth")
+    }
 }
