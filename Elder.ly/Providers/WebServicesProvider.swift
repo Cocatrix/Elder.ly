@@ -152,12 +152,12 @@ class WebServicesProvider {
             do {
                 if context.hasChanges {
                     try context.save()
+                    success()
                 }
             } catch {
                 failure(error)
                 return
             }
-            success()
         }
     }
     

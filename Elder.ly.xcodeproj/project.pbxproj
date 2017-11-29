@@ -27,6 +27,7 @@
 		41E825CC1FCC1B1700566D10 /* Elder_lyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825CB1FCC1B1700566D10 /* Elder_lyTests.swift */; };
 		41E825D71FCC1B1700566D10 /* Elder_lyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825D61FCC1B1700566D10 /* Elder_lyUITests.swift */; };
 		5118D7E01FCDBE710015E2F8 /* UserDefaultUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118D7DF1FCDBE710015E2F8 /* UserDefaultUtils.swift */; };
+		5133E0AC1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5133E0AB1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift */; };
 		51CD9B54318495C701BE9BDD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABCF36C8A2D1039482C85EA7 /* AVFoundation.framework */; };
 		51EC3A701FCC3F3B00EEE7D6 /* WebServicesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EC3A6F1FCC3F3B00EEE7D6 /* WebServicesProvider.swift */; };
 		51EC3A721FCC403E00EEE7D6 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EC3A711FCC403E00EEE7D6 /* Contact.swift */; };
@@ -91,6 +92,7 @@
 		41E825D61FCC1B1700566D10 /* Elder_lyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elder_lyUITests.swift; sourceTree = "<group>"; };
 		41E825D81FCC1B1700566D10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5118D7DF1FCDBE710015E2F8 /* UserDefaultUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultUtils.swift; sourceTree = "<group>"; };
+		5133E0AB1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoreDataProvider.swift; sourceTree = "<group>"; };
 		51EC3A6F1FCC3F3B00EEE7D6 /* WebServicesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServicesProvider.swift; sourceTree = "<group>"; };
 		51EC3A711FCC403E00EEE7D6 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		51EC3A731FCC405100EEE7D6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				51EC3A6F1FCC3F3B00EEE7D6 /* WebServicesProvider.swift */,
+				5133E0AB1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				3790C15C1FCC6018001928E4 /* LoginViewController.swift in Sources */,
 				51EC3A721FCC403E00EEE7D6 /* Contact.swift in Sources */,
 				5118D7E01FCDBE710015E2F8 /* UserDefaultUtils.swift in Sources */,
+				5133E0AC1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift in Sources */,
 				51EC3A701FCC3F3B00EEE7D6 /* WebServicesProvider.swift in Sources */,
 				3790C1591FCC5539001928E4 /* SignUpViewController.swift in Sources */,
 				41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */,
