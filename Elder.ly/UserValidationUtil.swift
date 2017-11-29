@@ -32,7 +32,7 @@ class UserValidationUtil {
         if (result) {
             print("Firstname OK")
         } else {
-            print("Firstname not OK")
+            print("Firstname empty")
         }
         return result
     }
@@ -42,7 +42,7 @@ class UserValidationUtil {
         if (result) {
             print("Lastname OK")
         } else {
-            print("Lastname not OK")
+            print("Lastname empty")
         }
         return result
     }
@@ -56,6 +56,16 @@ class UserValidationUtil {
             print("Email OK")
         } else {
             print("Email not OK")
+        }
+        return result
+    }
+    
+    static func validatePassword(password: String) -> Bool {
+        let result = password.count > 0
+        if (result) {
+            print("Password OK")
+        } else {
+            print("Password empty")
         }
         return result
     }
