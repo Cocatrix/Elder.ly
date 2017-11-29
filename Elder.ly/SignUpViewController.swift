@@ -21,10 +21,10 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil) // Do any additional setup after loading the view.
-        phoneView.text = "0123456789"
-        firstnameView.text = "John"
-        lastnameView.text = "Doe"
-        emailView.text = "john.doe@nobody.net"
+//        phoneView.text = "0123456789"
+//        firstnameView.text = "John"
+//        lastnameView.text = "Doe"
+//        emailView.text = "john.doe@nobody.net"
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,10 +57,15 @@ class SignUpViewController: UIViewController {
     
     @IBAction func registerPressed(_ sender: Any) {
         print("Register pressed")
-        if (validatePhone(phone: phoneView.text!)
-            && validateFirstname(firstname: firstnameView.text!)
-            && validateLastname(lastname: lastnameView.text!)
-            && validateEmail(email: emailView.text!)) {
+        if (!UserValidationUtil.validatePhone(phone: phoneView.text!)) {
+            phoneView.becomeFirstResponder()
+        } else if (!UserValidationUtil.validateFirstname(firstname: firstnameView.text!)) {
+            firstnameView.becomeFirstResponder()
+        } else if (!UserValidationUtil.validateLastname(lastname: lastnameView.text!)) {
+            lastnameView.becomeFirstResponder()
+        } else if (!UserValidationUtil.validateEmail(email: emailView.text!)) {
+            emailView.becomeFirstResponder()
+        } else {
             let phone = phoneView.text!
             let password = "0000"
             let firstname = firstnameView.text!
@@ -88,66 +93,6 @@ class SignUpViewController: UIViewController {
         let alertAction = UIAlertAction(title: "Click", style: UIAlertActionStyle.default)
         alert.addAction(alertAction)
         self.present(alert, animated: true)
-    }
-    
-    func validatePhone(phone: String) -> Bool {
-        do {
-            let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.phoneNumber.rawValue)
-            let matches = detector.matches(in: phone, options: [], range: NSMakeRange(0, phone.count))
-            if let res = matches.first {
-                let result = res.resultType == .phoneNumber && res.range.location == 0 && res.range.length == phone.count
-                print("Phone OK")
-                return result
-            } else {
-                print("Phone not OK")
-                phoneView.becomeFirstResponder()
-                return false
-            }
-        } catch {
-            print(error)
-        }
-        phoneView.becomeFirstResponder()
-        return false;
-    }
-    
-    func validateFirstname(firstname: String) -> Bool {
-        let result = firstname.count > 0
-        if (result) {
-            print("Firstname OK")
-        } else {
-            print("Firstname not OK")
-            firstnameView.becomeFirstResponder()
-        }
-        return result
-    }
-    
-    func validateLastname(lastname: String) -> Bool {
-        let result = lastname.count > 0
-        if (result) {
-            print("Lastname OK")
-        } else {
-            print("Lastname not OK")
-            lastnameView.becomeFirstResponder()
-        }
-        return result
-    }
-    
-    func validateEmail(email: String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        let result = emailTest.evaluate(with: email)
-        if (result) {
-            print("Email OK")
-        } else {
-            print("Email not OK")
-            emailView.becomeFirstResponder()
-        }
-        return result
-    }
-    
-    func validateProfile(profile: String) -> Bool {
-        return false;
     }
     
     /*
