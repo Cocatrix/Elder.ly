@@ -12,7 +12,7 @@ import CoreData
 class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     var resultController: NSFetchedResultsController<Contact>?
     var detailViewController: DetailViewController? = nil
-    var managedObjectContext: NSManagedObjectContext? = nil
+    var managedObjectContext: NSManagedObjectContext? = nil // Useless - Remove in next commit
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -20,11 +20,15 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view, typically from a nib.
-        navigationItem.leftBarButtonItem = editButtonItem
-        
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
+        /*
+         * Handle navigation bar :
+         *  Left : Edit // TODO - Burger menu instead
+         *  Right : Add button, linked to "insertNewObject()"
+         */
+        navigationItem.leftBarButtonItem = editButtonItem
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         navigationItem.rightBarButtonItem = addButton
@@ -33,17 +37,20 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
         
-        // Test gettoken
+        // Use WebService to identify and load data
         let wsProvider = WebServicesProvider.sharedInstance
         
+        // Fake login to test list printing
         wsProvider.userLogin(phone: "0600000042", password: "0000", success: {
             print("success")
+            // Load contacts in local DB
             wsProvider.getContacts(success: {
                 print("success")
             }, failure: { (error) in
                 print(error ?? "unknown error")
             })
             /*
+             // Test : create contact // TODO - Move in insertNewObject method
             wsProvider.createContactOnServer(email: "xxx@example.com", phone: "0647474747", firstName: "John", lastName: "Kennedy", profile: "MEDECIN", gravatar: "", isFamilinkUser: false, isEmergencyUser: false, success: {
                 print("success")
             }, failure: { (error) in
@@ -57,6 +64,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
         let sortFirstName = NSSortDescriptor(key: "firstName", ascending: true)
         let sortLastName = NSSortDescriptor(key: "lastName", ascending: true)
+        // Sort by first name, then by last name
         fetchRequest.sortDescriptors = [sortFirstName, sortLastName]
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: self.appDelegate().persistentContainer.viewContext,
@@ -78,9 +86,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
             let controller = LoginViewController(nibName: nil, bundle: nil)
             
             self.present(controller, animated: false, completion: nil)
-            
         }
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -169,42 +175,6 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     func configureCell(_ cell: UITableViewCell, withContact contact: Contact) {
         cell.textLabel!.text = contact.firstName
     }
-
-    // MARK: - Fetched results controller
-
-//    var fetchedResultsController: NSFetchedResultsController<Contact> {
-//        if _fetchedResultsController != nil {
-//            return _fetchedResultsController!
-//        }
-//
-//        let fetchRequest: NSFetchRequest<Contact> = Contact.fetchRequest()
-//
-//        // Set the batch size to a suitable number.
-//        fetchRequest.fetchBatchSize = 20
-//
-//        // Edit the sort key as appropriate.
-//        let sortDescriptor = NSSortDescriptor(key: "firstName", ascending: false)
-//
-//        fetchRequest.sortDescriptors = [sortDescriptor]
-//
-//        // Edit the section name key path and cache name if appropriate.
-//        // nil for section name key path means "no sections".
-//        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: "Master")
-//        aFetchedResultsController.delegate = self
-//        _fetchedResultsController = aFetchedResultsController
-//
-//        do {
-//            try _fetchedResultsController!.performFetch()
-//        } catch {
-//             // Replace this implementation with code to handle the error appropriately.
-//             // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//             let nserror = error as NSError
-//             fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-//        }
-//
-//        return _fetchedResultsController!
-//    }
-//    var _fetchedResultsController: NSFetchedResultsController<Contact>? = nil
 
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
