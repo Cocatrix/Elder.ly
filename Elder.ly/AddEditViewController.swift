@@ -11,9 +11,14 @@ import UIKit
 class AddEditViewController: UIViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
+    @IBOutlet weak var phoneNumberTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
         // Do any additional setup after loading the view.
@@ -38,6 +43,47 @@ class AddEditViewController: UIViewController {
     @objc func keyboardWillHide(notification:NSNotification) {
         let contentInset:UIEdgeInsets = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
+    }
+    
+    @IBAction func onButtonAddClick(_ sender: Any) {
+        print("adding contact")
+        let firstName = firstNameTextField.text!
+        let lastName = lastNameTextField.text!
+        let phone = phoneNumberTextField.text!
+        let email = emailTextField.text!
+        if (!UserValidationUtil.validatePhone(phone: phone)) {
+            phoneNumberTextField.becomeFirstResponder()
+        } else if (!UserValidationUtil.validateFirstname(firstname: firstName)) {
+            firstNameTextField.becomeFirstResponder()
+        } else if (!UserValidationUtil.validateLastname(lastname: lastName)) {
+            lastNameTextField.becomeFirstResponder()
+        } else if (!UserValidationUtil.validateEmail(email: email)) {
+            emailTextField.becomeFirstResponder()
+        } else {
+            WebServicesProvider.sharedInstance.createContactOnServer(email: email, phone: phone, firstName: firstName, lastName: lastName, profile: "FAMILLE", gravatar: "", isFamilinkUser: false, isEmergencyUser: false, success: {
+                print("contact successfully created")
+                self.dismiss(animated: true)
+            }, failure: { (error) in
+                let myError = error as NSError?
+                if myError?.code == 401 {
+                    let controller = LoginViewController(nibName: nil, bundle: nil)
+                    self.present(controller, animated: false, completion: nil)
+                } else {
+                    self.alertUnknownError()
+                }
+            })
+        }
+    }
+    
+    func alertUnknownError() {
+        let errorTitle = NSLocalizedString("error", comment: "Error")
+        let errorConnection = NSLocalizedString("error", comment: "Erreur Inconnue")
+        let okString = NSLocalizedString("OK", comment: "OK")
+        
+        let errorAlertController = UIAlertController(title: errorTitle, message: errorConnection, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: okString, style: .default)
+        errorAlertController.addAction(OKAction)
+        self.present(errorAlertController, animated: true)
     }
     
 
