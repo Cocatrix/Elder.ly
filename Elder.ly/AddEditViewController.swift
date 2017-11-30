@@ -69,7 +69,6 @@ class AddEditViewController: UIViewController {
                     UserDefaults.standard.unsetAuth()
                     let controller = LoginViewController(nibName: nil, bundle: nil)
                     self.present(controller, animated: false, completion: nil)
-                    
                 } else {
                     self.alertUnknownError()
                 }
