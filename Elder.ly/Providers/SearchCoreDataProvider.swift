@@ -23,18 +23,18 @@ class SearchCoreDataProvider {
         return sharedSearchCoreData
     }
     
-    func searchContact(content: String) -> [Contact] {
-        var matchingContacts = [Contact]()
-        let context = self.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
-        let contacts = try! context.fetch(fetchRequest)
-        for contact in contacts {
-            if ((contact.firstName?.lowercased().range(of: content)) != nil) || ((contact.lastName?.lowercased().range(of: content)) != nil) || ((contact.phone?.range(of: content)) != nil) || ((contact.email?.lowercased().range(of: content)) != nil) {
-                matchingContacts.append(contact)
-            }
+    func getSearchPredicate(content: String) -> NSPredicate? {
+        /**
+         * Returns a predicate that filters the results with data corresponding to "content"
+         * Filters contacts matching "content" in their first/last names, phone numbers or emails.
+         */
+        guard content != "" else {
+            print("Search error")
+            return nil
         }
-        return matchingContacts
+        let predicateContent = "(firstName CONTAINS[cd] %@) || (lastName CONTAINS[cd] %@) || (phone CONTAINS[cd] %@) || (email CONTAINS[cd] %@)"
+        let searchPredicate: NSPredicate
+        searchPredicate = NSPredicate(format: predicateContent, content, content, content, content)
+        return searchPredicate
     }
-    
 }
-
