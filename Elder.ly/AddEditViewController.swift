@@ -72,14 +72,32 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         let profile = self.selectedProfile
         
         if (!UserValidationUtil.validateFirstname(firstname: firstName)) {
+            firstNameTextField.layer.borderWidth = 1.0
+            firstNameTextField.layer.borderColor = UIColor.red.cgColor
             firstNameTextField.becomeFirstResponder()
         } else if (!UserValidationUtil.validateLastname(lastname: lastName)) {
+            firstNameTextField.layer.borderWidth = 0.0
+            lastNameTextField.layer.borderWidth = 1.0
+            lastNameTextField.layer.borderColor = UIColor.red.cgColor
             lastNameTextField.becomeFirstResponder()
         } else if (!UserValidationUtil.validatePhone(phone: phone)) {
+            firstNameTextField.layer.borderWidth = 0.0
+            lastNameTextField.layer.borderWidth = 0.0
+            phoneNumberTextField.layer.borderWidth = 1.0
+            phoneNumberTextField.layer.borderColor = UIColor.red.cgColor
             phoneNumberTextField.becomeFirstResponder()
         } else if (!UserValidationUtil.validateEmail(email: email)) {
+            firstNameTextField.layer.borderWidth = 0.0
+            lastNameTextField.layer.borderWidth = 0.0
+            phoneNumberTextField.layer.borderWidth = 0.0
+            emailTextField.layer.borderWidth = 1.0
+            emailTextField.layer.borderColor = UIColor.red.cgColor
             emailTextField.becomeFirstResponder()
         } else {
+            firstNameTextField.layer.borderWidth = 0.0
+            lastNameTextField.layer.borderWidth = 0.0
+            phoneNumberTextField.layer.borderWidth = 0.0
+            emailTextField.layer.borderWidth = 0.0
             WebServicesProvider.sharedInstance.createContactOnServer(email: email, phone: phone, firstName: firstName, lastName: lastName, profile: profile, gravatar: "", isFamilinkUser: false, isEmergencyUser: false, success: {
                 print("contact successfully created with profile " + profile)
                 DispatchQueue.main.async {
