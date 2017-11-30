@@ -8,20 +8,38 @@
 
 import UIKit
 
-class AddEditViewController: UIViewController {
+class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var profileView: UIPickerView!
+    
+    var selectedProfile: String = ""    
+    var profilesList: [String] = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
-        // Do any additional setup after loading the view.
+        
+        let preferencesProfiles = UserDefaults.standard.value(forKey: "elderlyProfiles")
+        if ((preferencesProfiles) != nil) {
+            print("Preferences set")
+            self.profilesList = preferencesProfiles as? [String] ?? ["ERROR"]
+            self.selectedProfile = profilesList[0]
+        } else {
+            print("Preferences empty")
+            self.profilesList = []
+            self.selectedProfile = ""
+        }
+        profileView.dataSource = self
+        profileView.delegate = self
+        
+        loadProfilesFromWS()
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,6 +69,8 @@ class AddEditViewController: UIViewController {
         let lastName = lastNameTextField.text!
         let phone = phoneNumberTextField.text!
         let email = emailTextField.text!
+        let profile = self.selectedProfile
+        
         if (!UserValidationUtil.validateFirstname(firstname: firstName)) {
             firstNameTextField.becomeFirstResponder()
         } else if (!UserValidationUtil.validateLastname(lastname: lastName)) {
@@ -60,12 +80,13 @@ class AddEditViewController: UIViewController {
         } else if (!UserValidationUtil.validateEmail(email: email)) {
             emailTextField.becomeFirstResponder()
         } else {
-            WebServicesProvider.sharedInstance.createContactOnServer(email: email, phone: phone, firstName: firstName, lastName: lastName, profile: "FAMILLE", gravatar: "", isFamilinkUser: false, isEmergencyUser: false, success: {
-                print("contact successfully created")
+            WebServicesProvider.sharedInstance.createContactOnServer(email: email, phone: phone, firstName: firstName, lastName: lastName, profile: profile, gravatar: "", isFamilinkUser: false, isEmergencyUser: false, success: {
+                print("contact successfully created with profile " + profile)
                 DispatchQueue.main.async {
                     self.navigationController?.popViewController(animated: true)
                 }
             }, failure: { (error) in
+                print("Phone : " + phone + ", Firstname : " + firstName + ", Lastname : " + lastName + ", Email : " + email + ", Profile : " + profile)
                 let myError = error as NSError?
                 if myError?.code == 401 {
                     UserDefaults.standard.unsetAuth()
@@ -87,6 +108,40 @@ class AddEditViewController: UIViewController {
         let OKAction = UIAlertAction(title: okString, style: .default)
         errorAlertController.addAction(OKAction)
         self.present(errorAlertController, animated: true)
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return profilesList.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return profilesList[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedProfile = profilesList[row]
+    }
+    
+    func loadProfilesFromWS() {
+        WebServicesProvider.sharedInstance.getProfiles(success: { (profiles) in
+            DispatchQueue.main.async {
+                self.profilesList = profiles
+                self.selectedProfile = self.profilesList[0]
+                self.profileView.reloadAllComponents()
+            }
+            print("Setting preferences")
+            UserDefaults.standard.set(profiles, forKey: "elderlyProfiles")
+        }) { (error) in
+            print(error ?? "Error")
+        }
     }
     
 
