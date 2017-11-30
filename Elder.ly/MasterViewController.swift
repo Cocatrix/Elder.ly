@@ -160,6 +160,11 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if let contactCell = cell as? ContactTableViewCell {
             contactCell.nameLabel.text = (
                 contact.firstName! + " " + contact.lastName!)
+            guard let phone = contact.phone else {
+                contactCell.callButton.isHidden = true
+                return
+            }
+            contactCell.setPhoneNumber(phone: phone)
         }
     }
 
