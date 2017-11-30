@@ -151,7 +151,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="4v4-J1-p6i">
                                                 <rect key="frame" x="0.0" y="16" width="320" height="418"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="contactImage" image="default-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="gnb-5Q-Ozk">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="contactImage" image="default-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="gnb-5Q-Ozk">
                                                         <rect key="frame" x="110" y="0.0" width="100" height="100"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="100" id="DDV-ZE-7WL"/>
