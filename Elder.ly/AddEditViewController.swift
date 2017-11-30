@@ -51,12 +51,12 @@ class AddEditViewController: UIViewController {
         let lastName = lastNameTextField.text!
         let phone = phoneNumberTextField.text!
         let email = emailTextField.text!
-        if (!UserValidationUtil.validatePhone(phone: phone)) {
-            phoneNumberTextField.becomeFirstResponder()
-        } else if (!UserValidationUtil.validateFirstname(firstname: firstName)) {
+        if (!UserValidationUtil.validateFirstname(firstname: firstName)) {
             firstNameTextField.becomeFirstResponder()
         } else if (!UserValidationUtil.validateLastname(lastname: lastName)) {
             lastNameTextField.becomeFirstResponder()
+        } else if (!UserValidationUtil.validatePhone(phone: phone)) {
+            phoneNumberTextField.becomeFirstResponder()
         } else if (!UserValidationUtil.validateEmail(email: email)) {
             emailTextField.becomeFirstResponder()
         } else {
@@ -64,7 +64,7 @@ class AddEditViewController: UIViewController {
                 print("contact successfully created")
                 DispatchQueue.main.async {
                     self.navigationController?.popViewController(animated: true)
-                }                
+                }
             }, failure: { (error) in
                 let myError = error as NSError?
                 if myError?.code == 401 {
