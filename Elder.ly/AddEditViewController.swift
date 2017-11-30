@@ -62,7 +62,9 @@ class AddEditViewController: UIViewController {
         } else {
             WebServicesProvider.sharedInstance.createContactOnServer(email: email, phone: phone, firstName: firstName, lastName: lastName, profile: "FAMILLE", gravatar: "", isFamilinkUser: false, isEmergencyUser: false, success: {
                 print("contact successfully created")
-                self.dismiss(animated: true)
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }                
             }, failure: { (error) in
                 let myError = error as NSError?
                 if myError?.code == 401 {
