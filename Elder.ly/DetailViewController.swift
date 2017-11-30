@@ -12,14 +12,17 @@ class DetailViewController: UIViewController {
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
 
-
+    @IBOutlet weak var contactImage: UIImageView!
+    
     func configureView() {
         // Update the user interface for the detail item.
-        if let detail = detailItem {
+        if let contact = detailItem {
             if let label = detailDescriptionLabel {
-                label.text = detail.timestamp!.description
+                label.text = contact.firstName
             }
         }
+        
+        self.contactImage.layer.cornerRadius = self.contactImage.frame.size.width / 2;
     }
 
     override func viewDidLoad() {
@@ -33,7 +36,7 @@ class DetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    var detailItem: Event? {
+    var detailItem: Contact? {
         didSet {
             // Update the view.
             configureView()

@@ -1,0 +1,33 @@
+
+/* Class = "UILabel"; text = "N° de téléphone"; ObjectID = "3jU-ER-dZD"; */
+"3jU-ER-dZD.text" = "N° de téléphone";
+
+/* Class = "UILabel"; text = "Josianne"; ObjectID = "7Fe-QB-CYB"; */
+"7Fe-QB-CYB.text" = "Josianne";
+
+/* Class = "UISegmentedControl"; CMW-Gd-OXo.segmentTitles[0] = "Texto"; ObjectID = "CMW-Gd-OXo"; */
+"CMW-Gd-OXo.segmentTitles[0]" = "Texto";
+
+/* Class = "UISegmentedControl"; CMW-Gd-OXo.segmentTitles[1] = "Appeler"; ObjectID = "CMW-Gd-OXo"; */
+"CMW-Gd-OXo.segmentTitles[1]" = "Appeler";
+
+/* Class = "UISegmentedControl"; CMW-Gd-OXo.segmentTitles[2] = "Email"; ObjectID = "CMW-Gd-OXo"; */
+"CMW-Gd-OXo.segmentTitles[2]" = "Email";
+
+/* Class = "UIViewController"; title = "Detail"; ObjectID = "JEX-9P-axG"; */
+"JEX-9P-axG.title" = "Detail";
+
+/* Class = "UIButton"; normalTitle = "+33 06 88 88 88 88"; ObjectID = "Nve-TX-Xnl"; */
+"Nve-TX-Xnl.normalTitle" = "+33 06 88 88 88 88";
+
+/* Class = "UINavigationController"; title = "Master"; ObjectID = "RMx-3f-FxP"; */
+"RMx-3f-FxP.title" = "Master";
+
+/* Class = "UIButton"; normalTitle = "email@email.com"; ObjectID = "le8-vv-d37"; */
+"le8-vv-d37.normalTitle" = "email@email.com";
+
+/* Class = "UINavigationItem"; title = "Detail"; ObjectID = "mOI-FS-AaM"; */
+"mOI-FS-AaM.title" = "Detail";
+
+/* Class = "UILabel"; text = "Email"; ObjectID = "zEb-H3-umV"; */
+"zEb-H3-umV.text" = "Email";

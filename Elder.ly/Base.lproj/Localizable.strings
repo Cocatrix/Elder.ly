@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  Elder.ly
+
+  Created by Nicolas Vergoz on 28/11/2017.
+  Copyright © 2017 Old Mojito. All rights reserved.
+*/
+"error" = "Erreur";
+"errorConnection" = "Erreur de connexion";
+"OK" = "OK";
