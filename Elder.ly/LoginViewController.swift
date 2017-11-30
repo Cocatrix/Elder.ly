@@ -68,40 +68,49 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func forgottenPasswordPressed(_ sender: Any) {
-        // TODO Internationalization
-        let alert = UIAlertController(title: "Mot de passe oublié", message: "Veuillez renseigner votre numéro de téléphone", preferredStyle: .alert)
+        let errorTitle = NSLocalizedString("error", comment: "Error")
+        let okString = NSLocalizedString("OK", comment: "OK")
+        let forgottenTitle = NSLocalizedString("Forgotten password", comment: "Forgotten password")
+        let phoneRequestString = NSLocalizedString("Please enter your phone number", comment: "Please enter your phone number")
+        let phoneNumberString = NSLocalizedString("Phone number", comment: "Phone number")
+        let sendString = NSLocalizedString("Send", comment: "Send")
+        let sentPasswordString = NSLocalizedString("Sent password", comment: "Sent password")
+        let noAccountErrorString = NSLocalizedString("No account", comment: "No account")
+        let invalidPhoneString = NSLocalizedString("Invalid phone", comment: "Invalid phone")
+        
+        let alert = UIAlertController(title: forgottenTitle, message: phoneRequestString, preferredStyle: .alert)
         alert.addTextField { (numberField) in
-            numberField.placeholder = "Numéro de téléphone"
+            numberField.placeholder = phoneNumberString
         }
-        let alertAction = UIAlertAction(title: "Envoyer", style: UIAlertActionStyle.default) { (_) in
-            let resultAlert = UIAlertController(title: "Mot de passe oublié", message: "", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: sendString, style: UIAlertActionStyle.default) { (_) in
+            let resultAlert = UIAlertController(title: forgottenTitle, message: "", preferredStyle: .alert)
             var resultButton: UIAlertAction?
             if let fields = alert.textFields {
                 let field = fields[0]
                 let number = field.text!
                 if (UserValidationUtil.validatePhone(phone: number)) {
                     WebServicesProvider.sharedInstance.forgottenPassword(phone: number, success: {
-                        resultAlert.message = "Mot de passe envoyé"
-                        resultButton = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        resultAlert.message = sentPasswordString
+                        resultButton = UIAlertAction(title: okString, style: .default, handler: nil)
                         resultAlert.addAction(resultButton!)
                         self.present(resultAlert, animated: true)
                     }, failure: { (error) in
-                        resultAlert.message = "Compte inexistant ou erreur de communication avec le serveur"
-                        resultButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                        resultAlert.message = noAccountErrorString
+                        resultButton = UIAlertAction(title: okString, style: .cancel, handler: nil)
                         resultAlert.addAction(resultButton!)
                         self.present(resultAlert, animated: true)
                     })
                 } else {
-                    resultAlert.message = "Numéro invalide"
-                    resultButton = UIAlertAction(title: "OK", style: .destructive) { (_) in
+                    resultAlert.message = invalidPhoneString
+                    resultButton = UIAlertAction(title: okString, style: .destructive) { (_) in
                         self.present(alert, animated: true)
                     }
                     resultAlert.addAction(resultButton!)
                     self.present(resultAlert, animated: true)
                 }
             } else {
-                resultAlert.message = "Erreur"
-                resultButton = UIAlertAction(title: "OK", style: .destructive, handler: nil)
+                resultAlert.message = errorTitle
+                resultButton = UIAlertAction(title: okString, style: .destructive, handler: nil)
                 resultAlert.addAction(resultButton!)
                 self.present(resultAlert, animated: true)
             }
