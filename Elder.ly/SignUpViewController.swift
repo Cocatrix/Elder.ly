@@ -28,21 +28,26 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil) // Do any additional setup after loading the view.
         
-        // TODO Récupérer depuis WS
-        profilesList = [
-            "FAMILLE",
-            "SENIOR",
-            "MEDECIN"
-        ]
+        let preferencesProfiles = UserDefaults.standard.value(forKey: "elderlyProfiles")
+        if ((preferencesProfiles) != nil) {
+            print("Preferences set")
+            self.profilesList = preferencesProfiles as? [String] ?? ["ERROR"]
+            self.selectedProfile = profilesList[0]
+        } else {
+            print("Preferences empty")
+            self.profilesList = []
+            self.selectedProfile = ""
+        }
         profileView.dataSource = self
         profileView.delegate = self
-        selectedProfile = profilesList[0]
         
-        phoneView.text = "0123456789"
-        firstnameView.text = "John"
-        lastnameView.text = "Doe"
-        emailView.text = "john.doe@nobody.net"
-        passwordView.text = "0000"
+        loadProfilesFromWS()
+        
+//        phoneView.text = "0123456789"
+//        firstnameView.text = "John"
+//        lastnameView.text = "Doe"
+//        emailView.text = "john.doe@nobody.net"
+//        passwordView.text = "0000"
     }
     
     override func didReceiveMemoryWarning() {
@@ -97,7 +102,7 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     
                 })
             }, failure: { (error) in
-                print(error)
+                print(error ?? "ERROR")
                 DispatchQueue.main.async {
                     self.view.endEditing(true)
                     self.alertErrorSignup(message: (error?.localizedDescription)!)
@@ -132,6 +137,20 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedProfile = profilesList[row]
+    }
+    
+    func loadProfilesFromWS() {
+        WebServicesProvider.sharedInstance.getProfiles(success: { (profiles) in
+            DispatchQueue.main.async {
+                self.profilesList = profiles
+                self.selectedProfile = self.profilesList[0]
+                self.profileView.reloadAllComponents()
+            }
+            print("Setting preferences")
+            UserDefaults.standard.set(profiles, forKey: "elderlyProfiles")
+        }) { (error) in
+            print(error ?? "Error")
+        }
     }
     
     /*
