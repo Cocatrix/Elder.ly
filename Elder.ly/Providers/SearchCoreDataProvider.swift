@@ -37,4 +37,14 @@ class SearchCoreDataProvider {
         searchPredicate = NSPredicate(format: predicateContent, content, content, content, content)
         return searchPredicate
     }
+    
+    func getFavouritePredicate() -> NSPredicate? {
+        /**
+         * Returns a predicate that filters the results with favourite contacts
+         */
+        let predicateContent = "isFavouriteUser == %@"
+        let searchPredicate: NSPredicate
+        searchPredicate = NSPredicate(format: predicateContent, "true")
+        return searchPredicate
+    }
 }
