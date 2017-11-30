@@ -148,6 +148,8 @@ class WebServicesProvider {
                 } else {
                     let contact = Contact(context: context)
                     contact.wsId = jsonContact["_id"] as? String ?? "Error"
+                    contact.isFavouriteUser = false
+                    contact.frequency = 0
                     self.updateLocalContactWithData(contact: contact, dict: jsonContact)
                     print("added contact")
                 }
@@ -186,6 +188,8 @@ class WebServicesProvider {
                 self.checkForDataError(data: data, success: { (dict) in
                     let contact = Contact(entity: Contact.entity(), insertInto: context)
                     contact.wsId = dict["_id"] as? String
+                    contact.isFavouriteUser = false
+                    contact.frequency = 0
                     self.updateLocalContactWithData(contact: contact, dict: dict)
                     do {
                         try context.save()
