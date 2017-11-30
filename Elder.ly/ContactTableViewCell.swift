@@ -29,11 +29,7 @@ class ContactTableViewCell: UITableViewCell {
     
     @IBAction func callPressed(_ sender: Any) {
         // TODO : call link the real contact phoneNumber
-        if #available(iOS 10, *) {
-            UIApplication.shared.open(URL(string: "tel://\(0123456789)")!)
-        } else {
-            UIApplication.shared.openURL(URL(string: "tel://\(0123456789)")!)
-        }
+        CommunicationUtil.call(phoneNumber: "0123456789")
     }
 }
 

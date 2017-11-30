@@ -10,18 +10,13 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    @IBOutlet weak var detailDescriptionLabel: UILabel!
-
     @IBOutlet weak var contactImage: UIImageView!
+    @IBOutlet weak var communicationSegmentedControl: UISegmentedControl!
+    
+    weak var contact: Contact?
     
     func configureView() {
         // Update the user interface for the detail item.
-        if let contact = detailItem {
-            if let label = detailDescriptionLabel {
-                label.text = contact.firstName
-            }
-        }
-        
         self.contactImage.layer.cornerRadius = self.contactImage.frame.size.width / 2;
     }
 
@@ -30,7 +25,33 @@ class DetailViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         configureView()
     }
-
+    
+    @IBAction func interactionPressed(_ segment: UISegmentedControl) {
+        switch segment.selectedSegmentIndex {
+        case 0: // Text message
+            // TODO : insert the real contact phone number
+            CommunicationUtil.text(phoneNumber: "0123456789")
+            break
+        case 1: // Call
+            // TODO : insert the real contact phone number
+            CommunicationUtil.call(phoneNumber: "0123456789")
+            break
+        case 2: // eMail
+            CommunicationUtil.email(emailAdress: "email@emai.com")
+            break
+        default:
+            break
+        }
+    }
+    
+    @IBAction func emailPressed(_ sender: Any) {
+        CommunicationUtil.email(emailAdress: "email@email.com")
+    }
+    
+    @IBAction func phoneNumberPressed(_ sender: Any) {
+        CommunicationUtil.call(phoneNumber: "0123456789")
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

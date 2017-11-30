@@ -17,6 +17,7 @@
 		37D007321FCDC71000132F68 /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37D007341FCDC71000132F68 /* SignUpViewController.xib */; };
 		37D007391FCDC95200132F68 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 37D007371FCDC95200132F68 /* Localizable.strings */; };
 		37F562081FCEBE1A0083C0CC /* KeyboardUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F562071FCEBE1A0083C0CC /* KeyboardUtil.swift */; };
+		37FF79391FD012CF007D7047 /* CommunicationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FF79381FD012CF007D7047 /* CommunicationUtil.swift */; };
 		39F07E2087F6B6AE4057F0DC /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC243844D049F4A0232ECC51 /* CoreText.framework */; };
 		41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B11FCC1B1600566D10 /* AppDelegate.swift */; };
 		41E825B51FCC1B1600566D10 /* Elder_ly.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B31FCC1B1600566D10 /* Elder_ly.xcdatamodeld */; };
@@ -78,6 +79,7 @@
 		37D007381FCDC95200132F68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		37D0073B1FCDCA0900132F68 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/AddEditViewController.strings; sourceTree = "<group>"; };
 		37F562071FCEBE1A0083C0CC /* KeyboardUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardUtil.swift; sourceTree = "<group>"; };
+		37FF79381FD012CF007D7047 /* CommunicationUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationUtil.swift; sourceTree = "<group>"; };
 		41E825AE1FCC1B1600566D10 /* Elder.ly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elder.ly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41E825B11FCC1B1600566D10 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41E825B41FCC1B1600566D10 /* Elder_ly.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Elder_ly.xcdatamodel; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				37F562071FCEBE1A0083C0CC /* KeyboardUtil.swift */,
 				F914D2AB1FCEC911008326FB /* UserValidationUtil.swift */,
 				37016E411FCF153400AB82C9 /* ContactTableViewCell.swift */,
+				37FF79381FD012CF007D7047 /* CommunicationUtil.swift */,
 			);
 			path = Elder.ly;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				5133E0AC1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift in Sources */,
 				51EC3A701FCC3F3B00EEE7D6 /* WebServicesProvider.swift in Sources */,
 				3790C1591FCC5539001928E4 /* SignUpViewController.swift in Sources */,
+				37FF79391FD012CF007D7047 /* CommunicationUtil.swift in Sources */,
 				37016E421FCF153400AB82C9 /* ContactTableViewCell.swift in Sources */,
 				41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */,
 				41E825B51FCC1B1600566D10 /* Elder_ly.xcdatamodeld in Sources */,

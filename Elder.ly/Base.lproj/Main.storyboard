@@ -162,13 +162,16 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <segmentedControl opaque="NO" contentMode="scaleAspectFit" restorationIdentifier="communicationSegmentControl" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="CMW-Gd-OXo">
+                                                    <segmentedControl opaque="NO" contentMode="scaleAspectFit" restorationIdentifier="communicationSegmentControl" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CMW-Gd-OXo">
                                                         <rect key="frame" x="16" y="152.5" width="288" height="29"/>
                                                         <segments>
                                                             <segment title="Texto"/>
                                                             <segment title="Appeler"/>
                                                             <segment title="Email"/>
                                                         </segments>
+                                                        <connections>
+                                                            <action selector="interactionPressed:" destination="JEX-9P-axG" eventType="valueChanged" id="jrq-n5-9Zj"/>
+                                                        </connections>
                                                     </segmentedControl>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zEb-H3-umV">
                                                         <rect key="frame" x="16" y="196.5" width="288" height="16"/>
@@ -179,6 +182,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="le8-vv-d37">
                                                         <rect key="frame" x="16" y="228.5" width="288" height="30"/>
                                                         <state key="normal" title="email@email.com"/>
+                                                        <connections>
+                                                            <action selector="emailPressed:" destination="JEX-9P-axG" eventType="touchUpInside" id="UEl-Z6-4GB"/>
+                                                        </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N° de téléphone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3jU-ER-dZD">
                                                         <rect key="frame" x="16" y="274.5" width="288" height="16"/>
@@ -189,6 +195,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nve-TX-Xnl">
                                                         <rect key="frame" x="16" y="306.5" width="288" height="30"/>
                                                         <state key="normal" title="+33 06 88 88 88 88"/>
+                                                        <connections>
+                                                            <action selector="phoneNumberPressed:" destination="JEX-9P-axG" eventType="touchUpInside" id="d7h-6k-xOW"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -236,6 +245,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Detail" id="mOI-FS-AaM"/>
                     <connections>
+                        <outlet property="communicationSegmentedControl" destination="CMW-Gd-OXo" id="ajh-WU-dco"/>
                         <outlet property="contactImage" destination="gnb-5Q-Ozk" id="56m-nT-Ncz"/>
                     </connections>
                 </viewController>
