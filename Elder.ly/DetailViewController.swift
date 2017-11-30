@@ -10,12 +10,25 @@ import UIKit
 
 class DetailViewController: UIViewController, UIActionSheetDelegate {
 
+    @IBOutlet weak var contactFullname: UILabel!
     @IBOutlet weak var contactImage: UIImageView!
     @IBOutlet weak var communicationSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var emailButton: UIButton!
+    @IBOutlet weak var callButton: UIButton!
     
     weak var contact: Contact?
     
     func configureView() {
+        
+        guard let contact = self.contact else {
+            return
+        }
+        
+        self.contactFullname.text = contact.firstName! + " " + contact.lastName!
+        
+        self.emailButton.setTitle(contact.email, for: .normal)
+        self.callButton.setTitle(contact.phone, for: .normal)
+        
         // Update the user interface for the detail item.
         self.contactImage.layer.cornerRadius = self.contactImage.frame.size.width / 2;
         
@@ -75,11 +88,17 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
     }
     
     @IBAction func emailPressed(_ sender: Any) {
-        CommunicationUtil.email(emailAdress: "email@email.com")
+        guard let email = self.contact?.email else {
+            return
+        }
+        CommunicationUtil.email(emailAdress: email)
     }
     
     @IBAction func phoneNumberPressed(_ sender: Any) {
-        CommunicationUtil.call(phoneNumber: "0123456789")
+        guard let phoneNumber = self.contact?.phone else {
+            return
+        }
+        CommunicationUtil.call(phoneNumber: phoneNumber)
     }
     
     func editContact() {
