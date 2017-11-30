@@ -126,6 +126,7 @@
                     <navigationItem key="navigationItem" id="Fl6-x6-Ncj"/>
                     <connections>
                         <outlet property="searchBar" destination="yab-1u-5Dw" id="Jch-nv-TCj"/>
+                        <outlet property="tabBar" destination="lWB-nf-AJg" id="ugn-jr-wel"/>
                         <outlet property="tableView" destination="qhS-qq-l2R" id="BJj-RH-Gko"/>
                     </connections>
                 </viewController>
