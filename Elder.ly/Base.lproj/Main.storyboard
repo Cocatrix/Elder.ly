@@ -88,7 +88,7 @@
                                         <connections>
                                             <outlet property="avatarImageView" destination="kht-6x-VEi" id="7aX-AN-39Z"/>
                                             <outlet property="nameLabel" destination="28D-Nm-ki9" id="6UA-t3-N1c"/>
-                                            <segue destination="vC3-pB-5Vb" kind="showDetail" id="jbU-mD-Mpv"/>
+                                            <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" action="showViewController:sender:" id="zbk-nb-8X0"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -149,7 +149,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="4v4-J1-p6i">
                                                 <rect key="frame" x="0.0" y="16" width="320" height="382.5"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="gnb-5Q-Ozk">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="contactImage" image="default-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="gnb-5Q-Ozk">
                                                         <rect key="frame" x="110" y="0.0" width="100" height="100"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="100" id="DDV-ZE-7WL"/>
@@ -296,6 +296,6 @@
         <image name="default-avatar" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="jbU-mD-Mpv"/>
+        <segue reference="zbk-nb-8X0"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -88,10 +88,11 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
+            print("showDetail")
             if let indexPath = tableView.indexPathForSelectedRow {
-            let object = resultController?.object(at: indexPath)
+                let object = resultController?.object(at: indexPath)
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object
+                controller.contact = object
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }

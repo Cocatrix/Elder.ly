@@ -48,17 +48,26 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
     }
     
     @IBAction func interactionPressed(_ segment: UISegmentedControl) {
+        
+        guard
+            let phoneNumber = self.contact?.phone,
+            let email = self.contact?.email
+            else {
+            return
+        }
+        
         switch segment.selectedSegmentIndex {
         case 0: // Text message
-            // TODO : insert the real contact phone number
-            CommunicationUtil.text(phoneNumber: "0123456789")
+            print("text", phoneNumber)
+            CommunicationUtil.text(phoneNumber: phoneNumber)
             break
         case 1: // Call
-            // TODO : insert the real contact phone number
-            CommunicationUtil.call(phoneNumber: "0123456789")
+            print("call", phoneNumber)
+            CommunicationUtil.call(phoneNumber: phoneNumber)
             break
         case 2: // eMail
-            CommunicationUtil.email(emailAdress: "email@emai.com")
+            print("email", email)
+            CommunicationUtil.email(emailAdress: email)
             break
         default:
             break
