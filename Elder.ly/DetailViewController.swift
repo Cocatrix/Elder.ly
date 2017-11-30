@@ -18,6 +18,22 @@ class DetailViewController: UIViewController {
     func configureView() {
         // Update the user interface for the detail item.
         self.contactImage.layer.cornerRadius = self.contactImage.frame.size.width / 2;
+        
+        self.navigationController?.isToolbarHidden = false
+        
+        let options = UIBarButtonItem(title: "title", style: .plain, target: self, action: #selector(displayOptions))
+        
+        //change to play
+        self.navigationController?.navigationBar.topItem?.rightBarButtonItem = options
+        self.navigationController?.navigationBar.topItem?.rightBarButtonItem?.title = "Options"
+//        var items = [UIBarButtonItem]()
+//        items.append( options )
+//        self.navigationController?.toolbar.items = items
+    }
+    
+    @objc func displayOptions() {
+        // TODO : display options
+        print("display options clicked")
     }
 
     override func viewDidLoad() {
