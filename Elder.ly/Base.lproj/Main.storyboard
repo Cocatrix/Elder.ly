@@ -87,6 +87,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="avatarImageView" destination="kht-6x-VEi" id="7aX-AN-39Z"/>
+                                            <outlet property="callButton" destination="C1H-yd-cU7" id="m8K-fQ-jeF"/>
                                             <outlet property="nameLabel" destination="28D-Nm-ki9" id="6UA-t3-N1c"/>
                                             <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" action="showViewController:sender:" id="zbk-nb-8X0"/>
                                         </connections>
