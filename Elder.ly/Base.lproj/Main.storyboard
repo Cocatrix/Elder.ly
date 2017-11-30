@@ -147,9 +147,9 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="4v4-J1-p6i">
-                                                <rect key="frame" x="0.0" y="16" width="320" height="386"/>
+                                                <rect key="frame" x="0.0" y="16" width="320" height="418"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="contactImage" image="default-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="gnb-5Q-Ozk">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="contactImage" image="default-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="gnb-5Q-Ozk">
                                                         <rect key="frame" x="110" y="0.0" width="100" height="100"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="100" id="DDV-ZE-7WL"/>
@@ -163,7 +163,10 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <segmentedControl opaque="NO" contentMode="scaleAspectFit" restorationIdentifier="communicationSegmentControl" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CMW-Gd-OXo">
-                                                        <rect key="frame" x="16" y="156" width="288" height="29"/>
+                                                        <rect key="frame" x="16" y="156" width="288" height="51"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="lAF-CH-cdU"/>
+                                                        </constraints>
                                                         <segments>
                                                             <segment title="Texto"/>
                                                             <segment title="Appeler"/>
@@ -174,33 +177,35 @@
                                                         </connections>
                                                     </segmentedControl>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zEb-H3-umV">
-                                                        <rect key="frame" x="16" y="200" width="288" height="16"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                        <rect key="frame" x="16" y="222" width="288" height="18"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="le8-vv-d37">
-                                                        <rect key="frame" x="16" y="232" width="288" height="30"/>
+                                                        <rect key="frame" x="16" y="256" width="288" height="33"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <state key="normal" title="email@email.com"/>
                                                         <connections>
                                                             <action selector="emailPressed:" destination="JEX-9P-axG" eventType="touchUpInside" id="UEl-Z6-4GB"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N° de téléphone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3jU-ER-dZD">
-                                                        <rect key="frame" x="16" y="278" width="288" height="16"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                        <rect key="frame" x="16" y="305" width="288" height="18"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nve-TX-Xnl">
-                                                        <rect key="frame" x="16" y="310" width="288" height="30"/>
+                                                        <rect key="frame" x="16" y="339" width="288" height="33"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <state key="normal" title="+33 06 88 88 88 88"/>
                                                         <connections>
                                                             <action selector="phoneNumberPressed:" destination="JEX-9P-axG" eventType="touchUpInside" id="d7h-6k-xOW"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="addToFavoritesButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cro-to-dZP">
-                                                        <rect key="frame" x="0.0" y="356" width="320" height="30"/>
+                                                        <rect key="frame" x="0.0" y="388" width="320" height="30"/>
                                                         <state key="normal" title="Ajouter à vos favoris">
                                                             <color key="titleColor" red="1" green="0.54117647059999996" blue="0.14901960780000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
@@ -258,6 +263,7 @@
                         <outlet property="contactFullname" destination="7Fe-QB-CYB" id="xTc-7O-MPf"/>
                         <outlet property="contactImage" destination="gnb-5Q-Ozk" id="56m-nT-Ncz"/>
                         <outlet property="emailButton" destination="le8-vv-d37" id="dvn-YU-3mS"/>
+                        <outlet property="segmentControl" destination="CMW-Gd-OXo" id="E5t-KR-Wwh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>

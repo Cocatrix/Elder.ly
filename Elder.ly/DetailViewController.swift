@@ -15,11 +15,12 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
     @IBOutlet weak var communicationSegmentedControl: UISegmentedControl!
     @IBOutlet weak var emailButton: UIButton!
     @IBOutlet weak var callButton: UIButton!
+    @IBOutlet weak var segmentControl: UISegmentedControl!
     
     weak var contact: Contact?
     
     func configureView() {
-        
+        // Update the user interface for the detail item.
         guard let contact = self.contact else {
             return
         }
@@ -29,8 +30,17 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         self.emailButton.setTitle(contact.email, for: .normal)
         self.callButton.setTitle(contact.phone, for: .normal)
         
-        // Update the user interface for the detail item.
-        self.contactImage.layer.cornerRadius = self.contactImage.frame.size.width / 2;
+        
+        //TODO : display real avatar profil
+        // Set avatar image
+        self.contactImage.image = UIImage(named: "default-avatar")
+        self.contactImage.layer.cornerRadius = self.contactImage.frame.size.width / 2
+        self.contactImage.contentMode = .scaleAspectFill
+        
+        // Segment Control Font Size
+        let font = UIFont.systemFont(ofSize: 17)
+        self.segmentControl.setTitleTextAttributes([NSAttributedStringKey.font: font],
+                                                for: .normal)
         
         let options = UIBarButtonItem(title: "Options".localized, style: .plain, target: self, action: #selector(displayOptions))
         self.navigationController?.isToolbarHidden = false
