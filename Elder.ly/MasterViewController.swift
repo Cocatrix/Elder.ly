@@ -184,11 +184,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
 extension MasterViewController : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         guard let frc = self.resultController else {
             return
         }
-        if(searchText == ""){
+        if(searchText == "") {
             frc.fetchRequest.predicate = nil
         } else {
             let scdProvider = SearchCoreDataProvider.sharedInstance
