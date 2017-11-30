@@ -47,4 +47,25 @@ class SearchCoreDataProvider {
         searchPredicate = NSPredicate(format: predicateContent, "true")
         return searchPredicate
     }
+    
+    func getDefaultSortDescriptor() -> [NSSortDescriptor] {
+        /**
+         * Returns a sort descriptor array with these sort rules :
+         * Sort by first name, then by last name
+         */
+        let sortFirstName = NSSortDescriptor(key: "firstName", ascending: true)
+        let sortLastName = NSSortDescriptor(key: "lastName", ascending: true)
+        return [sortFirstName, sortLastName]
+    }
+    
+    func getFrequentSortDescriptor() -> [NSSortDescriptor] {
+        /**
+         * Returns a sort descriptor array with these sort rules :
+         * Sort by frequency, then by first name, then by last name
+         */
+        let sortFrequency = NSSortDescriptor(key: "frequency", ascending: false)
+        let sortFirstName = NSSortDescriptor(key: "firstName", ascending: true)
+        let sortLastName = NSSortDescriptor(key: "lastName", ascending: true)
+        return [sortFrequency, sortFirstName, sortLastName]
+    }
 }

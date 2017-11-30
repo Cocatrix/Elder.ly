@@ -43,10 +43,9 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
    
         // Setup fetched resultController
         let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
-        let sortFirstName = NSSortDescriptor(key: "firstName", ascending: true)
-        let sortLastName = NSSortDescriptor(key: "lastName", ascending: true)
         // Sort by first name, then by last name
-        fetchRequest.sortDescriptors = [sortFirstName, sortLastName]
+        let scdProvider = SearchCoreDataProvider.sharedInstance
+        fetchRequest.sortDescriptors = scdProvider.getDefaultSortDescriptor()
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: self.appDelegate().persistentContainer.viewContext,
                                              sectionNameKeyPath: nil, cacheName: nil)
@@ -186,113 +185,9 @@ extension MasterViewController: UISearchBarDelegate {
             let searchPredicate = scdProvider.getSearchPredicate(content: searchText)
             frc.fetchRequest.predicate = searchPredicate
         }
-        try? frc.performFetch()
-        self.tableView.reloadData()
-    }
-}
-
-extension MasterViewController: UITabBarDelegate {
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-
-        guard let tabs = self.tabBar.items, tabs.count == 3 else {
-            print("Error in getting tab bar items")
-            return
-        }
-        
-        switch item {
-        case tabs[0]:
-            self.displayFavouriteContacts()
-        case tabs[1]:
-            self.displayAllContacts()
-        case tabs[2]:
-            self.displayFrequentContacts()
-        default:
-            print("default: error")
-        }
-    }
-    
-    func displayFavouriteContacts() {
-        /**
-         * Gets fetchResultsController and update its fetchRequest to reset some settings, and get favourites only :
-         * - no fetchLimitNumber
-         * - sorted by first name, then last name
-         * - predicate to display favourite contacts only
-         */
-        guard let frc = self.resultController else {
-            return
-        }
-        // Reset fetch limit number
-        frc.fetchRequest.fetchLimit = 0
-        
-        // Sort by first name, then by last name
-        let sortFirstName = NSSortDescriptor(key: "firstName", ascending: true)
-        let sortLastName = NSSortDescriptor(key: "lastName", ascending: true)
-        frc.fetchRequest.sortDescriptors = [sortFirstName, sortLastName]
-        
-        // Get predicate corresponding to favourite
-        let scdProvider = SearchCoreDataProvider.sharedInstance
-        let favouritePredicate = scdProvider.getFavouritePredicate()
-        frc.fetchRequest.predicate = favouritePredicate
         
         // Perform fetch and reload data
         try? frc.performFetch()
-        print("left : success ?")
-        self.tableView.reloadData()
-    }
-    
-    func displayAllContacts() {
-        /**
-         * Gets fetchResultsController and update its fetchRequest to reset default settings :
-         * - no fetchLimitNumber
-         * - sorted by first name, then last name
-         * - no predicate
-         */
-        guard let frc = self.resultController else {
-            return
-        }
-        // Reset fetch limit number
-        frc.fetchRequest.fetchLimit = 0
-        
-        // Sort by first name, then by last name
-        let sortFirstName = NSSortDescriptor(key: "firstName", ascending: true)
-        let sortLastName = NSSortDescriptor(key: "lastName", ascending: true)
-        frc.fetchRequest.sortDescriptors = [sortFirstName, sortLastName]
-        
-        // Reset predicate
-        frc.fetchRequest.predicate = nil
-        
-        // Perform fetch and reload data
-        try? frc.performFetch()
-        print("middle : success ?")
-        self.tableView.reloadData()
-    }
-    
-    func displayFrequentContacts() {
-        /**
-         * Gets fetchResultsController and update its fetchRequest with :
-         * - a fetchLimitNumber
-         * - sorted by frequency, then first name, then last name
-         * - no predicate
-         */
-        guard let frc = self.resultController else {
-            return
-        }
-        // Set fetch limit number
-        let fetchLimitNumber = 5
-        frc.fetchRequest.fetchLimit = fetchLimitNumber
-        
-        // Sort by frequency, then by first name, then by last name
-        let sortFrequency = NSSortDescriptor(key: "frequency", ascending: false)
-        let sortFirstName = NSSortDescriptor(key: "firstName", ascending: true)
-        let sortLastName = NSSortDescriptor(key: "lastName", ascending: true)
-        frc.fetchRequest.sortDescriptors = [sortFrequency, sortFirstName, sortLastName]
-        
-        // Reset predicate
-        frc.fetchRequest.predicate = nil
-        
-        // Perform fetch and reload data
-        try? frc.performFetch()
-        print("right : success ?")
         self.tableView.reloadData()
     }
 }
