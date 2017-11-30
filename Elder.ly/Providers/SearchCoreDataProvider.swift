@@ -23,14 +23,14 @@ class SearchCoreDataProvider {
         return sharedSearchCoreData
     }
     
-    func getSearchPredicate(content: String) -> NSPredicate {
+    func getSearchPredicate(content: String) -> NSPredicate? {
         /**
          * Returns a predicate that filters the results with data corresponding to "content"
          * Filters contacts matching "content" in their first/last names, phone numbers or emails.
          */
         guard content != "" else {
             print("Search error")
-            return NSPredicate() // TODO - Find better catching
+            return nil
         }
         let predicateContent = "(firstName CONTAINS[c] %@) || (lastName CONTAINS[c] %@) || (phone CONTAINS[c] %@) || (email CONTAINS[c] %@)"
         let searchPredicate: NSPredicate

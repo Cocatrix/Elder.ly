@@ -182,7 +182,6 @@ extension MasterViewController : UISearchBarDelegate {
             let scdProvider = SearchCoreDataProvider.sharedInstance
             // Get predicate corresponding to research
             let searchPredicate = scdProvider.getSearchPredicate(content: searchText)
-            
             frc.fetchRequest.predicate = searchPredicate
         }
         try? frc.performFetch()
