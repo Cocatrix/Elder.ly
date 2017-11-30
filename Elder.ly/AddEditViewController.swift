@@ -66,8 +66,10 @@ class AddEditViewController: UIViewController {
             }, failure: { (error) in
                 let myError = error as NSError?
                 if myError?.code == 401 {
+                    UserDefaults.standard.unsetAuth()
                     let controller = LoginViewController(nibName: nil, bundle: nil)
                     self.present(controller, animated: false, completion: nil)
+                    
                 } else {
                     self.alertUnknownError()
                 }
