@@ -133,6 +133,9 @@
                                             <state key="normal" title="J'ai oublié mon mot de passe">
                                                 <color key="titleColor" red="1" green="0.54117647058823526" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                                             </state>
+                                            <connections>
+                                                <action selector="forgottenPasswordPressed:" destination="-1" eventType="touchUpInside" id="Deu-ng-c9U"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
