@@ -14,6 +14,9 @@
 /* Class = "UITextField"; placeholder = "eMail"; ObjectID = "kn7-bq-rAf"; */
 "kn7-bq-rAf.placeholder" = "eMail";
 
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "ra0-ce-UUm"; */
+"ra0-ce-UUm.placeholder" = "Password";
+
 /* Class = "UILabel"; text = "S'inscrire"; ObjectID = "x1C-1y-Sjv"; */
 "x1C-1y-Sjv.text" = "S'inscrire";
 
