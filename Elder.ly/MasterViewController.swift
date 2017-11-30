@@ -84,7 +84,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @objc
     func insertNewObject(_ sender: Any) {
         let controller = AddEditViewController(nibName: nil, bundle: nil)
-        self.present(controller, animated: false, completion: nil)
+        self.navigationController?.pushViewController(controller, animated: false)
     }
 
     // MARK: - Segues
