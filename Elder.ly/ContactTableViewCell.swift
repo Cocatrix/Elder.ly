@@ -36,11 +36,7 @@ class ContactTableViewCell: UITableViewCell {
         guard let phone = self.phoneNumber else {
             return
         }
-        if #available(iOS 10, *) {
-            UIApplication.shared.open(URL(string: "tel://\(phone)")!)
-        } else {
-            UIApplication.shared.openURL(URL(string: "tel://\(phone)")!)
-        }
+        CommunicationUtil.call(phoneNumber: phone)
     }
 }
 

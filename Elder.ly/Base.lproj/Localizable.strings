@@ -5,9 +5,13 @@
   Created by Nicolas Vergoz on 28/11/2017.
   Copyright © 2017 Old Mojito. All rights reserved.
 */
-"error" = "Erreur";
-"errorConnection" = "Erreur de connexion";
+"Error" = "Erreur";
+"ErrorConnection" = "Erreur de connexion";
 "OK" = "OK";
+"Options" = "Options";
+"Edit" = "Modifier";
+"Delete" = "Supprimer";
+"Cancel" = "Annuler";
 "Forgotten password" = "Mot de passe oublié";
 "Please enter your phone number" = "Veuillez renseigner votre numéro de téléphone";
 "Phone number" = "Numéro de téléphone";

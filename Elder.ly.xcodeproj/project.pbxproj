@@ -17,6 +17,8 @@
 		37D007321FCDC71000132F68 /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37D007341FCDC71000132F68 /* SignUpViewController.xib */; };
 		37D007391FCDC95200132F68 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 37D007371FCDC95200132F68 /* Localizable.strings */; };
 		37F562081FCEBE1A0083C0CC /* KeyboardUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F562071FCEBE1A0083C0CC /* KeyboardUtil.swift */; };
+		37FF79391FD012CF007D7047 /* CommunicationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FF79381FD012CF007D7047 /* CommunicationUtil.swift */; };
+		37FF79411FD04796007D7047 /* LocalizedUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FF79401FD04796007D7047 /* LocalizedUtil.swift */; };
 		39F07E2087F6B6AE4057F0DC /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC243844D049F4A0232ECC51 /* CoreText.framework */; };
 		41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B11FCC1B1600566D10 /* AppDelegate.swift */; };
 		41E825B51FCC1B1600566D10 /* Elder_ly.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B31FCC1B1600566D10 /* Elder_ly.xcdatamodeld */; };
@@ -71,15 +73,18 @@
 		3790C15B1FCC6018001928E4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		37D007211FCDB76200132F68 /* AddEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditViewController.swift; sourceTree = "<group>"; };
 		37D007261FCDC5C500132F68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LoginViewController.xib; sourceTree = "<group>"; };
-		37D0072A1FCDC63D00132F68 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LoginViewController.strings; sourceTree = "<group>"; };
-		37D0072B1FCDC63D00132F68 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		37D0072C1FCDC63D00132F68 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		37D0072E1FCDC68300132F68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddEditViewController.xib; sourceTree = "<group>"; };
 		37D007331FCDC71000132F68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SignUpViewController.xib; sourceTree = "<group>"; };
-		37D007361FCDC71300132F68 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SignUpViewController.strings; sourceTree = "<group>"; };
 		37D007381FCDC95200132F68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
-		37D0073B1FCDCA0900132F68 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/AddEditViewController.strings; sourceTree = "<group>"; };
 		37F562071FCEBE1A0083C0CC /* KeyboardUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardUtil.swift; sourceTree = "<group>"; };
+		37FF79381FD012CF007D7047 /* CommunicationUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationUtil.swift; sourceTree = "<group>"; };
+		37FF793A1FD0176A007D7047 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/AddEditViewController.strings; sourceTree = "<group>"; };
+		37FF793B1FD0176A007D7047 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LoginViewController.strings; sourceTree = "<group>"; };
+		37FF793C1FD0176A007D7047 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SignUpViewController.strings; sourceTree = "<group>"; };
+		37FF793D1FD0176A007D7047 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		37FF793E1FD0176A007D7047 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		37FF793F1FD0176B007D7047 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		37FF79401FD04796007D7047 /* LocalizedUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedUtil.swift; sourceTree = "<group>"; };
 		41E825AE1FCC1B1600566D10 /* Elder.ly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elder.ly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41E825B11FCC1B1600566D10 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41E825B41FCC1B1600566D10 /* Elder_ly.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Elder_ly.xcdatamodel; sourceTree = "<group>"; };
@@ -194,6 +199,8 @@
 				37F562071FCEBE1A0083C0CC /* KeyboardUtil.swift */,
 				F914D2AB1FCEC911008326FB /* UserValidationUtil.swift */,
 				37016E411FCF153400AB82C9 /* ContactTableViewCell.swift */,
+				37FF79381FD012CF007D7047 /* CommunicationUtil.swift */,
+				37FF79401FD04796007D7047 /* LocalizedUtil.swift */,
 				51FBCD1A1FD048FA004A8E73 /* UIColorUtils.swift */,
 			);
 			path = Elder.ly;
@@ -399,12 +406,14 @@
 				51FBCD131FD005D1004A8E73 /* GravatarProvider.swift in Sources */,
 				51EC3A701FCC3F3B00EEE7D6 /* WebServicesProvider.swift in Sources */,
 				3790C1591FCC5539001928E4 /* SignUpViewController.swift in Sources */,
+				37FF79391FD012CF007D7047 /* CommunicationUtil.swift in Sources */,
 				37016E421FCF153400AB82C9 /* ContactTableViewCell.swift in Sources */,
 				41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */,
 				41E825B51FCC1B1600566D10 /* Elder_ly.xcdatamodeld in Sources */,
 				37D007231FCDB76200132F68 /* AddEditViewController.swift in Sources */,
 				37F562081FCEBE1A0083C0CC /* KeyboardUtil.swift in Sources */,
 				41E825B71FCC1B1600566D10 /* MasterViewController.swift in Sources */,
+				37FF79411FD04796007D7047 /* LocalizedUtil.swift in Sources */,
 				51FBCD1B1FD048FA004A8E73 /* UIColorUtils.swift in Sources */,
 				F914D2AC1FCEC912008326FB /* UserValidationUtil.swift in Sources */,
 				41E825B91FCC1B1600566D10 /* DetailViewController.swift in Sources */,
@@ -448,7 +457,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				37D007261FCDC5C500132F68 /* Base */,
-				37D0072A1FCDC63D00132F68 /* fr */,
+				37FF793B1FD0176A007D7047 /* fr */,
 			);
 			name = LoginViewController.xib;
 			sourceTree = "<group>";
@@ -457,7 +466,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				37D0072E1FCDC68300132F68 /* Base */,
-				37D0073B1FCDCA0900132F68 /* fr */,
+				37FF793A1FD0176A007D7047 /* fr */,
 			);
 			name = AddEditViewController.xib;
 			sourceTree = "<group>";
@@ -466,7 +475,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				37D007331FCDC71000132F68 /* Base */,
-				37D007361FCDC71300132F68 /* fr */,
+				37FF793C1FD0176A007D7047 /* fr */,
 			);
 			name = SignUpViewController.xib;
 			sourceTree = "<group>";
@@ -475,6 +484,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				37D007381FCDC95200132F68 /* Base */,
+				37FF793F1FD0176B007D7047 /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -483,7 +493,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				41E825BB1FCC1B1600566D10 /* Base */,
-				37D0072C1FCDC63D00132F68 /* fr */,
+				37FF793E1FD0176A007D7047 /* fr */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -492,7 +502,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				41E825C01FCC1B1600566D10 /* Base */,
-				37D0072B1FCDC63D00132F68 /* fr */,
+				37FF793D1FD0176A007D7047 /* fr */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
