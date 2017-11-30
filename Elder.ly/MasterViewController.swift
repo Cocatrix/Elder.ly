@@ -14,6 +14,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil // Called by AppDelegate.
 
+    var currentTabPredicate : NSPredicate?
+    var currentSearchPredicate : NSPredicate?
+    
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tabBar: UITabBar!
@@ -23,7 +27,6 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
         self.searchBar.delegate = self
         self.tabBar.delegate = self
         
@@ -52,6 +55,13 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         frc.delegate = self
         try? frc.performFetch()
         self.resultController = frc
+        
+        // Select Contacts tab at launch
+        guard let items = self.tabBar.items, items.count == 3 else {
+            return
+        }
+        self.tabBar.selectedItem = items[1]
+        // TODO - Set toolbar items
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -59,7 +69,6 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // It is related to selected element. Should it still be selected on viewWillAppear ? I think it's not important to comment it for now.
         super.viewWillAppear(animated)
         
-        //TODO: Check if User is Connected
         let isUserConnected = UserDefaults.standard.isAuth()
         
         if !isUserConnected {
@@ -169,7 +178,6 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
      // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
-    
 }
 
 extension MasterViewController: UISearchBarDelegate {
@@ -177,13 +185,18 @@ extension MasterViewController: UISearchBarDelegate {
         guard let frc = self.resultController else {
             return
         }
-        if(searchText == "") {
-            frc.fetchRequest.predicate = nil
+
+        let scdProvider = SearchCoreDataProvider.sharedInstance
+        // Get predicate corresponding to research
+        let searchPredicate = scdProvider.getSearchPredicate(content: searchText)
+        self.currentSearchPredicate = searchPredicate
+        
+        if self.currentTabPredicate != nil && searchPredicate != nil {
+             frc.fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [self.currentTabPredicate!, searchPredicate!])
+        } else if self.currentTabPredicate != nil {
+            frc.fetchRequest.predicate = self.currentTabPredicate
         } else {
-            let scdProvider = SearchCoreDataProvider.sharedInstance
-            // Get predicate corresponding to research
-            let searchPredicate = scdProvider.getSearchPredicate(content: searchText)
-            frc.fetchRequest.predicate = searchPredicate
+             frc.fetchRequest.predicate = searchPredicate
         }
         
         // Perform fetch and reload data
@@ -192,47 +205,161 @@ extension MasterViewController: UISearchBarDelegate {
     }
 }
 
-extension MasterViewController: NSFetchedResultsControllerDelegate {
-    // BASIC METHOD :
-     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        self.tableView.reloadData()
-     }
-    // Could be replaced by following methods :
-    /*
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-    }
+extension MasterViewController: UITabBarDelegate {
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-        print("Inserting ? : ", type)
-        switch type {
-        case .insert:
-            tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
-        case .delete:
-            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
-        default:
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        /**
+         * Tab bar items controller :
+         * Calls function depending on which tab was clicked
+         */
+        guard let tabs = self.tabBar.items, tabs.count == 3 else {
+            print("Error in getting tab bar items")
             return
         }
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        print("Updating ? : ", type)
-        switch type {
-        case .insert:
-            tableView.insertRows(at: [newIndexPath!], with: .fade)
-        case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .fade)
-        case .update:
-            configureCell(tableView.cellForRow(at: indexPath!)!, withContact: anObject as! Contact)
-        case .move:
-            configureCell(tableView.cellForRow(at: indexPath!)!, withContact: anObject as! Contact)
-            tableView.moveRow(at: indexPath!, to: newIndexPath!)
+        
+        switch item {
+        case tabs[0]:
+            self.displayFavouriteContacts()
+        case tabs[1]:
+            self.displayAllContacts()
+        case tabs[2]:
+            self.displayFrequentContacts()
+        default:
+            print("default: error")
         }
     }
     
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
+    func displayFavouriteContacts() {
+        /**
+         * Gets fetchResultsController and update its fetchRequest to reset some settings, and get favourites only :
+         * - no fetchLimitNumber
+         * - sorted by first name, then last name
+         * - predicate to display favourite contacts only (and search results if applicable)
+         */
+        guard let frc = self.resultController else {
+            return
+        }
+        // Reset fetch limit number
+        frc.fetchRequest.fetchLimit = 0
+        
+        // Get predicate corresponding to favourite (manage search predicate if existing)
+        let scdProvider = SearchCoreDataProvider.sharedInstance
+        let favouritePredicate = scdProvider.getFavouritePredicate()
+        if self.currentSearchPredicate != nil && favouritePredicate != nil {
+            frc.fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [self.currentSearchPredicate!, favouritePredicate!])
+        } else {
+            frc.fetchRequest.predicate = favouritePredicate
+        }
+        self.currentTabPredicate = favouritePredicate
+        
+        // Sort by first name, then by last name
+        frc.fetchRequest.sortDescriptors = scdProvider.getDefaultSortDescriptor()
+        
+        // Perform fetch and reload data
+        try? frc.performFetch()
+        self.tableView.reloadData()
     }
-    */
+    
+    func displayAllContacts() {
+        /**
+         * Gets fetchResultsController and update its fetchRequest to reset default settings :
+         * - no fetchLimitNumber
+         * - sorted by first name, then last name
+         * - no predicate (except search results if applicable)
+         */
+        guard let frc = self.resultController else {
+            return
+        }
+        // Reset fetch limit number
+        frc.fetchRequest.fetchLimit = 0
+        
+        // Sort by first name, then by last name
+        let scdProvider = SearchCoreDataProvider.sharedInstance
+        frc.fetchRequest.sortDescriptors = scdProvider.getDefaultSortDescriptor()
+        
+        // Reset predicate (or keep search predicate)
+        if self.currentSearchPredicate != nil {
+            frc.fetchRequest.predicate = self.currentSearchPredicate
+        } else {
+            frc.fetchRequest.predicate = nil
+        }
+        self.currentTabPredicate = nil
+        // Perform fetch and reload data
+        try? frc.performFetch()
+        self.tableView.reloadData()
+    }
+    
+    func displayFrequentContacts() {
+        /**
+         * Gets fetchResultsController and update its fetchRequest with :
+         * - a fetchLimitNumber
+         * - sorted by frequency, then first name, then last name
+         * - no predicate (except search results if applicable)
+         */
+        guard let frc = self.resultController else {
+            return
+        }
+        // Set fetch limit number
+        let fetchLimitNumber = 5
+        frc.fetchRequest.fetchLimit = fetchLimitNumber
+        
+        // Sort by frequency, then by first name, then by last name
+        let scdProvider = SearchCoreDataProvider.sharedInstance
+        frc.fetchRequest.sortDescriptors = scdProvider.getFrequentSortDescriptor()
+        
+        // Reset predicate (or keep search predicate)
+        if self.currentSearchPredicate != nil {
+            frc.fetchRequest.predicate = self.currentSearchPredicate
+        } else {
+            frc.fetchRequest.predicate = nil
+        }
+        self.currentTabPredicate = nil
+        // Perform fetch and reload data
+        try? frc.performFetch()
+        self.tableView.reloadData()
+    }
 }
 
+extension MasterViewController: NSFetchedResultsControllerDelegate {
+    // BASIC METHOD :
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.reloadData()
+    }
+    // Could be replaced by following methods :
+    /*
+     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+     }
+     
+     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+         print("Inserting ? : ", type)
+         switch type {
+         case .insert:
+            tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+         case .delete:
+            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+         default:
+            return
+         }
+     }
+     
+     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+         print("Updating ? : ", type)
+         switch type {
+            case .insert:
+         tableView.insertRows(at: [newIndexPath!], with: .fade)
+            case .delete:
+         tableView.deleteRows(at: [indexPath!], with: .fade)
+            case .update:
+         configureCell(tableView.cellForRow(at: indexPath!)!, withContact: anObject as! Contact)
+            case .move:
+         configureCell(tableView.cellForRow(at: indexPath!)!, withContact: anObject as! Contact)
+            tableView.moveRow(at: indexPath!, to: newIndexPath!)
+         }
+     }
+     
+     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+     }
+     */
+}

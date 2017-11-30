@@ -29,7 +29,7 @@ class SearchCoreDataProvider {
          * Filters contacts matching "content" in their first/last names, phone numbers or emails.
          */
         guard content != "" else {
-            print("Search error")
+            // No content, a nil predicate is needed.
             return nil
         }
         let predicateContent = "(firstName CONTAINS[cd] %@) || (lastName CONTAINS[cd] %@) || (phone CONTAINS[cd] %@) || (email CONTAINS[cd] %@)"
