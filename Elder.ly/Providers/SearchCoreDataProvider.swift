@@ -32,7 +32,7 @@ class SearchCoreDataProvider {
             print("Search error")
             return nil
         }
-        let predicateContent = "(firstName CONTAINS[c] %@) || (lastName CONTAINS[c] %@) || (phone CONTAINS[c] %@) || (email CONTAINS[c] %@)"
+        let predicateContent = "(firstName CONTAINS[cd] %@) || (lastName CONTAINS[cd] %@) || (phone CONTAINS[cd] %@) || (email CONTAINS[cd] %@)"
         let searchPredicate: NSPredicate
         searchPredicate = NSPredicate(format: predicateContent, content, content, content, content)
         return searchPredicate
