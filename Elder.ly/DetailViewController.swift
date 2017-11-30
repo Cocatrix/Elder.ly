@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UIActionSheetDelegate {
 
     @IBOutlet weak var contactImage: UIImageView!
     @IBOutlet weak var communicationSegmentedControl: UISegmentedControl!
@@ -19,21 +19,26 @@ class DetailViewController: UIViewController {
         // Update the user interface for the detail item.
         self.contactImage.layer.cornerRadius = self.contactImage.frame.size.width / 2;
         
+        let options = UIBarButtonItem(title: "Options".localized, style: .plain, target: self, action: #selector(displayOptions))
         self.navigationController?.isToolbarHidden = false
-        
-        let options = UIBarButtonItem(title: "title", style: .plain, target: self, action: #selector(displayOptions))
-        
-        //change to play
         self.navigationController?.navigationBar.topItem?.rightBarButtonItem = options
-        self.navigationController?.navigationBar.topItem?.rightBarButtonItem?.title = "Options"
-//        var items = [UIBarButtonItem]()
-//        items.append( options )
-//        self.navigationController?.toolbar.items = items
     }
     
     @objc func displayOptions() {
         // TODO : display options
         print("display options clicked")
+        
+        let actionSheet = UIAlertController.init(title: "Options".localized, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction.init(title: "Edit".localized, style: UIAlertActionStyle.default, handler: { (action) in
+            self.editContact()
+        }))
+        actionSheet.addAction(UIAlertAction.init(title: "Delete".localized, style: UIAlertActionStyle.destructive, handler: { (action) in
+            self.deleteContact()
+        }))
+        actionSheet.addAction(UIAlertAction.init(title: "Cancel".localized, style: UIAlertActionStyle.cancel, handler: { (action) in }))
+        
+        //Present the controller
+        self.present(actionSheet, animated: true, completion: nil)
     }
 
     override func viewDidLoad() {
@@ -66,6 +71,14 @@ class DetailViewController: UIViewController {
     
     @IBAction func phoneNumberPressed(_ sender: Any) {
         CommunicationUtil.call(phoneNumber: "0123456789")
+    }
+    
+    func editContact() {
+        print("Edit pressed")
+    }
+    
+    func deleteContact() {
+        print("Delete pressed")
     }
     
     override func didReceiveMemoryWarning() {
