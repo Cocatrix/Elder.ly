@@ -28,22 +28,20 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil) // Do any additional setup after loading the view.
         
-        let group = DispatchGroup()
-        group.enter()
-        WebServicesProvider.sharedInstance.getProfiles(success: { (profiles) in
-            self.profilesList = profiles
-            self.selectedProfile = self.profilesList[0]
-            
-            group.leave()
-        }) { (error) in
-            print(error ?? "Error")
-            
-            group.leave()
+        let preferencesProfiles = UserDefaults.standard.value(forKey: "elderlyProfiles")
+        if ((preferencesProfiles) != nil) {
+            print("Preferences set")
+            self.profilesList = preferencesProfiles as? [String] ?? ["ERROR"]
+            self.selectedProfile = profilesList[0]
+        } else {
+            print("Preferences empty")
+            self.profilesList = []
+            self.selectedProfile = ""
         }
-        group.wait()
-        
         profileView.dataSource = self
         profileView.delegate = self
+        
+        loadProfilesFromWS()
         
 //        phoneView.text = "0123456789"
 //        firstnameView.text = "John"
@@ -139,6 +137,20 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedProfile = profilesList[row]
+    }
+    
+    func loadProfilesFromWS() {
+        WebServicesProvider.sharedInstance.getProfiles(success: { (profiles) in
+            DispatchQueue.main.async {
+                self.profilesList = profiles
+                self.selectedProfile = self.profilesList[0]
+                self.profileView.reloadAllComponents()
+            }
+            print("Setting preferences")
+            UserDefaults.standard.set(profiles, forKey: "elderlyProfiles")
+        }) { (error) in
+            print(error ?? "Error")
+        }
     }
     
     /*
