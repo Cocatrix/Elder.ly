@@ -9,10 +9,11 @@
 import UIKit
 
 class ContactTableViewCell: UITableViewCell {
-    
+    var phoneNumber: String?
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var callButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,12 +28,18 @@ class ContactTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func setPhoneNumber(phone: String) {
+        self.phoneNumber = phone
+    }
+    
     @IBAction func callPressed(_ sender: Any) {
-        // TODO : call link the real contact phoneNumber
+        guard let phone = self.phoneNumber else {
+            return
+        }
         if #available(iOS 10, *) {
-            UIApplication.shared.open(URL(string: "tel://\(0123456789)")!)
+            UIApplication.shared.open(URL(string: "tel://\(phone)")!)
         } else {
-            UIApplication.shared.openURL(URL(string: "tel://\(0123456789)")!)
+            UIApplication.shared.openURL(URL(string: "tel://\(phone)")!)
         }
     }
 }
