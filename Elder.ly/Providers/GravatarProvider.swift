@@ -50,14 +50,37 @@ public class Gravatar {
         let url = Gravatar.baseURL.appendingPathComponent(email.md5)
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         
-        components.queryItems = [(URLQueryItem(name: "s", value: String(format: "%.0f",size)))]
+        components.queryItems = [URLQueryItem(name: "d", value: "mm"), URLQueryItem(name: "s", value: String(format: "%.0f",size))]
         
         return components.url!
     }
     
-    public static func urlForSize(email: String, size: Size = Size.medium) -> URL {
+    public static func urlForSize(email: String, size: Size) -> URL {
         let myGrav = Gravatar(email: email)
         return myGrav.url(size: size.rawValue)
+    }
+}
+
+extension UIImageView {
+    public func imageFromServerURL(url: URL) {
+        
+        URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) -> Void in
+            
+            if error != nil {
+                print(error ?? "Error")
+                return
+            }
+            DispatchQueue.main.async(execute: { () -> Void in
+                let image = UIImage(data: data!)
+                self.image = image
+            })
+            
+        }).resume()
+    }
+    
+    public func gravatarImage(email: String, size: Gravatar.Size = Gravatar.Size.medium) {
+        let myGrav = Gravatar(email: email)
+        imageFromServerURL(url: myGrav.url(size: size.rawValue))
     }
 }
 
