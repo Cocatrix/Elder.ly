@@ -86,16 +86,41 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let email = emailView.text!
         let profile = selectedProfile
         if (!UserValidationUtil.validatePhone(phone: phone)) {
+            phoneView.layer.borderWidth = 1.0
+            phoneView.layer.borderColor = UIColor.red.cgColor
             phoneView.becomeFirstResponder()
         } else if (!UserValidationUtil.validateFirstname(firstname: firstname)) {
+            phoneView.layer.borderWidth = 0.0
+            firstnameView.layer.borderWidth = 1.0
+            firstnameView.layer.borderColor = UIColor.red.cgColor
             firstnameView.becomeFirstResponder()
         } else if (!UserValidationUtil.validateLastname(lastname: lastname)) {
+            phoneView.layer.borderWidth = 0.0
+            firstnameView.layer.borderWidth = 0.0
+            lastnameView.layer.borderWidth = 1.0
+            lastnameView.layer.borderColor = UIColor.red.cgColor
             lastnameView.becomeFirstResponder()
         } else if (!UserValidationUtil.validateEmail(email: email)) {
+            phoneView.layer.borderWidth = 0.0
+            firstnameView.layer.borderWidth = 0.0
+            lastnameView.layer.borderWidth = 0.0
+            emailView.layer.borderWidth = 1.0
+            emailView.layer.borderColor = UIColor.red.cgColor
             emailView.becomeFirstResponder()
         } else if (!UserValidationUtil.validatePassword(password: password)) {
+            phoneView.layer.borderWidth = 0.0
+            firstnameView.layer.borderWidth = 0.0
+            lastnameView.layer.borderWidth = 0.0
+            emailView.layer.borderWidth = 0.0
+            passwordView.layer.borderWidth = 1.0
+            passwordView.layer.borderColor = UIColor.red.cgColor
             passwordView.becomeFirstResponder()
         } else {
+            phoneView.layer.borderWidth = 0.0
+            firstnameView.layer.borderWidth = 0.0
+            lastnameView.layer.borderWidth = 0.0
+            emailView.layer.borderWidth = 0.0
+            passwordView.layer.borderWidth = 0.0
             WebServicesProvider.sharedInstance.createUser(phone: phone, password: password, firstName: firstname, lastName: lastname, email: email, profile: profile, success: {
                 print("User created")
                 self.dismiss(animated: true, completion: {
