@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		00EF402178A187FB8996946E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF07CD3234CE34238AAF00CF /* SystemConfiguration.framework */; };
 		37016E421FCF153400AB82C9 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37016E411FCF153400AB82C9 /* ContactTableViewCell.swift */; };
+		378A09481FD18684002211C1 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378A09471FD18684002211C1 /* MenuViewController.swift */; };
+		378A094C1FD18E49002211C1 /* TransitionFromLeftSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378A094B1FD18E49002211C1 /* TransitionFromLeftSegue.swift */; };
 		3790C1591FCC5539001928E4 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3790C1571FCC5539001928E4 /* SignUpViewController.swift */; };
 		3790C15C1FCC6018001928E4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3790C15B1FCC6018001928E4 /* LoginViewController.swift */; };
 		37D007231FCDB76200132F68 /* AddEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D007211FCDB76200132F68 /* AddEditViewController.swift */; };
@@ -69,6 +71,8 @@
 		11EF9C8E822F789BD93FAFF3 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		2410B9AB82100003E207B63C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		37016E411FCF153400AB82C9 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
+		378A09471FD18684002211C1 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		378A094B1FD18E49002211C1 /* TransitionFromLeftSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionFromLeftSegue.swift; sourceTree = "<group>"; };
 		3790C1571FCC5539001928E4 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		3790C15B1FCC6018001928E4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		37D007211FCDB76200132F68 /* AddEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +206,8 @@
 				37FF79381FD012CF007D7047 /* CommunicationUtil.swift */,
 				37FF79401FD04796007D7047 /* LocalizedUtil.swift */,
 				51FBCD1A1FD048FA004A8E73 /* UIColorUtils.swift */,
+				378A09471FD18684002211C1 /* MenuViewController.swift */,
+				378A094B1FD18E49002211C1 /* TransitionFromLeftSegue.swift */,
 			);
 			path = Elder.ly;
 			sourceTree = "<group>";
@@ -410,8 +416,10 @@
 				37016E421FCF153400AB82C9 /* ContactTableViewCell.swift in Sources */,
 				41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */,
 				41E825B51FCC1B1600566D10 /* Elder_ly.xcdatamodeld in Sources */,
+				378A09481FD18684002211C1 /* MenuViewController.swift in Sources */,
 				37D007231FCDB76200132F68 /* AddEditViewController.swift in Sources */,
 				37F562081FCEBE1A0083C0CC /* KeyboardUtil.swift in Sources */,
+				378A094C1FD18E49002211C1 /* TransitionFromLeftSegue.swift in Sources */,
 				41E825B71FCC1B1600566D10 /* MasterViewController.swift in Sources */,
 				37FF79411FD04796007D7047 /* LocalizedUtil.swift in Sources */,
 				51FBCD1B1FD048FA004A8E73 /* UIColorUtils.swift in Sources */,

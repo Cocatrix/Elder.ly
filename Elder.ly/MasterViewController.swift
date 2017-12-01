@@ -35,7 +35,8 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
          *  Left : Edit // TODO - Burger menu instead
          *  Right : Add button, linked to "insertNewObject()"
          */
-        navigationItem.leftBarButtonItem = editButtonItem
+        let menuButton = UIBarButtonItem(title: "Mon Profil".localized, style: .plain, target: self, action: #selector(openMenu(_:)))
+        navigationItem.leftBarButtonItem = menuButton
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         navigationItem.rightBarButtonItem = addButton
@@ -92,6 +93,11 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @objc
+    func openMenu(_ sender: Any) {
+        performSegue(withIdentifier: "openMenu", sender: nil)
+    }
+    
+    @objc
     func insertNewObject(_ sender: Any) {
         let controller = AddEditViewController(nibName: nil, bundle: nil)
         self.navigationController?.pushViewController(controller, animated: false)
@@ -108,6 +114,14 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 controller.contact = object
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
+            }
+        }
+        
+        
+        if segue.identifier == "openMenu" {
+            print("openMenu")
+            if let destinationViewController = segue.destination as? MenuViewController {
+                destinationViewController.transitioningDelegate = self as? UIViewControllerTransitioningDelegate
             }
         }
     }
