@@ -54,17 +54,46 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginPressed(_ sender: Any) {
-        let wsProvider = WebServicesProvider.sharedInstance
-        wsProvider.userLogin(phone: self.phoneNumberField.text!, password: self.passwordField.text!, success: {
-            UserDefaults.standard.setAuth()
-            self.dismiss(animated: true)
-        }) { (error) in
-            UserDefaults.standard.unsetAuth()
-            self.alertConnectionError()
+        var isInvalidField = false
+        
+        if !UserValidationUtil.validatePassword(password: self.passwordField.text!) {
+            isInvalidField = true
+            setHighlightTextField(field: passwordField)
+            passwordField.becomeFirstResponder()
+        } else {
+            resetHighlightTextField(field: passwordField)
         }
-        if self.rememberSwitch.isOn {
-            UserDefaults.standard.setUserPhoneNumber(phone: self.phoneNumberField.text!)
+        
+        if !UserValidationUtil.validatePhone(phone: self.phoneNumberField.text!) {
+            isInvalidField = true
+            setHighlightTextField(field: phoneNumberField)
+            phoneNumberField.becomeFirstResponder()
+        } else {
+            resetHighlightTextField(field: phoneNumberField)
         }
+        
+        if !isInvalidField {
+            let wsProvider = WebServicesProvider.sharedInstance
+            wsProvider.userLogin(phone: self.phoneNumberField.text!, password: self.passwordField.text!, success: {
+                UserDefaults.standard.setAuth()
+                self.dismiss(animated: true)
+            }) { (error) in
+                UserDefaults.standard.unsetAuth()
+                self.alertConnectionError()
+            }
+            if self.rememberSwitch.isOn {
+                UserDefaults.standard.setUserPhoneNumber(phone: self.phoneNumberField.text!)
+            }
+        }
+    }
+    
+    func setHighlightTextField(field: UITextField) {
+        field.layer.borderColor = UIColor.red.cgColor
+        field.layer.borderWidth = 1.0
+    }
+    
+    func resetHighlightTextField(field: UITextField) {
+        field.layer.borderWidth = 0.0
     }
     
     @IBAction func forgottenPasswordPressed(_ sender: Any) {
