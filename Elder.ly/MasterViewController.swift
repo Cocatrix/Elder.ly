@@ -70,20 +70,22 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // It is related to selected element. Should it still be selected on viewWillAppear ? I think it's not important to comment it for now.
         super.viewWillAppear(animated)
         
-        let isUserConnected = UserDefaults.standard.isAuth()
-        
-        if !isUserConnected {
-            let controller = LoginViewController(nibName: nil, bundle: nil)
-            self.present(controller, animated: false, completion: nil)
-        }
-        
         // Use WebService to identify and load data
         let wsProvider = WebServicesProvider.sharedInstance
         
         wsProvider.getContacts(success: {
             print("Load data : success")
         }, failure: { (error) in
-            print(error ?? "unknown error")
+            let myError = error as NSError?
+            if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
+                DispatchQueue.main.async {
+                    UserDefaults.standard.unsetAuth()
+                    let controller = LoginViewController(nibName: nil, bundle: nil)
+                    self.present(controller, animated: false, completion: nil)
+                }
+            } else {
+                print(myError ?? "Error")
+            }
         })
     }
 
@@ -176,16 +178,34 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let context = self.resultController?.managedObjectContext
-            context?.delete((self.resultController?.object(at: indexPath))!)
-                
-            do {
-                try context?.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            let deleteAlertController = UIAlertController(title: "Delete Alert".localized,
+                                                          message: "Are you sure you want to delete this contact ?".localized,
+                                                          preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel) { _ in
+                return
+            }
+            deleteAlertController.addAction(cancelAction)
+            let OKAction = UIAlertAction(title: "OK", style: .default) { _ in
+                guard let id = self.resultController?.object(at: indexPath).wsId else {
+                    return
+                }
+                WebServicesProvider.sharedInstance.deleteContactOnServer(wsId: id, success: {
+                    print("delete success")
+                }, failure: { (error) in
+                    let myError = error as NSError?
+                    if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
+                        DispatchQueue.main.async {
+                            UserDefaults.standard.unsetAuth()
+                            let controller = LoginViewController(nibName: nil, bundle: nil)
+                            self.present(controller, animated: false, completion: nil)
+                        }
+                    } else {
+                        print(myError ?? "Error")
+                    }
+                })
+            }
+            deleteAlertController.addAction(OKAction)
+            self.present(deleteAlertController, animated: true) {
             }
         }
     }
