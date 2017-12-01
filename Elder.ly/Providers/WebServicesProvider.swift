@@ -19,7 +19,7 @@ class WebServicesProvider {
     let url: String = "http://familink.cleverapps.io"
     
     var token: String?
-
+    
     class var sharedInstance: WebServicesProvider {
         return sharedWebServices
     }
@@ -67,6 +67,41 @@ class WebServicesProvider {
             success()
         }
         task.resume()
+    }
+    
+    func getCurrentUser(success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
+        persistentContainer.performBackgroundTask { (context) in
+            guard let token = self.token else {
+                failure(NSError(domain: "Auth Error", code: WebServicesProvider.AUTH_ERROR, userInfo: nil))
+                return
+            }
+            let url = URL(string: self.url + "/secured/users/current")
+            var request = URLRequest(url: url!)
+            request.httpMethod = "GET"
+            request.setValue("application/json", forHTTPHeaderField: "Content-type")
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let httpError = self.checkForHTTPError(response: response) {
+                    failure(httpError)
+                    return
+                }
+                self.checkForDataError(data: data, success: { (userDict) in
+                    let fetchRequest = NSFetchRequest<User>(entityName: "User")
+                    let users = try! context.fetch(fetchRequest)
+                    let user = users.first
+                    self.updateLocalUser(user: user, dict: userDict)
+                    do {
+                        try context.save()
+                        success()
+                    } catch {
+                        failure(error)
+                    }
+                }, failure: { (error) in
+                    failure(error)
+                })
+            }
+            task.resume()
+        }
     }
     
     func forgottenPassword(phone: String, success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
@@ -229,9 +264,9 @@ class WebServicesProvider {
                 self.updateLocalContactWithData(contact: contact!, dict: jsonContact)
                 do {
                     try context.save()
+                    success()
                 } catch {
                     failure(error)
-                    return
                 }
             }
             task.resume()
@@ -339,5 +374,13 @@ class WebServicesProvider {
         contact.gravatar = dict["gravatar"] as? String
         contact.isFamilinkUser = dict["isFamilinkUser"] as? Bool ?? false
         contact.isEmergencyUser = dict["isEmergencyUser"] as? Bool ?? false
+    }
+    
+    func updateLocalUser(user: User, dict: [String: Any]) {
+        user.email = dict["email"] as? String
+        user.firstName = dict["firstName"] as? String
+        user.lastName = dict ["lastName"] as? String
+        user.profile = dict["profile"] as? String
+        user.phone = dict["phone"] as? String
     }
 }
