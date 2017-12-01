@@ -21,6 +21,9 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     var selectedProfile: String = ""
     var profilesList: [String] = [String]()
     
+    @IBOutlet weak var requestIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var registerButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
@@ -79,11 +82,16 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let email = emailView.text!
         let profile = selectedProfile
         
+        registerButton.isEnabled = false
+        requestIndicator.isHidden = false
+        
         var isInvalidField = false
         
         if (!UserValidationUtil.validatePassword(password: password)) {
             isInvalidField = true
             setHighlightTextField(field: passwordView)
+            self.registerButton.isEnabled = true
+            self.requestIndicator.isHidden = true
             passwordView.becomeFirstResponder()
         } else {
             resetHighlightTextField(field: passwordView)
@@ -91,6 +99,8 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         
         if (!UserValidationUtil.validateEmail(email: email)) {
             isInvalidField = true
+            self.registerButton.isEnabled = true
+            self.requestIndicator.isHidden = true
             setHighlightTextField(field: emailView)
             emailView.becomeFirstResponder()
         } else {
@@ -99,6 +109,8 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         
         if (!UserValidationUtil.validateLastname(lastname: lastname)) {
             isInvalidField = true
+            self.registerButton.isEnabled = true
+            self.requestIndicator.isHidden = true
             setHighlightTextField(field: lastnameView)
             lastnameView.becomeFirstResponder()
         } else {
@@ -107,6 +119,8 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         
         if (!UserValidationUtil.validateFirstname(firstname: firstname)) {
             isInvalidField = true
+            self.registerButton.isEnabled = true
+            self.requestIndicator.isHidden = true
             setHighlightTextField(field: firstnameView)
             firstnameView.becomeFirstResponder()
         } else {
@@ -115,6 +129,8 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         
         if (!UserValidationUtil.validatePhone(phone: phone)) {
             isInvalidField = true
+            self.registerButton.isEnabled = true
+            self.requestIndicator.isHidden = true
             setHighlightTextField(field: phoneView)
             phoneView.becomeFirstResponder()
         } else {
@@ -124,12 +140,16 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         if (!isInvalidField) {
             WebServicesProvider.sharedInstance.createUser(phone: phone, password: password, firstName: firstname, lastName: lastname, email: email, profile: profile, success: {
                 print("User created")
-                self.dismiss(animated: true, completion: {
-                    
-                })
+                DispatchQueue.main.async {
+                    self.registerButton.isEnabled = true
+                    self.requestIndicator.isHidden = true
+                }
+                self.dismiss(animated: true)
             }, failure: { (error) in
                 print(error ?? "ERROR")
                 DispatchQueue.main.async {
+                    self.registerButton.isEnabled = true
+                    self.requestIndicator.isHidden = true
                     self.view.endEditing(true)
                     self.alertErrorSignup(message: (error?.localizedDescription)!)
                 }
