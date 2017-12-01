@@ -106,7 +106,7 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             }, failure: { (error) in
                 print("Phone : " + phone + ", Firstname : " + firstName + ", Lastname : " + lastName + ", Email : " + email + ", Profile : " + profile)
                 let myError = error as NSError?
-                if myError?.code == 401 {
+                if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
                     UserDefaults.standard.unsetAuth()
                     let controller = LoginViewController(nibName: nil, bundle: nil)
                     self.present(controller, animated: false, completion: nil)
