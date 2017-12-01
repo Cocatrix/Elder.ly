@@ -69,20 +69,22 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // It is related to selected element. Should it still be selected on viewWillAppear ? I think it's not important to comment it for now.
         super.viewWillAppear(animated)
         
-        let isUserConnected = UserDefaults.standard.isAuth()
-        
-        if !isUserConnected {
-            let controller = LoginViewController(nibName: nil, bundle: nil)
-            self.present(controller, animated: false, completion: nil)
-        }
-        
         // Use WebService to identify and load data
         let wsProvider = WebServicesProvider.sharedInstance
         
         wsProvider.getContacts(success: {
             print("Load data : success")
         }, failure: { (error) in
-            print(error ?? "unknown error")
+            let myError = error as NSError?
+            if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
+                DispatchQueue.main.async {
+                    UserDefaults.standard.unsetAuth()
+                    let controller = LoginViewController(nibName: nil, bundle: nil)
+                    self.present(controller, animated: false, completion: nil)
+                }
+            } else {
+                print(myError ?? "Error")
+            }
         })
     }
 
