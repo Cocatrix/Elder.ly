@@ -176,6 +176,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 return
             }
             contactCell.setPhoneNumber(phone: phone)
+            contactCell.setContact(contact: contact)
         }
     }
 

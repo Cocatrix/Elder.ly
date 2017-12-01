@@ -46,4 +46,33 @@ extension Contact {
             }
         }
     }
+    
+    func updateContactFrequency(newFrequency: Int16, success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
+        /**
+         * Make asynchronous task of updating the frequency "frequency" of current contact.
+         * Fetches all contacts, get the right one from context, updates its frequency with parameter "newFrequency", and saves context.
+         */
+        self.getPersistentContainer().performBackgroundTask { (context) in
+            let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
+            let contacts = try! context.fetch(fetchRequest)
+            let coreContactArray = contacts.filter({ (existingContact) -> Bool in
+                existingContact.wsId == self.wsId
+            })
+            guard coreContactArray.count == 1 else {
+                print("Not found contacts; or several contacts with same Id")
+                return
+            }
+            let coreContact = coreContactArray[0]
+            coreContact.frequency = newFrequency
+            do {
+                if context.hasChanges {
+                    try context.save()
+                    success()
+                }
+            } catch {
+                failure(error)
+                return
+            }
+        }
+    }
 }
