@@ -85,17 +85,50 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let lastname = lastnameView.text!
         let email = emailView.text!
         let profile = selectedProfile
-        if (!UserValidationUtil.validatePhone(phone: phone)) {
-            phoneView.becomeFirstResponder()
-        } else if (!UserValidationUtil.validateFirstname(firstname: firstname)) {
-            firstnameView.becomeFirstResponder()
-        } else if (!UserValidationUtil.validateLastname(lastname: lastname)) {
-            lastnameView.becomeFirstResponder()
-        } else if (!UserValidationUtil.validateEmail(email: email)) {
-            emailView.becomeFirstResponder()
-        } else if (!UserValidationUtil.validatePassword(password: password)) {
+        
+        var isInvalidField = false
+        
+        if (!UserValidationUtil.validatePassword(password: password)) {
+            isInvalidField = true
+            setHighlightTextField(field: passwordView)
             passwordView.becomeFirstResponder()
         } else {
+            resetHighlightTextField(field: passwordView)
+        }
+        
+        if (!UserValidationUtil.validateEmail(email: email)) {
+            isInvalidField = true
+            setHighlightTextField(field: emailView)
+            emailView.becomeFirstResponder()
+        } else {
+            resetHighlightTextField(field: emailView)
+        }
+        
+        if (!UserValidationUtil.validateLastname(lastname: lastname)) {
+            isInvalidField = true
+            setHighlightTextField(field: lastnameView)
+            lastnameView.becomeFirstResponder()
+        } else {
+            resetHighlightTextField(field: lastnameView)
+        }
+        
+        if (!UserValidationUtil.validateFirstname(firstname: firstname)) {
+            isInvalidField = true
+            setHighlightTextField(field: firstnameView)
+            firstnameView.becomeFirstResponder()
+        } else {
+            resetHighlightTextField(field: firstnameView)
+        }
+        
+        if (!UserValidationUtil.validatePhone(phone: phone)) {
+            isInvalidField = true
+            setHighlightTextField(field: phoneView)
+            phoneView.becomeFirstResponder()
+        } else {
+            resetHighlightTextField(field: phoneView)
+        }
+        
+        if (!isInvalidField) {
             WebServicesProvider.sharedInstance.createUser(phone: phone, password: password, firstName: firstname, lastName: lastname, email: email, profile: profile, success: {
                 print("User created")
                 self.dismiss(animated: true, completion: {
@@ -110,6 +143,15 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 print("Phone : " + phone + ", Password : " + password + ", Firstname : " + firstname + ", Lastname : " + lastname + ", Email : " + email + ", Profile : " + profile)
             })
         }
+    }
+    
+    func setHighlightTextField(field: UITextField) {
+        field.layer.borderColor = UIColor.red.cgColor
+        field.layer.borderWidth = 1.0
+    }
+    
+    func resetHighlightTextField(field: UITextField) {
+        field.layer.borderWidth = 0.0
     }
     
     func alertErrorSignup(message: String) {
