@@ -46,6 +46,11 @@ public class Gravatar {
         self.email = email
     }
     
+    public static func urlForSize(email: String, size: Size) -> URL {
+        let myGrav = Gravatar(email: email)
+        return myGrav.url(size: size.rawValue)
+    }
+    
     func url(size: CGFloat) -> URL {
         let url = Gravatar.baseURL.appendingPathComponent(email.md5)
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
@@ -54,18 +59,11 @@ public class Gravatar {
         
         return components.url!
     }
-    
-    public static func urlForSize(email: String, size: Size) -> URL {
-        let myGrav = Gravatar(email: email)
-        return myGrav.url(size: size.rawValue)
-    }
 }
 
 extension UIImageView {
     public func imageFromServerURL(url: URL) {
-        
         URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) -> Void in
-            
             if error != nil {
                 print(error ?? "Error")
                 return
@@ -74,7 +72,6 @@ extension UIImageView {
                 let image = UIImage(data: data!)
                 self.image = image
             })
-            
         }).resume()
     }
     
