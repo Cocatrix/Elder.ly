@@ -12,9 +12,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="Elder_ly" customModuleProvider="target">
             <connections>
+                <outlet property="loginButton" destination="rWb-ae-nod" id="mYe-IB-1ZR"/>
                 <outlet property="passwordField" destination="Wnn-Tg-N26" id="Ga6-kZ-4QV"/>
                 <outlet property="phoneNumberField" destination="f1l-gE-EaT" id="iOw-qg-Rie"/>
                 <outlet property="rememberSwitch" destination="E6z-U7-aon" id="XrM-Z6-11w"/>
+                <outlet property="requestIndicator" destination="S5I-N5-Pjj" id="bwd-HN-gUN"/>
                 <outlet property="scrollView" destination="LU1-UP-9GA" id="KPW-Cy-ong"/>
                 <outlet property="view" destination="mQP-Im-gX6" id="eh3-f0-VqR"/>
             </connections>
@@ -171,14 +173,23 @@
                         <constraint firstItem="eFU-fT-5QZ" firstAttribute="leading" secondItem="LU1-UP-9GA" secondAttribute="leading" id="n40-I4-a0M"/>
                     </constraints>
                 </scrollView>
+                <activityIndicatorView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="S5I-N5-Pjj">
+                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                    <color key="backgroundColor" red="0.5725490196078431" green="0.55294117647058827" blue="0.75044642857142863" alpha="0.70483054577464788" colorSpace="calibratedRGB"/>
+                    <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="eFU-fT-5QZ" firstAttribute="width" secondItem="di3-4a-QjO" secondAttribute="width" id="HDN-IP-4VE"/>
+                <constraint firstItem="S5I-N5-Pjj" firstAttribute="trailing" secondItem="di3-4a-QjO" secondAttribute="trailing" id="M5d-xu-ZFE"/>
+                <constraint firstItem="S5I-N5-Pjj" firstAttribute="leading" secondItem="di3-4a-QjO" secondAttribute="leading" id="OKb-BG-7aF"/>
+                <constraint firstItem="S5I-N5-Pjj" firstAttribute="top" secondItem="di3-4a-QjO" secondAttribute="top" id="VFG-Nt-MKc"/>
                 <constraint firstItem="LU1-UP-9GA" firstAttribute="top" secondItem="di3-4a-QjO" secondAttribute="top" id="WyV-I5-zdT"/>
                 <constraint firstItem="LU1-UP-9GA" firstAttribute="leading" secondItem="di3-4a-QjO" secondAttribute="leading" id="XH9-Ew-NC0"/>
                 <constraint firstItem="di3-4a-QjO" firstAttribute="trailing" secondItem="LU1-UP-9GA" secondAttribute="trailing" id="fxr-ku-G0h"/>
                 <constraint firstItem="di3-4a-QjO" firstAttribute="bottom" secondItem="LU1-UP-9GA" secondAttribute="bottom" id="rEX-8S-jLp"/>
+                <constraint firstItem="di3-4a-QjO" firstAttribute="bottom" secondItem="S5I-N5-Pjj" secondAttribute="bottom" id="rvC-BH-woO"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="di3-4a-QjO"/>
         </view>
