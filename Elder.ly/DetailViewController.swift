@@ -116,17 +116,13 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
     }
     
     func deleteContact() {
-        // dismiss(animated: true, completion: nil)
-        // self.navigationController?.navigationController?.dismiss(animated: true, completion: nil)
-        print("Delete pressed")
         guard let wsId = contact?.wsId else {
             print("no id")
             return
         }
         WebServicesProvider.sharedInstance.deleteContactOnServer(wsId: wsId, success: {
-            print("success")
             DispatchQueue.main.async {
-                
+                self.splitViewController?.popToMasterViewController()
             }
         }) { (error) in
             print(error ?? "Error")
