@@ -20,6 +20,9 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     var selectedProfile: String = ""    
     var profilesList: [String] = [String]()
     
+    @IBOutlet weak var requestIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var addContactButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
@@ -71,20 +74,29 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         let email = emailTextField.text!
         let profile = self.selectedProfile
         
+        self.addContactButton.isEnabled = false
+        self.requestIndicator.isHidden = false
+        
         if (!UserValidationUtil.validateFirstname(firstname: firstName)) {
             firstNameTextField.layer.borderWidth = 1.0
             firstNameTextField.layer.borderColor = UIColor.red.cgColor
+            self.addContactButton.isEnabled = true
+            self.requestIndicator.isHidden = true
             firstNameTextField.becomeFirstResponder()
         } else if (!UserValidationUtil.validateLastname(lastname: lastName)) {
             firstNameTextField.layer.borderWidth = 0.0
             lastNameTextField.layer.borderWidth = 1.0
             lastNameTextField.layer.borderColor = UIColor.red.cgColor
+            self.addContactButton.isEnabled = true
+            self.requestIndicator.isHidden = true
             lastNameTextField.becomeFirstResponder()
         } else if (!UserValidationUtil.validatePhone(phone: phone)) {
             firstNameTextField.layer.borderWidth = 0.0
             lastNameTextField.layer.borderWidth = 0.0
             phoneNumberTextField.layer.borderWidth = 1.0
             phoneNumberTextField.layer.borderColor = UIColor.red.cgColor
+            self.addContactButton.isEnabled = true
+            self.requestIndicator.isHidden = true
             phoneNumberTextField.becomeFirstResponder()
         } else if (!UserValidationUtil.validateEmail(email: email)) {
             firstNameTextField.layer.borderWidth = 0.0
@@ -92,6 +104,8 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             phoneNumberTextField.layer.borderWidth = 0.0
             emailTextField.layer.borderWidth = 1.0
             emailTextField.layer.borderColor = UIColor.red.cgColor
+            self.addContactButton.isEnabled = true
+            self.requestIndicator.isHidden = true
             emailTextField.becomeFirstResponder()
         } else {
             firstNameTextField.layer.borderWidth = 0.0
@@ -101,6 +115,8 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             WebServicesProvider.sharedInstance.createContactOnServer(email: email, phone: phone, firstName: firstName, lastName: lastName, profile: profile, gravatar: "", isFamilinkUser: false, isEmergencyUser: false, success: {
                 print("contact successfully created with profile " + profile)
                 DispatchQueue.main.async {
+                    self.addContactButton.isEnabled = true
+                    self.requestIndicator.isHidden = true
                     self.navigationController?.popViewController(animated: true)
                 }
             }, failure: { (error) in
@@ -108,6 +124,10 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                 let myError = error as NSError?
                 if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
                     UserDefaults.standard.unsetAuth()
+                    DispatchQueue.main.async {
+                        self.addContactButton.isEnabled = true
+                        self.requestIndicator.isHidden = true
+                    }
                     let controller = LoginViewController(nibName: nil, bundle: nil)
                     self.present(controller, animated: false, completion: nil)
                 } else {
