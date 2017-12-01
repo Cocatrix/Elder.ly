@@ -84,6 +84,9 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }, failure: { (error) in
             print(error ?? "unknown error")
         })
+        
+        // Test gravatar
+        print(Gravatar.urlForSize(email: "drazx974@gmail.com"))
     }
 
     override func didReceiveMemoryWarning() {

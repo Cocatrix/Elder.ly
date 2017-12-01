@@ -31,7 +31,7 @@ private protocol QueryItemConvertible {
     var queryItem: URLQueryItem {get}
 }
 
-public struct Gravatar {
+public class Gravatar {
     public enum DefaultImage: String, QueryItemConvertible {
         case http404 = "404"
         case mysteryMan = "mm"
@@ -57,6 +57,12 @@ public struct Gravatar {
         }
     }
     
+    public enum Size: CGFloat {
+        case small = 80
+        case medium = 128
+        case large = 200
+    }
+    
     private static let baseURL = URL(string: "https://secure.gravatar.com/avatar")!
     public let email: String
     public let forceDefault: Bool
@@ -75,7 +81,7 @@ public struct Gravatar {
         self.rating = rating
     }
     
-    public func url(size: CGFloat, scale: CGFloat = UIScreen.main.scale) -> URL {
+    func url(size: CGFloat, scale: CGFloat = UIScreen.main.scale) -> URL {
         let url = Gravatar.baseURL.appendingPathComponent(email.md5)
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         
@@ -85,6 +91,11 @@ public struct Gravatar {
         components.queryItems = queryItems
         
         return components.url!
+    }
+    
+    public static func urlForSize(email: String, size: Size = Size.medium) -> URL {
+        let myGrav = Gravatar.init(email: email)
+        return myGrav.url(size: size.rawValue)
     }
 }
 
