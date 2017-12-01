@@ -88,7 +88,7 @@
                                             </constraints>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next" secureTextEntry="YES" textContentType="password"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" returnKeyType="next" secureTextEntry="YES" textContentType="password"/>
                                         </textField>
                                         <pickerView contentMode="scaleToFill" restorationIdentifier="profilePicker" translatesAutoresizingMaskIntoConstraints="NO" id="DSk-C3-QaC">
                                             <rect key="frame" x="16" y="480" width="288" height="76"/>

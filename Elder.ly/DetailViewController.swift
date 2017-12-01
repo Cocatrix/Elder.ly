@@ -33,6 +33,11 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         
         //TODO : display real avatar profil
         // Set avatar image
+        if let email = contact.email {
+            self.contactImage.gravatarImage(email: email, size: Gravatar.Size.large)
+        } else {
+            self.contactImage.image = UIImage(named: "default-avatar")
+        }
         self.contactImage.image = UIImage(named: "default-avatar")
         self.contactImage.layer.cornerRadius = self.contactImage.frame.size.width / 2
         self.contactImage.contentMode = .scaleAspectFill
