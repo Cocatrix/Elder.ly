@@ -149,15 +149,18 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
             return
         }
         self.contact!.updateIsFavouriteContact(shouldBeFavourite: !isFavourite, success: {
-            print("Contact favourite status updated")
+            DispatchQueue.main.async {
+                // Change addFavouriteButton label depending on favourite status
+                if !isFavourite {
+                    print("Contact added to favourites")
+                    self.addFavouriteButton.setTitle(self.removeFavouritesString.localized, for: .normal)
+                } else {
+                    print("Contact removed from favourites")
+                    self.addFavouriteButton.setTitle(self.addFavouritesString.localized, for: .normal)
+                }   
+            }
         }) { (error) in
             print("Contact favourite status not updated")
-        }
-        // Change addFavouriteButton label depending on favourite status
-        if !isFavourite {
-            self.addFavouriteButton.setTitle(self.removeFavouritesString.localized, for: .normal)
-        } else {
-            self.addFavouriteButton.setTitle(self.addFavouritesString.localized, for: .normal)
         }
     }
 }
