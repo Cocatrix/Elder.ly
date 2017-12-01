@@ -177,7 +177,6 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 contactCell.callButton.isHidden = true
             }
 
-            contactCell.setPhoneNumber(phone: phone)
             contactCell.setContact(contact: contact)
 
             if let email = contact.email  {
