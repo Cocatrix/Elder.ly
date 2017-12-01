@@ -54,16 +54,27 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginPressed(_ sender: Any) {
-        let wsProvider = WebServicesProvider.sharedInstance
-        wsProvider.userLogin(phone: self.phoneNumberField.text!, password: self.passwordField.text!, success: {
-            UserDefaults.standard.setAuth()
-            self.dismiss(animated: true)
-        }) { (error) in
-            UserDefaults.standard.unsetAuth()
-            self.alertConnectionError()
-        }
-        if self.rememberSwitch.isOn {
-            UserDefaults.standard.setUserPhoneNumber(phone: self.phoneNumberField.text!)
+        if (!UserValidationUtil.validatePhone(phone: self.phoneNumberField.text!)) {
+            self.phoneNumberField.layer.borderWidth = 1.0
+            self.phoneNumberField.layer.borderColor = UIColor.red.cgColor
+            self.phoneNumberField.becomeFirstResponder()
+        } else if (!UserValidationUtil.validatePassword(password: self.passwordField.text!)) {
+            self.phoneNumberField.layer.borderWidth = 0.0
+            self.passwordField.layer.borderWidth = 1.0
+            self.passwordField.layer.borderColor = UIColor.red.cgColor
+            self.passwordField.becomeFirstResponder()
+        } else {
+            let wsProvider = WebServicesProvider.sharedInstance
+            wsProvider.userLogin(phone: self.phoneNumberField.text!, password: self.passwordField.text!, success: {
+                UserDefaults.standard.setAuth()
+                self.dismiss(animated: true)
+            }) { (error) in
+                UserDefaults.standard.unsetAuth()
+                self.alertConnectionError()
+            }
+            if self.rememberSwitch.isOn {
+                UserDefaults.standard.setUserPhoneNumber(phone: self.phoneNumberField.text!)
+            }
         }
     }
     
