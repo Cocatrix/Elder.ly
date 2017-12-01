@@ -19,7 +19,6 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     @IBOutlet weak var profileView: UIPickerView!
     var selectedProfile: String = ""
-    
     var profilesList: [String] = [String]()
     
     override func viewDidLoad() {
@@ -42,12 +41,6 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         profileView.delegate = self
         
         loadProfilesFromWS()
-        
-//        phoneView.text = "0123456789"
-//        firstnameView.text = "John"
-//        lastnameView.text = "Doe"
-//        emailView.text = "john.doe@nobody.net"
-//        passwordView.text = "0000"
     }
     
     override func didReceiveMemoryWarning() {
