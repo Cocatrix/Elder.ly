@@ -194,11 +194,17 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if let contactCell = cell as? ContactTableViewCell {
             contactCell.nameLabel.text = (
                 contact.firstName! + " " + contact.lastName!)
-            guard let phone = contact.phone else {
+            if let phone = contact.phone {
+                contactCell.setPhoneNumber(phone: phone)
+            } else {
                 contactCell.callButton.isHidden = true
-                return
             }
-            contactCell.setPhoneNumber(phone: phone)
+
+            contactCell.setContact(contact: contact)
+
+            if let email = contact.email  {
+                contactCell.avatarImageView.gravatarImage(email: email)
+            }
         }
     }
 

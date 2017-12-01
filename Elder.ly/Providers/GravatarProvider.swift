@@ -31,60 +31,53 @@ private protocol QueryItemConvertible {
     var queryItem: URLQueryItem {get}
 }
 
-public struct Gravatar {
-    public enum DefaultImage: String, QueryItemConvertible {
-        case http404 = "404"
-        case mysteryMan = "mm"
-        case identicon = "identicon"
-        case monsterID = "monsterid"
-        case wavatar = "wavatar"
-        case retro = "retro"
-        case blank = "blank"
-        
-        var queryItem: URLQueryItem {
-            return URLQueryItem(name: "d", value: rawValue)
-        }
-    }
-    
-    public enum Rating: String, QueryItemConvertible {
-        case g = "g"
-        case pg = "pg"
-        case r = "r"
-        case x = "x"
-        
-        var queryItem: URLQueryItem {
-            return URLQueryItem(name: "r", value: rawValue)
-        }
+public class Gravatar {
+    public enum Size: CGFloat {
+        case small = 80
+        case medium = 128
+        case large = 200
     }
     
     private static let baseURL = URL(string: "https://secure.gravatar.com/avatar")!
     public let email: String
-    public let forceDefault: Bool
-    public let defaultImage: DefaultImage
-    public let rating: Rating
     
-    public init(
-        email: String,
-        defaultImage: DefaultImage = .mysteryMan,
-        forceDefault: Bool = false,
-        rating: Rating = .pg)
+    public init(email: String)
     {
         self.email = email
-        self.defaultImage = defaultImage
-        self.forceDefault = forceDefault
-        self.rating = rating
     }
     
-    public func url(size: CGFloat, scale: CGFloat = UIScreen.main.scale) -> URL {
+    public static func urlForSize(email: String, size: Size) -> URL {
+        let myGrav = Gravatar(email: email)
+        return myGrav.url(size: size.rawValue)
+    }
+    
+    func url(size: CGFloat) -> URL {
         let url = Gravatar.baseURL.appendingPathComponent(email.md5)
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         
-        var queryItems = [defaultImage.queryItem, rating.queryItem]
-        queryItems.append(URLQueryItem(name: "s", value: String(format: "%.0f",size * scale)))
-        
-        components.queryItems = queryItems
+        components.queryItems = [URLQueryItem(name: "d", value: "mm"), URLQueryItem(name: "s", value: String(format: "%.0f",size))]
         
         return components.url!
+    }
+}
+
+extension UIImageView {
+    public func imageFromServerURL(url: URL) {
+        URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) -> Void in
+            if error != nil {
+                print(error ?? "Error")
+                return
+            }
+            DispatchQueue.main.async(execute: { () -> Void in
+                let image = UIImage(data: data!)
+                self.image = image
+            })
+        }).resume()
+    }
+    
+    public func gravatarImage(email: String, size: Gravatar.Size = Gravatar.Size.medium) {
+        let myGrav = Gravatar(email: email)
+        imageFromServerURL(url: myGrav.url(size: size.rawValue))
     }
 }
 

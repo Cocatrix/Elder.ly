@@ -11,17 +11,18 @@ import CoreData
 private let sharedWebServices = WebServicesProvider()
 
 class WebServicesProvider {
-    var token: String?
-    let url: String = "http://familink.cleverapps.io"
     static let DATA_ERROR: Int = -1
     static let AUTH_ERROR: Int = -2
     static let NETWORK_ERROR: Int = -3
     
+    let persistentContainer: NSPersistentContainer
+    let url: String = "http://familink.cleverapps.io"
+    
+    var token: String?
+
     class var sharedInstance: WebServicesProvider {
         return sharedWebServices
     }
-    
-    let persistentContainer: NSPersistentContainer
     
     init() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -122,9 +123,7 @@ class WebServicesProvider {
     
     func updateLocalData (jsonDict: [[String: Any]], success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
         persistentContainer.performBackgroundTask { (context) in
-            let sort = NSSortDescriptor(key: "lastName", ascending: true)
             let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
-            fetchRequest.sortDescriptors = [sort]
             let contacts = try! context.fetch(fetchRequest)
             let contactIds = contacts.map({ (contact) -> String in
                 return contact.wsId!
@@ -136,7 +135,6 @@ class WebServicesProvider {
             for contact in contacts {
                 if !serverIds.contains(contact.wsId!) {
                     context.delete(contact)
-                    print("removecontact")
                 }
             }
             // Update or create contact
@@ -144,14 +142,12 @@ class WebServicesProvider {
                 if contactIds.contains(jsonContact["_id"] as! String) {
                     let currentContact = contacts.filter({return jsonContact["_id"] as? String == $0.wsId}).first
                     self.updateLocalContactWithData(contact: currentContact!, dict: jsonContact)
-                    print("updated contact")
                 } else {
                     let contact = Contact(context: context)
                     contact.wsId = jsonContact["_id"] as? String ?? "Error"
                     contact.isFavouriteUser = false
                     contact.frequency = 0
                     self.updateLocalContactWithData(contact: contact, dict: jsonContact)
-                    print("added contact")
                 }
             }
             do {
@@ -226,15 +222,49 @@ class WebServicesProvider {
                     failure(httpError)
                     return
                 }
-                let sort = NSSortDescriptor(key: "lastName", ascending: true)
                 let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
-                fetchRequest.sortDescriptors = [sort]
                 let contacts = try! context.fetch(fetchRequest)
                 let contact = contacts.filter({return jsonContact["_id"] as? String == $0.wsId}).first
                 contact?.wsId = wsId
                 self.updateLocalContactWithData(contact: contact!, dict: jsonContact)
                 do {
                     try context.save()
+                } catch {
+                    failure(error)
+                    return
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    func deleteContactOnServer(wsId: String, success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
+        persistentContainer.performBackgroundTask { (context) in
+            guard let token = self.token else {
+                failure(NSError(domain: "Auth Error", code: WebServicesProvider.AUTH_ERROR, userInfo: nil))
+                return
+            }
+            let url = URL(string: self.url + "/secured/users/contacts/\(wsId)")
+            var request = URLRequest(url: url!)
+            request.httpMethod = "DELETE"
+            request.setValue("application/json", forHTTPHeaderField: "Content-type")
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let httpError = self.checkForHTTPError(response: response) {
+                    failure(httpError)
+                    return
+                }
+                let sort = NSSortDescriptor(key: "lastName", ascending: true)
+                let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
+                fetchRequest.sortDescriptors = [sort]
+                let contacts = try! context.fetch(fetchRequest)
+                let contact = contacts.filter({return wsId == $0.wsId}).first
+                if let contact = contact {
+                    context.delete(contact)
+                }
+                do {
+                    try context.save()
+                    success()
                 } catch {
                     failure(error)
                     return
@@ -311,4 +341,3 @@ class WebServicesProvider {
         contact.isEmergencyUser = dict["isEmergencyUser"] as? Bool ?? false
     }
 }
-

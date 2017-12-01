@@ -37,6 +37,7 @@
 		51EC3A701FCC3F3B00EEE7D6 /* WebServicesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EC3A6F1FCC3F3B00EEE7D6 /* WebServicesProvider.swift */; };
 		51EC3A721FCC403E00EEE7D6 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EC3A711FCC403E00EEE7D6 /* Contact.swift */; };
 		51EC3A741FCC405100EEE7D6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EC3A731FCC405100EEE7D6 /* User.swift */; };
+		51FB10BB1FD1978C00A9D9F1 /* SplitViewControllerUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51FB10BA1FD1978C00A9D9F1 /* SplitViewControllerUtils.swift */; };
 		51FBCD131FD005D1004A8E73 /* GravatarProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51FBCD121FD005D1004A8E73 /* GravatarProvider.swift */; };
 		51FBCD1B1FD048FA004A8E73 /* UIColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51FBCD1A1FD048FA004A8E73 /* UIColorUtils.swift */; };
 		595B124CFBA76185B25FBA90 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3DBE58689F165E4D44BF8CA /* QuartzCore.framework */; };
@@ -109,6 +110,7 @@
 		51EC3A6F1FCC3F3B00EEE7D6 /* WebServicesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServicesProvider.swift; sourceTree = "<group>"; };
 		51EC3A711FCC403E00EEE7D6 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		51EC3A731FCC405100EEE7D6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		51FB10BA1FD1978C00A9D9F1 /* SplitViewControllerUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewControllerUtils.swift; sourceTree = "<group>"; };
 		51FBCD121FD005D1004A8E73 /* GravatarProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GravatarProvider.swift; sourceTree = "<group>"; };
 		51FBCD1A1FD048FA004A8E73 /* UIColorUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorUtils.swift; sourceTree = "<group>"; };
 		6E9080D2E28AB93EA46F8392 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -206,6 +208,7 @@
 				37FF79381FD012CF007D7047 /* CommunicationUtil.swift */,
 				37FF79401FD04796007D7047 /* LocalizedUtil.swift */,
 				51FBCD1A1FD048FA004A8E73 /* UIColorUtils.swift */,
+				51FB10BA1FD1978C00A9D9F1 /* SplitViewControllerUtils.swift */,
 				378A09471FD18684002211C1 /* MenuViewController.swift */,
 				378A094D1FD1A157002211C1 /* SegueTransitions.swift */,
 			);
@@ -411,6 +414,7 @@
 				5118D7E01FCDBE710015E2F8 /* UserDefaultUtils.swift in Sources */,
 				5133E0AC1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift in Sources */,
 				51FBCD131FD005D1004A8E73 /* GravatarProvider.swift in Sources */,
+				51FB10BB1FD1978C00A9D9F1 /* SplitViewControllerUtils.swift in Sources */,
 				51EC3A701FCC3F3B00EEE7D6 /* WebServicesProvider.swift in Sources */,
 				3790C1591FCC5539001928E4 /* SignUpViewController.swift in Sources */,
 				37FF79391FD012CF007D7047 /* CommunicationUtil.swift in Sources */,

@@ -16,6 +16,10 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
     @IBOutlet weak var emailButton: UIButton!
     @IBOutlet weak var callButton: UIButton!
     @IBOutlet weak var segmentControl: UISegmentedControl!
+    @IBOutlet weak var addFavouriteButton: UIButton!
+    
+    let addFavouritesString: String = "Add to your favourites"
+    let removeFavouritesString: String = "Remove from your favourites"
     
     weak var contact: Contact?
     
@@ -30,9 +34,22 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         self.emailButton.setTitle(contact.email, for: .normal)
         self.callButton.setTitle(contact.phone, for: .normal)
         
+        // Change addFavouriteButton label depending on favourite status
+        if let isFavourite = self.contact?.isFavouriteUser {
+            if isFavourite {
+                self.addFavouriteButton.setTitle(self.removeFavouritesString.localized, for: .normal)
+            } else {
+                self.addFavouriteButton.setTitle(self.addFavouritesString.localized, for: .normal)
+            }
+        }
         
         //TODO : display real avatar profil
         // Set avatar image
+        if let email = contact.email {
+            self.contactImage.gravatarImage(email: email, size: Gravatar.Size.large)
+        } else {
+            self.contactImage.image = UIImage(named: "default-avatar")
+        }
         self.contactImage.image = UIImage(named: "default-avatar")
         self.contactImage.layer.cornerRadius = self.contactImage.frame.size.width / 2
         self.contactImage.contentMode = .scaleAspectFill
@@ -80,17 +97,14 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         }
         
         switch segment.selectedSegmentIndex {
-        case 0: // Text message
-            print("text", phoneNumber)
-            CommunicationUtil.text(phoneNumber: phoneNumber)
+        case 0:
+            CommunicationUtil.text(phoneNumber: phoneNumber, contact: self.contact!)
             break
-        case 1: // Call
-            print("call", phoneNumber)
-            CommunicationUtil.call(phoneNumber: phoneNumber)
+        case 1:
+            CommunicationUtil.call(phoneNumber: phoneNumber, contact: self.contact!)
             break
-        case 2: // eMail
-            print("email", email)
-            CommunicationUtil.email(emailAdress: email)
+        case 2:
+            CommunicationUtil.email(emailAdress: email, contact: self.contact!)
             break
         default:
             break
@@ -101,14 +115,14 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         guard let email = self.contact?.email else {
             return
         }
-        CommunicationUtil.email(emailAdress: email)
+        CommunicationUtil.email(emailAdress: email, contact: self.contact!)
     }
     
     @IBAction func phoneNumberPressed(_ sender: Any) {
         guard let phoneNumber = self.contact?.phone else {
             return
         }
-        CommunicationUtil.call(phoneNumber: phoneNumber)
+        CommunicationUtil.call(phoneNumber: phoneNumber, contact: self.contact!)
     }
     
     func editContact() {
@@ -116,7 +130,17 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
     }
     
     func deleteContact() {
-        print("Delete pressed")
+        guard let wsId = contact?.wsId else {
+            print("no id")
+            return
+        }
+        WebServicesProvider.sharedInstance.deleteContactOnServer(wsId: wsId, success: {
+            DispatchQueue.main.async {
+                self.splitViewController?.popToMasterViewController()
+            }
+        }) { (error) in
+            print(error ?? "Error")
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -130,7 +154,25 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
             configureView()
         }
     }
-
-
+    
+    @IBAction func pressAddFavourite(_ sender: Any) {
+        guard let isFavourite = self.contact?.isFavouriteUser else {
+            print("Not found whether favourite")
+            return
+        }
+        self.contact!.updateIsFavouriteContact(shouldBeFavourite: !isFavourite, success: {
+            DispatchQueue.main.async {
+                // Change addFavouriteButton label depending on favourite status
+                if !isFavourite {
+                    print("Contact added to favourites")
+                    self.addFavouriteButton.setTitle(self.removeFavouritesString.localized, for: .normal)
+                } else {
+                    print("Contact removed from favourites")
+                    self.addFavouriteButton.setTitle(self.addFavouritesString.localized, for: .normal)
+                }   
+            }
+        }) { (error) in
+            print("Contact favourite status not updated")
+        }
+    }
 }
-
