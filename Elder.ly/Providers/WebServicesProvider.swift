@@ -244,6 +244,42 @@ class WebServicesProvider {
         }
     }
     
+    func deleteContactOnServer(wsId: String, success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
+        persistentContainer.performBackgroundTask { (context) in
+            guard let token = self.token else {
+                failure(NSError(domain: "Auth Error", code: WebServicesProvider.AUTH_ERROR, userInfo: nil))
+                return
+            }
+            let url = URL(string: self.url + "/secured/users/contacts/\(wsId)")
+            var request = URLRequest(url: url!)
+            request.httpMethod = "DELETE"
+            request.setValue("application/json", forHTTPHeaderField: "Content-type")
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let httpError = self.checkForHTTPError(response: response) {
+                    failure(httpError)
+                    return
+                }
+                let sort = NSSortDescriptor(key: "lastName", ascending: true)
+                let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
+                fetchRequest.sortDescriptors = [sort]
+                let contacts = try! context.fetch(fetchRequest)
+                let contact = contacts.filter({return wsId == $0.wsId}).first
+                if let contact = contact {
+                    context.delete(contact)
+                }
+                do {
+                    try context.save()
+                    success()
+                } catch {
+                    failure(error)
+                    return
+                }
+            }
+            task.resume()
+        }
+    }
+    
     func getProfiles(success: @escaping ([String]) -> (), failure: @escaping (Error?) -> ()) {
         let url = URL(string: self.url + "/public/profiles")
         var request = URLRequest(url: url!)
