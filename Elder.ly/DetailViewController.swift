@@ -26,6 +26,7 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         }
         
         self.contactFullname.text = contact.firstName! + " " + contact.lastName!
+        
         self.emailButton.setTitle(contact.email, for: .normal)
         self.callButton.setTitle(contact.phone, for: .normal)
         
