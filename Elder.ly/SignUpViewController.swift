@@ -85,42 +85,50 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let lastname = lastnameView.text!
         let email = emailView.text!
         let profile = selectedProfile
-        if (!UserValidationUtil.validatePhone(phone: phone)) {
-            phoneView.layer.borderWidth = 1.0
-            phoneView.layer.borderColor = UIColor.red.cgColor
-            phoneView.becomeFirstResponder()
-        } else if (!UserValidationUtil.validateFirstname(firstname: firstname)) {
-            phoneView.layer.borderWidth = 0.0
-            firstnameView.layer.borderWidth = 1.0
-            firstnameView.layer.borderColor = UIColor.red.cgColor
-            firstnameView.becomeFirstResponder()
-        } else if (!UserValidationUtil.validateLastname(lastname: lastname)) {
-            phoneView.layer.borderWidth = 0.0
-            firstnameView.layer.borderWidth = 0.0
-            lastnameView.layer.borderWidth = 1.0
-            lastnameView.layer.borderColor = UIColor.red.cgColor
-            lastnameView.becomeFirstResponder()
-        } else if (!UserValidationUtil.validateEmail(email: email)) {
-            phoneView.layer.borderWidth = 0.0
-            firstnameView.layer.borderWidth = 0.0
-            lastnameView.layer.borderWidth = 0.0
-            emailView.layer.borderWidth = 1.0
-            emailView.layer.borderColor = UIColor.red.cgColor
-            emailView.becomeFirstResponder()
-        } else if (!UserValidationUtil.validatePassword(password: password)) {
-            phoneView.layer.borderWidth = 0.0
-            firstnameView.layer.borderWidth = 0.0
-            lastnameView.layer.borderWidth = 0.0
-            emailView.layer.borderWidth = 0.0
-            passwordView.layer.borderWidth = 1.0
-            passwordView.layer.borderColor = UIColor.red.cgColor
+        
+        var error = false
+        
+        if (!UserValidationUtil.validatePassword(password: password)) {
+            error = true
+            setHighlightTextField(field: passwordView)
             passwordView.becomeFirstResponder()
         } else {
-            phoneView.layer.borderWidth = 0.0
-            firstnameView.layer.borderWidth = 0.0
-            lastnameView.layer.borderWidth = 0.0
-            emailView.layer.borderWidth = 0.0
-            passwordView.layer.borderWidth = 0.0
+            resetHighlightTextField(field: passwordView)
+        }
+        
+        if (!UserValidationUtil.validateEmail(email: email)) {
+            error = true
+            setHighlightTextField(field: emailView)
+            emailView.becomeFirstResponder()
+        } else {
+            resetHighlightTextField(field: emailView)
+        }
+        
+        if (!UserValidationUtil.validateLastname(lastname: lastname)) {
+            error = true
+            setHighlightTextField(field: lastnameView)
+            lastnameView.becomeFirstResponder()
+        } else {
+            resetHighlightTextField(field: lastnameView)
+        }
+        
+        if (!UserValidationUtil.validateFirstname(firstname: firstname)) {
+            error = true
+            setHighlightTextField(field: firstnameView)
+            firstnameView.becomeFirstResponder()
+        } else {
+            resetHighlightTextField(field: firstnameView)
+        }
+        
+        if (!UserValidationUtil.validatePhone(phone: phone)) {
+            error = true
+            setHighlightTextField(field: phoneView)
+            phoneView.becomeFirstResponder()
+        } else {
+            resetHighlightTextField(field: phoneView)
+        }
+        
+        if (!error) {
             WebServicesProvider.sharedInstance.createUser(phone: phone, password: password, firstName: firstname, lastName: lastname, email: email, profile: profile, success: {
                 print("User created")
                 self.dismiss(animated: true, completion: {
@@ -135,6 +143,15 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 print("Phone : " + phone + ", Password : " + password + ", Firstname : " + firstname + ", Lastname : " + lastname + ", Email : " + email + ", Profile : " + profile)
             })
         }
+    }
+    
+    func setHighlightTextField(field: UITextField) {
+        field.layer.borderColor = UIColor.red.cgColor
+        field.layer.borderWidth = 1.0
+    }
+    
+    func resetHighlightTextField(field: UITextField) {
+        field.layer.borderWidth = 0.0
     }
     
     func alertErrorSignup(message: String) {
