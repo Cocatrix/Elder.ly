@@ -77,41 +77,49 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         self.addContactButton.isEnabled = false
         self.requestIndicator.isHidden = false
         
-        if (!UserValidationUtil.validateFirstname(firstname: firstName)) {
-            firstNameTextField.layer.borderWidth = 1.0
-            firstNameTextField.layer.borderColor = UIColor.red.cgColor
-            self.addContactButton.isEnabled = true
-            self.requestIndicator.isHidden = true
-            firstNameTextField.becomeFirstResponder()
-        } else if (!UserValidationUtil.validateLastname(lastname: lastName)) {
-            firstNameTextField.layer.borderWidth = 0.0
-            lastNameTextField.layer.borderWidth = 1.0
-            lastNameTextField.layer.borderColor = UIColor.red.cgColor
-            self.addContactButton.isEnabled = true
-            self.requestIndicator.isHidden = true
-            lastNameTextField.becomeFirstResponder()
-        } else if (!UserValidationUtil.validatePhone(phone: phone)) {
-            firstNameTextField.layer.borderWidth = 0.0
-            lastNameTextField.layer.borderWidth = 0.0
-            phoneNumberTextField.layer.borderWidth = 1.0
-            phoneNumberTextField.layer.borderColor = UIColor.red.cgColor
-            self.addContactButton.isEnabled = true
-            self.requestIndicator.isHidden = true
-            phoneNumberTextField.becomeFirstResponder()
-        } else if (!UserValidationUtil.validateEmail(email: email)) {
-            firstNameTextField.layer.borderWidth = 0.0
-            lastNameTextField.layer.borderWidth = 0.0
-            phoneNumberTextField.layer.borderWidth = 0.0
-            emailTextField.layer.borderWidth = 1.0
-            emailTextField.layer.borderColor = UIColor.red.cgColor
+        var isInvalidField = false
+        
+        if (!UserValidationUtil.validateEmail(email: email)) {
+            isInvalidField = true
+            setHighlightTextField(field: emailTextField)
             self.addContactButton.isEnabled = true
             self.requestIndicator.isHidden = true
             emailTextField.becomeFirstResponder()
         } else {
-            firstNameTextField.layer.borderWidth = 0.0
-            lastNameTextField.layer.borderWidth = 0.0
-            phoneNumberTextField.layer.borderWidth = 0.0
-            emailTextField.layer.borderWidth = 0.0
+            resetHighlightTextField(field: emailTextField)
+        }
+        
+        if (!UserValidationUtil.validatePhone(phone: phone)) {
+            isInvalidField = true
+            setHighlightTextField(field: phoneNumberTextField)
+            self.addContactButton.isEnabled = true
+            self.requestIndicator.isHidden = true
+            phoneNumberTextField.becomeFirstResponder()
+        } else {
+            resetHighlightTextField(field: phoneNumberTextField)
+        }
+        
+        if (!UserValidationUtil.validateLastname(lastname: lastName)) {
+            isInvalidField = true
+            setHighlightTextField(field: lastNameTextField)
+            self.addContactButton.isEnabled = true
+            self.requestIndicator.isHidden = true
+            lastNameTextField.becomeFirstResponder()
+        } else {
+            resetHighlightTextField(field: lastNameTextField)
+        }
+        
+        if (!UserValidationUtil.validateFirstname(firstname: firstName)) {
+            isInvalidField = true
+            setHighlightTextField(field: firstNameTextField)
+            self.addContactButton.isEnabled = true
+            self.requestIndicator.isHidden = true
+            firstNameTextField.becomeFirstResponder()
+        } else {
+            resetHighlightTextField(field: firstNameTextField)
+        }
+        
+        if (!isInvalidField) {
             WebServicesProvider.sharedInstance.createContactOnServer(email: email, phone: phone, firstName: firstName, lastName: lastName, profile: profile, gravatar: "", isFamilinkUser: false, isEmergencyUser: false, success: {
                 print("contact successfully created with profile " + profile)
                 DispatchQueue.main.async {
@@ -135,6 +143,15 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                 }
             })
         }
+    }
+    
+    func setHighlightTextField(field: UITextField) {
+        field.layer.borderColor = UIColor.red.cgColor
+        field.layer.borderWidth = 1.0
+    }
+    
+    func resetHighlightTextField(field: UITextField) {
+        field.layer.borderWidth = 0.0
     }
     
     func alertUnknownError() {
