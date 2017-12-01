@@ -69,7 +69,7 @@ class WebServicesProvider {
         task.resume()
     }
     
-    func getCurrentUser(success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
+    func getCurrentUser(success: @escaping (User) -> (), failure: @escaping (Error?) -> ()) {
         persistentContainer.performBackgroundTask { (context) in
             guard let token = self.token else {
                 failure(NSError(domain: "Auth Error", code: WebServicesProvider.AUTH_ERROR, userInfo: nil))
@@ -88,11 +88,16 @@ class WebServicesProvider {
                 self.checkForDataError(data: data, success: { (userDict) in
                     let fetchRequest = NSFetchRequest<User>(entityName: "User")
                     let users = try! context.fetch(fetchRequest)
-                    let user = users.first
-                    self.updateLocalUser(user: user, dict: userDict)
+                    var myUser: User
+                    if let user = users.first {
+                        myUser = user
+                    } else {
+                        myUser = User(entity: User.entity(), insertInto: context)
+                    }
+                    self.updateLocalUser(user: myUser, dict: userDict)
                     do {
                         try context.save()
-                        success()
+                        success(myUser)
                     } catch {
                         failure(error)
                     }
