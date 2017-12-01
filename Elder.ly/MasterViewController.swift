@@ -17,6 +17,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var currentTabPredicate : NSPredicate?
     var currentSearchPredicate : NSPredicate?
     
+    var searchPlaceholder: String = "Search (name, email...)".localized
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -62,6 +63,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         self.tabBar.selectedItem = items[1]
         // TODO - Set toolbar items
+        
+        self.manageKeyboardDisplaying()
+        
+        self.searchBar.placeholder = self.searchPlaceholder
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -101,7 +106,6 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
-            print("showDetail")
             if let indexPath = tableView.indexPathForSelectedRow {
                 let object = resultController?.object(at: indexPath)
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
@@ -189,10 +193,37 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return UIApplication.shared.delegate as! AppDelegate
     }
     
+    // MARK: - Keyboard
+    
+    func manageKeyboardDisplaying() {
+        self.hideKeyboardWhenTappedAround()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification:NSNotification){
+        //give room at the bottom of the scroll view, so it doesn't cover up anything the user needs to tap
+        var userInfo = notification.userInfo!
+        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+        
+        var contentInset:UIEdgeInsets = self.tableView.contentInset
+        contentInset.bottom = keyboardFrame.size.height
+        tableView.contentInset = contentInset
+    }
+    
+    @objc func keyboardWillHide(notification:NSNotification) {
+        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        tableView.contentInset = contentInset
+    }
+    
      // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
 }
 
+// MARK: - Search Bar
+
 extension MasterViewController: UISearchBarDelegate {
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let frc = self.resultController else {
             return
@@ -216,6 +247,8 @@ extension MasterViewController: UISearchBarDelegate {
         self.tableView.reloadData()
     }
 }
+
+// MARK: - Tab Bar
 
 extension MasterViewController: UITabBarDelegate {
     
@@ -333,6 +366,8 @@ extension MasterViewController: UITabBarDelegate {
         self.tableView.reloadData()
     }
 }
+
+// MARK: - FetchedResultsController
 
 extension MasterViewController: NSFetchedResultsControllerDelegate {
     // BASIC METHOD :
