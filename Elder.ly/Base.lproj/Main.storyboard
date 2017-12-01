@@ -212,6 +212,9 @@
                                                         <state key="normal" title="Ajouter à vos favoris">
                                                             <color key="titleColor" red="1" green="0.54117647059999996" blue="0.14901960780000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="pressAddFavourite:" destination="JEX-9P-axG" eventType="touchUpInside" id="3eS-G1-ReF"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -261,6 +264,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Detail" id="mOI-FS-AaM"/>
                     <connections>
+                        <outlet property="addFavouriteButton" destination="Cro-to-dZP" id="oQw-ge-veC"/>
                         <outlet property="callButton" destination="Nve-TX-Xnl" id="fGy-VV-Yej"/>
                         <outlet property="communicationSegmentedControl" destination="CMW-Gd-OXo" id="ajh-WU-dco"/>
                         <outlet property="contactFullname" destination="7Fe-QB-CYB" id="xTc-7O-MPf"/>
