@@ -61,7 +61,9 @@ class UserValidationUtil {
     }
     
     static func validatePassword(password: String) -> Bool {
-        let result = password.count > 0
+        let passwordRegex = "^[0-9]{4,}$"
+        let predicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: password)
+        let result = (password.count >= 4) && predicate
         if (result) {
             print("Password OK")
         } else {
