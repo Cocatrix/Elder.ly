@@ -122,9 +122,7 @@ class WebServicesProvider {
     
     func updateLocalData (jsonDict: [[String: Any]], success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
         persistentContainer.performBackgroundTask { (context) in
-            let sort = NSSortDescriptor(key: "lastName", ascending: true)
             let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
-            fetchRequest.sortDescriptors = [sort]
             let contacts = try! context.fetch(fetchRequest)
             let contactIds = contacts.map({ (contact) -> String in
                 return contact.wsId!
@@ -226,9 +224,7 @@ class WebServicesProvider {
                     failure(httpError)
                     return
                 }
-                let sort = NSSortDescriptor(key: "lastName", ascending: true)
                 let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
-                fetchRequest.sortDescriptors = [sort]
                 let contacts = try! context.fetch(fetchRequest)
                 let contact = contacts.filter({return jsonContact["_id"] as? String == $0.wsId}).first
                 contact?.wsId = wsId
@@ -311,4 +307,3 @@ class WebServicesProvider {
         contact.isEmergencyUser = dict["isEmergencyUser"] as? Bool ?? false
     }
 }
-

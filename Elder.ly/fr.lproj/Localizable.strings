@@ -12,3 +12,12 @@
 "Edit" = "Modifier";
 "Delete" = "Supprimer";
 "Cancel" = "Annuler";
+"Forgotten password" = "Mot de passe oublié";
+"Please enter your phone number" = "Veuillez renseigner votre numéro de téléphone";
+"Phone number" = "Numéro de téléphone";
+"Send" = "Envoyer";
+"Sent password" = "Mot de passe envoyé";
+"No account" = "Compte inexistant ou erreur de communication avec le serveur";
+"Invalid phone" = "Numéro invalide";
+"Add to your favourites" = "Ajouter à vos favoris";
+"Remove from your favourites" = "Retirer de vos favoris";

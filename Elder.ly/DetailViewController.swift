@@ -16,6 +16,10 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
     @IBOutlet weak var emailButton: UIButton!
     @IBOutlet weak var callButton: UIButton!
     @IBOutlet weak var segmentControl: UISegmentedControl!
+    @IBOutlet weak var addFavouriteButton: UIButton!
+    
+    let addFavouritesString: String = "Add to your favourites"
+    let removeFavouritesString: String = "Remove from your favourites"
     
     weak var contact: Contact?
     
@@ -30,6 +34,14 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         self.emailButton.setTitle(contact.email, for: .normal)
         self.callButton.setTitle(contact.phone, for: .normal)
         
+        // Change addFavouriteButton label depending on favourite status
+        if let isFavourite = self.contact?.isFavouriteUser {
+            if isFavourite {
+                self.addFavouriteButton.setTitle(self.removeFavouritesString.localized, for: .normal)
+            } else {
+                self.addFavouriteButton.setTitle(self.addFavouritesString.localized, for: .normal)
+            }
+        }
         
         //TODO : display real avatar profil
         // Set avatar image
@@ -135,7 +147,22 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
             configureView()
         }
     }
-
-
+    
+    @IBAction func pressAddFavourite(_ sender: Any) {
+        guard let isFavourite = self.contact?.isFavouriteUser else {
+            print("Not found whether favourite")
+            return
+        }
+        self.contact!.updateIsFavouriteContact(shouldBeFavourite: !isFavourite, success: {
+            print("Contact favourite status updated")
+        }) { (error) in
+            print("Contact favourite status not updated")
+        }
+        // Change addFavouriteButton label depending on favourite status
+        if !isFavourite {
+            self.addFavouriteButton.setTitle(self.removeFavouritesString.localized, for: .normal)
+        } else {
+            self.addFavouriteButton.setTitle(self.addFavouritesString.localized, for: .normal)
+        }
+    }
 }
-
