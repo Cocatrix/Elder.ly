@@ -86,10 +86,10 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let email = emailView.text!
         let profile = selectedProfile
         
-        var error = false
+        var isInvalidField = false
         
         if (!UserValidationUtil.validatePassword(password: password)) {
-            error = true
+            isInvalidField = true
             setHighlightTextField(field: passwordView)
             passwordView.becomeFirstResponder()
         } else {
@@ -97,7 +97,7 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
         
         if (!UserValidationUtil.validateEmail(email: email)) {
-            error = true
+            isInvalidField = true
             setHighlightTextField(field: emailView)
             emailView.becomeFirstResponder()
         } else {
@@ -105,7 +105,7 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
         
         if (!UserValidationUtil.validateLastname(lastname: lastname)) {
-            error = true
+            isInvalidField = true
             setHighlightTextField(field: lastnameView)
             lastnameView.becomeFirstResponder()
         } else {
@@ -113,7 +113,7 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
         
         if (!UserValidationUtil.validateFirstname(firstname: firstname)) {
-            error = true
+            isInvalidField = true
             setHighlightTextField(field: firstnameView)
             firstnameView.becomeFirstResponder()
         } else {
@@ -121,14 +121,14 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
         
         if (!UserValidationUtil.validatePhone(phone: phone)) {
-            error = true
+            isInvalidField = true
             setHighlightTextField(field: phoneView)
             phoneView.becomeFirstResponder()
         } else {
             resetHighlightTextField(field: phoneView)
         }
         
-        if (!error) {
+        if (!isInvalidField) {
             WebServicesProvider.sharedInstance.createUser(phone: phone, password: password, firstName: firstname, lastName: lastname, email: email, profile: profile, success: {
                 print("User created")
                 self.dismiss(animated: true, completion: {
