@@ -129,7 +129,7 @@
                         <outlet property="searchBar" destination="yab-1u-5Dw" id="Jch-nv-TCj"/>
                         <outlet property="tabBar" destination="lWB-nf-AJg" id="ugn-jr-wel"/>
                         <outlet property="tableView" destination="qhS-qq-l2R" id="BJj-RH-Gko"/>
-                        <segue destination="yaC-f7-cDd" kind="presentation" identifier="openMenu" modalPresentationStyle="overCurrentContext" id="RWz-Me-Mtb"/>
+                        <segue destination="yaC-f7-cDd" kind="presentation" identifier="openMenu" customClass="TransitionToRightSegue" customModule="Elder_ly" customModuleProvider="target" modalPresentationStyle="overCurrentContext" id="RWz-Me-Mtb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="smO-UO-uLI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -147,19 +147,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OLY-wq-Gdh">
                                 <rect key="frame" x="0.0" y="20" width="256" height="548"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O6F-yn-xWV">
-                                        <rect key="frame" x="182" y="0.0" width="52" height="60"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="4F6-oL-NR4"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <state key="normal" title="Fermer">
-                                            <color key="titleColor" red="1" green="0.54117647059999996" blue="0.14901960780000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="closePressed:" destination="yaC-f7-cDd" eventType="touchUpInside" id="zhK-ZT-uLG"/>
-                                        </connections>
-                                    </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="contactImage" image="default-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="zdz-ZE-4Yc">
                                         <rect key="frame" x="78" y="64" width="100" height="100"/>
                                         <constraints>
@@ -204,6 +191,16 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zRa-u2-d2O">
+                                        <rect key="frame" x="150" y="8" width="90" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Fermer">
+                                            <color key="titleColor" red="1" green="0.54117647059999996" blue="0.14901960780000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="itq-Bh-n9y" kind="unwind" customClass="TransitionToLeftSegue" customModule="Elder_ly" customModuleProvider="target" unwindAction="prepareForUnwindWithSegue:" id="WRt-qg-KvP"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -214,7 +211,6 @@
                                     <constraint firstItem="yS4-h1-SfQ" firstAttribute="centerX" secondItem="OLY-wq-Gdh" secondAttribute="centerX" id="AEg-gy-7MW"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="myJ-ls-wUY" secondAttribute="trailing" id="IDD-X1-VY1"/>
                                     <constraint firstAttribute="trailing" secondItem="DqT-Va-9SI" secondAttribute="trailing" id="JqJ-cv-Cz3"/>
-                                    <constraint firstItem="O6F-yn-xWV" firstAttribute="top" secondItem="OLY-wq-Gdh" secondAttribute="top" id="MRi-sE-sf1"/>
                                     <constraint firstItem="yS4-h1-SfQ" firstAttribute="top" secondItem="LNf-7b-sUj" secondAttribute="bottom" id="OeG-hR-J2I"/>
                                     <constraint firstItem="myJ-ls-wUY" firstAttribute="top" secondItem="oKs-Pv-KmH" secondAttribute="bottom" constant="8" id="Qm1-Q2-iID"/>
                                     <constraint firstItem="myJ-ls-wUY" firstAttribute="centerX" secondItem="OLY-wq-Gdh" secondAttribute="centerX" id="VlC-Pm-0Vz"/>
@@ -227,7 +223,6 @@
                                     <constraint firstItem="LNf-7b-sUj" firstAttribute="centerX" secondItem="zgz-HU-uIx" secondAttribute="centerX" id="rQj-x9-50b"/>
                                     <constraint firstAttribute="trailing" secondItem="oKs-Pv-KmH" secondAttribute="trailing" id="rU6-NK-5iz"/>
                                     <constraint firstItem="LNf-7b-sUj" firstAttribute="centerX" secondItem="yS4-h1-SfQ" secondAttribute="centerX" id="syB-RM-gsb"/>
-                                    <constraint firstItem="O6F-yn-xWV" firstAttribute="leading" secondItem="OLY-wq-Gdh" secondAttribute="leading" constant="182" id="xuT-wc-8Se"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -245,6 +240,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Em6-aW-rYD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="itq-Bh-n9y" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1710" y="-633"/>
         </scene>
