@@ -103,13 +103,11 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.navigationController?.pushViewController(controller, animated: false)
     }
     
-    // UNWIND
+    // MARK: - Unwind with Segues
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
-        print("prepareForUnwind")
     }
     
     override func unwind(for unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
-        print("unwind")
         let segue = TransitionToLeftSegue(identifier: unwindSegue.identifier, source: unwindSegue.source, destination: unwindSegue.destination)
         segue.perform()
     }

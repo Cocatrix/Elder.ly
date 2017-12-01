@@ -15,6 +15,7 @@ class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Round user profil image
         self.userImage.image = UIImage(named: "default-avatar")
         self.userImage.layer.cornerRadius = self.userImage.frame.size.width / 2
         self.userImage.contentMode = .scaleAspectFill
@@ -22,6 +23,5 @@ class MenuViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }

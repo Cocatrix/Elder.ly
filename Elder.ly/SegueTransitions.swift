@@ -26,9 +26,7 @@ class TransitionToRightSegue: UIStoryboardSegue {
 }
 
 class TransitionToLeftSegue: UIStoryboardSegue {
-    
     override func perform() {
-        print("TransitionToLeftSegue:perform")
         let src = self.source
         let transition: CATransition = CATransition()
         let timeFunc : CAMediaTimingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
