@@ -319,13 +319,15 @@ extension MasterViewController: UITabBarDelegate {
         let scdProvider = SearchCoreDataProvider.sharedInstance
         frc.fetchRequest.sortDescriptors = scdProvider.getFrequentSortDescriptor()
         
-        // Reset predicate (or keep search predicate)
-        if self.currentSearchPredicate != nil {
-            frc.fetchRequest.predicate = self.currentSearchPredicate
+        // Get predicate corresponding to frequency (manage search predicate if existing)
+        let frequentPredicate = scdProvider.getFrequentPredicate()
+        if self.currentSearchPredicate != nil && frequentPredicate != nil {
+            frc.fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [self.currentSearchPredicate!, frequentPredicate!])
         } else {
-            frc.fetchRequest.predicate = nil
+            frc.fetchRequest.predicate = frequentPredicate
         }
-        self.currentTabPredicate = nil
+        self.currentTabPredicate = frequentPredicate
+        
         // Perform fetch and reload data
         try? frc.performFetch()
         self.tableView.reloadData()

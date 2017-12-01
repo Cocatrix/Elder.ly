@@ -47,6 +47,15 @@ class SearchCoreDataProvider {
         return favouritePredicate
     }
     
+    func getFrequentPredicate() -> NSPredicate? {
+        /**
+         * Returns a predicate that filters the results with frequent contacts (at least interacted once with)
+         */
+        let frequentPredicate: NSPredicate
+        frequentPredicate = NSPredicate(format: "frequency != 0")
+        return frequentPredicate
+    }
+    
     func getDefaultSortDescriptor() -> [NSSortDescriptor] {
         /**
          * Returns a sort descriptor array with these sort rules :
