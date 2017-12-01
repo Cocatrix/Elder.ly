@@ -246,6 +246,24 @@ extension MasterViewController: UISearchBarDelegate {
         try? frc.performFetch()
         self.tableView.reloadData()
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.searchBar.resignFirstResponder()
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+    }
+    
+    
+    func searchBarCancelButtonClicked() {
+        print("Test")
+        self.searchBar.text = ""
+        self.searchBar.showsCancelButton = false
+        searchBar.setShowsCancelButton(false, animated: true)
+        self.searchBar.resignFirstResponder()
+        searchBar.endEditing(true)
+    }
 }
 
 // MARK: - Tab Bar

@@ -160,6 +160,7 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
             print("Not found whether favourite")
             return
         }
+        
         self.contact!.updateIsFavouriteContact(shouldBeFavourite: !isFavourite, success: {
             DispatchQueue.main.async {
                 // Change addFavouriteButton label depending on favourite status
