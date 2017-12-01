@@ -176,6 +176,9 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             } else {
                 contactCell.callButton.isHidden = true
             }
+
+            contactCell.setContact(contact: contact)
+
             if let email = contact.email  {
                 contactCell.avatarImageView.gravatarImage(email: email)
             }

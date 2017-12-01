@@ -10,6 +10,7 @@ import UIKit
 
 class ContactTableViewCell: UITableViewCell {
     var phoneNumber: String?
+    var contact: Contact?
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -32,11 +33,15 @@ class ContactTableViewCell: UITableViewCell {
         self.phoneNumber = phone
     }
     
+    func setContact(contact: Contact) {
+        self.contact = contact
+    }
+    
     @IBAction func callPressed(_ sender: Any) {
-        guard let phone = self.phoneNumber else {
+        guard let phone = self.phoneNumber, let contact = self.contact else {
             return
         }
-        CommunicationUtil.call(phoneNumber: phone)
+        CommunicationUtil.call(phoneNumber: phone, contact: contact)
     }
 }
 

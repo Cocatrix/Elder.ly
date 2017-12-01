@@ -97,17 +97,14 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         }
         
         switch segment.selectedSegmentIndex {
-        case 0: // Text message
-            print("text", phoneNumber)
-            CommunicationUtil.text(phoneNumber: phoneNumber)
+        case 0:
+            CommunicationUtil.text(phoneNumber: phoneNumber, contact: self.contact!)
             break
-        case 1: // Call
-            print("call", phoneNumber)
-            CommunicationUtil.call(phoneNumber: phoneNumber)
+        case 1:
+            CommunicationUtil.call(phoneNumber: phoneNumber, contact: self.contact!)
             break
-        case 2: // eMail
-            print("email", email)
-            CommunicationUtil.email(emailAdress: email)
+        case 2:
+            CommunicationUtil.email(emailAdress: email, contact: self.contact!)
             break
         default:
             break
@@ -118,14 +115,14 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         guard let email = self.contact?.email else {
             return
         }
-        CommunicationUtil.email(emailAdress: email)
+        CommunicationUtil.email(emailAdress: email, contact: self.contact!)
     }
     
     @IBAction func phoneNumberPressed(_ sender: Any) {
         guard let phoneNumber = self.contact?.phone else {
             return
         }
-        CommunicationUtil.call(phoneNumber: phoneNumber)
+        CommunicationUtil.call(phoneNumber: phoneNumber, contact: self.contact!)
     }
     
     func editContact() {
