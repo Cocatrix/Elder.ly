@@ -107,6 +107,17 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="56"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="search"/>
                             </searchBar>
+                            <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="tuto-new-contact" translatesAutoresizingMaskIntoConstraints="NO" id="Cl4-Pc-pNL">
+                                <rect key="frame" x="240" y="64" width="46" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ajouter un contact" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5dZ-bf-oSn">
+                                <rect key="frame" x="73" y="74" width="162" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -129,12 +140,14 @@
                         <outlet property="searchBar" destination="yab-1u-5Dw" id="Jch-nv-TCj"/>
                         <outlet property="tabBar" destination="lWB-nf-AJg" id="ugn-jr-wel"/>
                         <outlet property="tableView" destination="qhS-qq-l2R" id="BJj-RH-Gko"/>
+                        <outlet property="tutoNewContactImage" destination="Cl4-Pc-pNL" id="WX3-Eb-fkK"/>
+                        <outlet property="tutoNewContactLabel" destination="5dZ-bf-oSn" id="dLw-HD-XN3"/>
                         <segue destination="yaC-f7-cDd" kind="presentation" identifier="openMenu" customClass="TransitionToRightSegue" customModule="Elder_ly" customModuleProvider="target" modalPresentationStyle="overCurrentContext" id="RWz-Me-Mtb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="smO-UO-uLI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="791" y="-632"/>
+            <point key="canvasLocation" x="789.375" y="-632.74647887323943"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="SEX-9f-MP4">
@@ -435,6 +448,7 @@
     </scenes>
     <resources>
         <image name="default-avatar" width="200" height="200"/>
+        <image name="tuto-new-contact" width="111" height="92"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="zbk-nb-8X0"/>
