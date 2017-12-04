@@ -55,11 +55,21 @@ class MenuViewController: UIViewController {
     }
     
     @IBAction func onDisconnectPressed(_ sender: Any) {
-        WebServicesProvider.sharedInstance.revokeToken()
-        UserDefaults.standard.unsetAuth()
-        let controller = LoginViewController(nibName: nil, bundle: nil)
-        self.present(controller, animated: false, completion: nil)
-        self.dismiss(animated: true)
+        let disconnectionAlert = UIAlertController(title: "Disconnection".localized, message: "Are you sure you want to disconnect ?".localized, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default, handler: { _ in
+            WebServicesProvider.sharedInstance.revokeToken()
+            UserDefaults.standard.unsetAuth()
+            UserDefaults.standard.setFirstLogin()
+            let controller = LoginViewController(nibName: nil, bundle: nil)
+            self.present(controller, animated: false, completion: nil)
+            self.dismiss(animated: true)
+        })
+        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel) { _ in
+            return
+        }
+        disconnectionAlert.addAction(OKAction)
+        disconnectionAlert.addAction(cancelAction)
+        self.present(disconnectionAlert, animated: true)
     }
     
     override func didReceiveMemoryWarning() {

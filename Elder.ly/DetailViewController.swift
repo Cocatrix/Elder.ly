@@ -173,9 +173,7 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
                 let myError = error as NSError?
                 if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
                     DispatchQueue.main.async {
-                        UserDefaults.standard.unsetAuth()
-                        let controller = LoginViewController(nibName: nil, bundle: nil)
-                        self.present(controller, animated: false, completion: nil)
+                        self.present(AlertDialogProvider.authError(), animated: true)
                     }
                 } else {
                     print(myError ?? "Error")
