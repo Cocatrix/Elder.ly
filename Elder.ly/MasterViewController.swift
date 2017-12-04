@@ -31,9 +31,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tabBar.delegate = self
         
         // NavigationBar colors
-        self.navigationController?.navigationBar.tintColor = UIColor.purpleLight()
+        self.navigationController?.navigationBar.tintColor = UIColor.white()
         self.navigationController?.navigationBar.barTintColor = UIColor.purple()
-//        self.navigationController?.navigationBar.backgroundColor = UIColor.purpleDark()
+        self.navigationController?.navigationBar.backgroundColor = UIColor.purple()
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white()]
         
         // NavigationBar items
         let menuButton = UIBarButtonItem(title: "Mon Profil".localized, style: .plain, target: self, action: #selector(openMenu(_:)))
@@ -171,11 +172,11 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let contact = resultController?.object(at: indexPath)
         // Displaying with grey background on half cells
-        if (indexPath.row+1)%2 == 0 {
-            cell.contentView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
-        } else {
-            cell.contentView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
-        }
+//        if (indexPath.row+1)%2 == 0 {
+//            cell.contentView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+//        } else {
+//            cell.contentView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
+//        }
         configureCell(cell, withContact: contact!)
         return cell
     }

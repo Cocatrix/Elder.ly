@@ -29,10 +29,16 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
             return
         }
         
+        // Display contact fullname
         self.contactFullname.text = contact.firstName! + " " + contact.lastName!
         
+        // Email and PhoneNumber buttons tyiyle and style
         self.emailButton.setTitle(contact.email, for: .normal)
+        self.emailButton.setTitleColor(UIColor.purple(), for: .normal)
+        self.emailButton.setTitleColor(UIColor.purpleDarker(), for: .highlighted)
         self.callButton.setTitle(contact.phone, for: .normal)
+        self.callButton.setTitleColor(UIColor.purple(), for: .normal)
+        self.callButton.setTitleColor(UIColor.purpleDarker(), for: .highlighted)
         
         // Change addFavouriteButton label depending on favourite status
         if let isFavourite = self.contact?.isFavouriteUser {
@@ -43,7 +49,7 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
             }
         }
         
-        //TODO : display real avatar profil
+        
         // Set avatar image
         if let email = contact.email {
             self.contactImage.gravatarImage(email: email, size: Gravatar.Size.large)
@@ -54,10 +60,16 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         self.contactImage.layer.cornerRadius = self.contactImage.frame.size.width / 2
         self.contactImage.contentMode = .scaleAspectFill
         
-        // Segment Control Font Size
+        // Segment Control Style
         let font = UIFont.systemFont(ofSize: 17)
-        self.segmentControl.setTitleTextAttributes([NSAttributedStringKey.font: font],
-                                                for: .normal)
+        self.segmentControl.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
+        self.segmentControl.layer.cornerRadius = self.segmentControl.frame.size.height / 2
+        self.segmentControl.layer.borderColor = UIColor.white().cgColor
+        self.segmentControl.layer.borderWidth = 3
+        self.segmentControl.tintColor = UIColor.white()
+        self.segmentControl.backgroundColor = UIColor.purple()
+        self.segmentControl.layer.borderWidth = 1
+        self.segmentControl.layer.masksToBounds = true
         
         let options = UIBarButtonItem(title: "Options".localized, style: .plain, target: self, action: #selector(displayOptions))
         self.navigationController?.isToolbarHidden = false
