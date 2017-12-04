@@ -28,7 +28,6 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         guard let contact = self.contact else {
             return
         }
-        
         // Display contact fullname
         self.contactFullname.text = contact.firstName! + " " + contact.lastName!
         
@@ -53,7 +52,6 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
                 self.addFavouriteButton.setTitle(self.addFavouritesString.localized, for: .normal)
             }
         }
-        
         
         // Set avatar image
         if let email = contact.email {
@@ -105,7 +103,6 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
     }
     
     @IBAction func interactionPressed(_ segment: UISegmentedControl) {
-        
         guard
             let phoneNumber = self.contact?.phone,
             let email = self.contact?.email

@@ -20,7 +20,6 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     var selectedProfile: String = ""    
     var profilesList: [String] = [String]()
-    
     var contact: Contact?
     
     @IBOutlet weak var requestIndicator: UIActivityIndicatorView!
