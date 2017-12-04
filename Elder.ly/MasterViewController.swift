@@ -62,7 +62,6 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return
         }
         self.tabBar.selectedItem = items[1]
-        // TODO - Set toolbar items
         
         self.manageKeyboardDisplaying()
         
@@ -163,7 +162,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             do {
                 try context?.save()
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
+                // TODO - Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
@@ -216,8 +215,6 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let contentInset:UIEdgeInsets = UIEdgeInsets.zero
         tableView.contentInset = contentInset
     }
-    
-     // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
 }
 
 // MARK: - Search Bar
@@ -225,6 +222,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 extension MasterViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        /**
+         * Refresh displayed cells when text has changed. Is also called when field search is emptied.
+         * Predicate used for search works with tab predicates (favourites only, most frequent first)
+         */
         guard let frc = self.resultController else {
             return
         }
@@ -248,21 +249,22 @@ extension MasterViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.searchBar.resignFirstResponder()
+        if(searchBar.text == "") { // Same behaviour as cancel button, exit searching
+            self.searchBarCancelButtonClicked(searchBar)
+        } else {
+            self.searchBar.resignFirstResponder()
+        }
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.searchBar.showsCancelButton = true
     }
     
-    
-    func searchBarCancelButtonClicked() {
-        print("Test")
-        self.searchBar.text = ""
-        self.searchBar.showsCancelButton = false
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        self.searchBar(searchBar, textDidChange: "")
         searchBar.setShowsCancelButton(false, animated: true)
-        self.searchBar.resignFirstResponder()
-        searchBar.endEditing(true)
+        searchBar.resignFirstResponder()
     }
 }
 
@@ -355,7 +357,7 @@ extension MasterViewController: UITabBarDelegate {
     func displayFrequentContacts() {
         /**
          * Gets fetchResultsController and update its fetchRequest with :
-         * - a fetchLimitNumber
+         * - a fetchLimitNumber (5)
          * - sorted by frequency, then first name, then last name
          * - no predicate (except search results if applicable)
          */
@@ -388,45 +390,7 @@ extension MasterViewController: UITabBarDelegate {
 // MARK: - FetchedResultsController
 
 extension MasterViewController: NSFetchedResultsControllerDelegate {
-    // BASIC METHOD :
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.reloadData()
     }
-    // Could be replaced by following methods :
-    /*
-     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-     }
-     
-     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-         print("Inserting ? : ", type)
-         switch type {
-         case .insert:
-            tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
-         case .delete:
-            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
-         default:
-            return
-         }
-     }
-     
-     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-         print("Updating ? : ", type)
-         switch type {
-            case .insert:
-         tableView.insertRows(at: [newIndexPath!], with: .fade)
-            case .delete:
-         tableView.deleteRows(at: [indexPath!], with: .fade)
-            case .update:
-         configureCell(tableView.cellForRow(at: indexPath!)!, withContact: anObject as! Contact)
-            case .move:
-         configureCell(tableView.cellForRow(at: indexPath!)!, withContact: anObject as! Contact)
-            tableView.moveRow(at: indexPath!, to: newIndexPath!)
-         }
-     }
-     
-     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
-     }
-     */
 }
