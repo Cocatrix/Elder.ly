@@ -53,6 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
         UserDefaults.standard.unsetAuth()
+        UserDefaults.standard.setFirstLogin()
     }
 
     // MARK: - Split view
@@ -92,7 +93,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
-        
         container.viewContext.automaticallyMergesChangesFromParent = true
         
         return container

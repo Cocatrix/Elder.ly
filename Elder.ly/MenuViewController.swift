@@ -40,11 +40,11 @@ class MenuViewController: UIViewController {
     }
     
     func updateMenuView() {
-        // Round user profil image
         guard let phone = cuPhone, let email = cuEmail, let firstName = cuFirstName, let lastName = cuLastName else {
             return
         }
  
+        // Round user profile image
         self.userImage.gravatarImage(email: email)
         self.userImage.layer.cornerRadius = self.userImage.frame.size.width / 2
         self.userImage.contentMode = .scaleAspectFill

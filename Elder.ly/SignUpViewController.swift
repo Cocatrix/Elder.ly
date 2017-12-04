@@ -16,14 +16,13 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var firstnameView: UITextField!
     @IBOutlet weak var emailView: UITextField!
     @IBOutlet weak var passwordView: UITextField!
-    
     @IBOutlet weak var profileView: UIPickerView!
-    var selectedProfile: String = ""
-    var profilesList: [String] = [String]()
-    
     @IBOutlet weak var requestIndicator: UIActivityIndicatorView!
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
+    
+    var selectedProfile: String = ""
+    var profilesList: [String] = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +36,6 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         self.loginButton.layer.borderColor = UIColor.orange().cgColor
         self.loginButton.layer.cornerRadius = self.loginButton.frame.size.height / 2
     
-        
         let preferencesProfiles = UserDefaults.standard.value(forKey: "elderlyProfiles")
         if ((preferencesProfiles) != nil) {
             print("Preferences set")
