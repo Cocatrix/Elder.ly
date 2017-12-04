@@ -143,7 +143,13 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
     }
     
     func editContact() {
-        print("Edit pressed")
+        guard let contactToEdit = self.contact else {
+            print("No contact in DetailView")
+            return
+        }
+        let controller = AddEditViewController(nibName: nil, bundle: nil)
+        controller.contact = contactToEdit
+        self.navigationController?.pushViewController(controller, animated: false)
     }
     
     func deleteContact() {

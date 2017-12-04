@@ -250,7 +250,7 @@ class WebServicesProvider {
                 return
             }
             let jsonContact: [String: Any] = ["email": email, "phone": phone, "firstName": firstName, "lastName": lastName, "profile": profile,
-                                              "gravatar": gravatar, "isFamilinkUser": isFamilinkUser, "isEmergencyUser": isEmergencyUser]
+                                              "gravatar": gravatar, "isFamilinkUser": isFamilinkUser, "isEmergencyUser": isEmergencyUser, "_id": wsId]
             let url = URL(string: self.url + "/secured/users/contacts/\(wsId)")
             var request = URLRequest(url: url!)
             request.httpMethod = "PUT"
@@ -265,8 +265,12 @@ class WebServicesProvider {
                 let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
                 let contacts = try! context.fetch(fetchRequest)
                 let contact = contacts.filter({return jsonContact["_id"] as? String == $0.wsId}).first
-                contact?.wsId = wsId
-                self.updateLocalContactWithData(contact: contact!, dict: jsonContact)
+                guard let contactToUpdateLocally = contact else {
+                    print("Filtering contact not working")
+                    return
+                }
+                contactToUpdateLocally.wsId = wsId
+                self.updateLocalContactWithData(contact: contactToUpdateLocally, dict: jsonContact)
                 do {
                     try context.save()
                     success()
