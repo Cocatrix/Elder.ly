@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var firstNameTextField: UITextField!
@@ -46,7 +46,29 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         profileView.dataSource = self
         profileView.delegate = self
         
+        firstNameTextField.delegate = self
+        firstNameTextField.tag = 0
+        lastNameTextField.delegate = self
+        lastNameTextField.tag = 1
+        phoneNumberTextField.delegate = self
+        phoneNumberTextField.tag = 2
+        emailTextField.delegate = self
+        emailTextField.tag = 3
+        
         loadProfilesFromWS()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        // Try to find next responder
+        if let nextField = textField.superview?.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            nextField.becomeFirstResponder()
+        } else {
+            // Not found, so remove keyboard.
+            textField.resignFirstResponder()
+        }
+        // Do not add a line break
+        return false
     }
 
     override func didReceiveMemoryWarning() {
