@@ -75,4 +75,14 @@ extension Contact {
             }
         }
     }
+    
+    @objc var firstLetter: String {
+        get {
+            if let first = firstName?.first {
+                return String(first).uppercased()
+            } else {
+                return "?"
+            }
+        }
+    }
 }
