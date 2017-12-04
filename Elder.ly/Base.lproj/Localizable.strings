@@ -6,7 +6,8 @@
   Copyright © 2017 Old Mojito. All rights reserved.
 */
 "Error" = "Erreur";
-"ErrorConnection" = "Erreur de connexion";
+"Connection error" = "Erreur de connexion";
+"Unknown error" = "Erreur inconnue";
 "OK" = "OK";
 "Options" = "Options";
 "Edit" = "Modifier";
@@ -16,11 +17,11 @@
 "Please enter your phone number" = "Veuillez renseigner votre numéro de téléphone";
 "Phone number" = "Numéro de téléphone";
 "Send" = "Envoyer";
-"Sent password" = "Mot de passe envoyé";
-"No account" = "Compte inexistant ou erreur de communication avec le serveur";
+"Password sent" = "Mot de passe envoyé";
+"No account or distant server communication error" = "Compte inexistant ou erreur de communication avec le serveur";
 "Invalid phone" = "Numéro invalide";
 "Add to your favourites" = "Ajouter à vos favoris";
 "Remove from your favourites" = "Retirer de vos favoris";
-"Search (name, email...)" = "Rechercher (par nom, email...)";
-"Delete Alert" = "Alerte Suppression";
+"Search (by name, email...)" = "Rechercher (par nom, email...)";
+"Delete Alert" = "Alerte de suppression";
 "Are you sure you want to delete this contact ?" = "Êtes vous sûr(e) de vouloir supprimer ce contact ?";

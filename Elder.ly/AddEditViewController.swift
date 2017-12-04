@@ -236,11 +236,11 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     func alertUnknownError() {
-        let errorTitle = NSLocalizedString("error", comment: "Error")
-        let errorConnection = NSLocalizedString("error", comment: "Erreur Inconnue")
-        let okString = NSLocalizedString("OK", comment: "OK")
+        let errorTitle = "Error".localized
+        let unknownError = "Unknown error".localized
+        let okString = "OK".localized
         
-        let errorAlertController = UIAlertController(title: errorTitle, message: errorConnection, preferredStyle: .alert)
+        let errorAlertController = UIAlertController(title: errorTitle, message: unknownError, preferredStyle: .alert)
         let OKAction = UIAlertAction(title: okString, style: .default)
         errorAlertController.addAction(OKAction)
         self.present(errorAlertController, animated: true)

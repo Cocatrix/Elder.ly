@@ -21,7 +21,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var currentUserLastName: String?
     var currentUserEmail: String?
     
-    var searchPlaceholder: String = "Search (name, email...)".localized
+    let searchPlaceholder: String = "Search (by name, email...)".localized
+    let myProfileString: String = "Mon Profil".localized
+    let addContactString: String = "Ajouter".localized
+    
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -42,10 +45,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white()]
         
         // NavigationBar items
-        let menuButton = UIBarButtonItem(title: "Mon Profil".localized, style: .plain, target: self, action: #selector(openMenu(_:)))
+        let menuButton = UIBarButtonItem(title: myProfileString, style: .plain, target: self, action: #selector(openMenu(_:)))
         navigationItem.leftBarButtonItem = menuButton
         
-        let addButton = UIBarButtonItem(title: "Ajouter".localized, style: .plain, target: self, action: #selector(insertNewObject(_:)))
+        let addButton = UIBarButtonItem(title: addContactString, style: .plain, target: self, action: #selector(insertNewObject(_:)))
         navigationItem.rightBarButtonItem = addButton
         if let split = splitViewController {
             let controllers = split.viewControllers
@@ -226,6 +229,9 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            guard let id = self.resultController?.object(at: indexPath).wsId else {
+                return
+            }
             let deleteAlertController = UIAlertController(title: "Delete Alert".localized,
                                                           message: "Are you sure you want to delete this contact ?".localized,
                                                           preferredStyle: .alert)
@@ -234,9 +240,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
             deleteAlertController.addAction(cancelAction)
             let OKAction = UIAlertAction(title: "OK", style: .default) { _ in
-                guard let id = self.resultController?.object(at: indexPath).wsId else {
-                    return
-                }
+                
                 WebServicesProvider.sharedInstance.deleteContactOnServer(wsId: id, success: {
                     print("delete success")
                 }, failure: { (error) in
@@ -253,6 +257,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 })
             }
             deleteAlertController.addAction(OKAction)
+           
             self.present(deleteAlertController, animated: true) {
             }
         }

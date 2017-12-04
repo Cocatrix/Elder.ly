@@ -18,8 +18,8 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var addFavouriteButton: UIButton!
     
-    let addFavouritesString: String = "Add to your favourites"
-    let removeFavouritesString: String = "Remove from your favourites"
+    let addFavouritesString: String = "Add to your favourites".localized
+    let removeFavouritesString: String = "Remove from your favourites".localized
     
     weak var contact: Contact?
     
@@ -48,9 +48,9 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         // Change addFavouriteButton label depending on favourite status
         if let isFavourite = self.contact?.isFavouriteUser {
             if isFavourite {
-                self.addFavouriteButton.setTitle(self.removeFavouritesString.localized, for: .normal)
+                self.addFavouriteButton.setTitle(self.removeFavouritesString, for: .normal)
             } else {
-                self.addFavouriteButton.setTitle(self.addFavouritesString.localized, for: .normal)
+                self.addFavouriteButton.setTitle(self.addFavouritesString, for: .normal)
             }
         }
         
@@ -210,10 +210,10 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
                 // Change addFavouriteButton label depending on favourite status
                 if !isFavourite {
                     print("Contact added to favourites")
-                    self.addFavouriteButton.setTitle(self.removeFavouritesString.localized, for: .normal)
+                    self.addFavouriteButton.setTitle(self.removeFavouritesString, for: .normal)
                 } else {
                     print("Contact removed from favourites")
-                    self.addFavouriteButton.setTitle(self.addFavouritesString.localized, for: .normal)
+                    self.addFavouriteButton.setTitle(self.addFavouritesString, for: .normal)
                 }   
             }
         }) { (error) in

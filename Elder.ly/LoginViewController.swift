@@ -128,15 +128,15 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func forgottenPasswordPressed(_ sender: Any) {
-        let errorTitle = NSLocalizedString("error", comment: "Error")
-        let okString = NSLocalizedString("OK", comment: "OK")
-        let forgottenTitle = NSLocalizedString("Forgotten password", comment: "Forgotten password")
-        let phoneRequestString = NSLocalizedString("Please enter your phone number", comment: "Please enter your phone number")
-        let phoneNumberString = NSLocalizedString("Phone number", comment: "Phone number")
-        let sendString = NSLocalizedString("Send", comment: "Send")
-        let sentPasswordString = NSLocalizedString("Sent password", comment: "Sent password")
-        let noAccountErrorString = NSLocalizedString("No account", comment: "No account")
-        let invalidPhoneString = NSLocalizedString("Invalid phone", comment: "Invalid phone")
+        let errorTitle = "Error".localized
+        let okString = "OK".localized
+        let forgottenTitle = "Forgotten password".localized
+        let phoneRequestString = "Please enter your phone number".localized
+        let phoneNumberString = "Phone number".localized
+        let sendString = "Send".localized
+        let sentPasswordString = "Password sent".localized
+        let noAccountErrorString = "No account or distant server communication error".localized
+        let invalidPhoneString = "Invalid phone".localized
         
         let alert = UIAlertController(title: forgottenTitle, message: phoneRequestString, preferredStyle: .alert)
         alert.addTextField { (numberField) in
@@ -180,9 +180,9 @@ class LoginViewController: UIViewController {
     }
     
     func alertConnectionError() {
-        let errorTitle = NSLocalizedString("error", comment: "Error")
-        let errorConnection = NSLocalizedString("errorConnection", comment: "Erreur de connexion")
-        let okString = NSLocalizedString("OK", comment: "OK")
+        let errorTitle = "Error".localized
+        let errorConnection = "Connection error".localized
+        let okString = "OK".localized
         
         let errorAlertController = UIAlertController(title: errorTitle, message: errorConnection, preferredStyle: .alert)
         let OKAction = UIAlertAction(title: okString, style: .default)
