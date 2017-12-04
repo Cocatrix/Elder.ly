@@ -36,4 +36,13 @@ extension UserDefaults {
     func deleteLoggedPhoneNumber () {
         UserDefaults.standard.removeObject(forKey: "loggedPhoneNumber")
     }
+    func isFirstLogin () -> Bool {
+        return (UserDefaults.standard.value(forKey: "isFirstLogin") as? Bool) ?? true
+    }
+    func setFirstLogin () {
+        UserDefaults.standard.set(true, forKey: "isFirstLogin")
+    }
+    func unsetFirstLogin () {
+        UserDefaults.standard.set(false, forKey: "isFirstLogin")
+    }
 }

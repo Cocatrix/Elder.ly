@@ -95,7 +95,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewWillAppear(animated)
         
         // Check Auth
-        if !UserDefaults.standard.isAuth() {
+        if !UserDefaults.standard.isAuth() && UserDefaults.standard.isFirstLogin() {
             let controller = LoginViewController(nibName: nil, bundle: nil)
             self.present(controller, animated: false, completion: nil)
         } else {
