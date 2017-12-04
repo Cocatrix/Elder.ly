@@ -34,6 +34,7 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         
         // Buttons Styling
         self.addButton.layer.cornerRadius = self.addButton.frame.size.height / 2
+        self.addButton.setTitle("Valider".localized, for: .normal)
         
         // Fill picker
         let preferencesProfiles = UserDefaults.standard.value(forKey: "elderlyProfiles")
