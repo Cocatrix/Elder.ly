@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddEditViewController" customModule="Elder_ly" customModuleProvider="target">
             <connections>
+                <outlet property="addButton" destination="3vZ-t1-FZx" id="0uk-mb-1Nf"/>
                 <outlet property="addContactButton" destination="3vZ-t1-FZx" id="IyS-9E-Q2W"/>
                 <outlet property="emailTextField" destination="EC1-Ln-LhG" id="uua-sC-O5R"/>
                 <outlet property="firstNameTextField" destination="9C7-3H-kK3" id="zq9-ZJ-kGs"/>
@@ -32,7 +33,7 @@
                     <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gvl-c8-Ufr">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="688"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Qb8-gA-9g8">
                                     <rect key="frame" x="16" y="16" width="382" height="640"/>
@@ -181,7 +182,7 @@
                             <constraints>
                                 <constraint firstItem="Qb8-gA-9g8" firstAttribute="top" secondItem="gvl-c8-Ufr" secondAttribute="top" constant="16" id="Rya-3G-pWx"/>
                                 <constraint firstItem="Qb8-gA-9g8" firstAttribute="leading" secondItem="gvl-c8-Ufr" secondAttribute="leading" constant="16" id="YI4-U7-FJs"/>
-                                <constraint firstAttribute="bottom" secondItem="Qb8-gA-9g8" secondAttribute="bottom" constant="16" id="aR1-fz-zd6"/>
+                                <constraint firstAttribute="bottom" secondItem="Qb8-gA-9g8" secondAttribute="bottom" constant="32" id="aR1-fz-zd6"/>
                                 <constraint firstAttribute="trailing" secondItem="Qb8-gA-9g8" secondAttribute="trailing" constant="16" id="fXH-qt-UZ2"/>
                             </constraints>
                         </view>
