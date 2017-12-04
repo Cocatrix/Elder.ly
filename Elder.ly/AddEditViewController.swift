@@ -176,13 +176,11 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                     print("Phone : " + phone + ", Firstname : " + firstName + ", Lastname : " + lastName + ", Email : " + email + ", Profile : " + profile)
                     let myError = error as NSError?
                     if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
-                        UserDefaults.standard.unsetAuth()
                         DispatchQueue.main.async {
                             self.addContactButton.isEnabled = true
                             self.requestIndicator.isHidden = true
+                            self.present(AlertDialogProvider.authError(), animated: true)
                         }
-                        let controller = LoginViewController(nibName: nil, bundle: nil)
-                        self.present(controller, animated: false, completion: nil)
                     } else {
                         self.alertUnknownError()
                     }
@@ -210,13 +208,11 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                     print("Phone : " + phone + ", Firstname : " + firstName + ", Lastname : " + lastName + ", Email : " + email + ", Profile : " + profile)
                     let myError = error as NSError?
                     if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
-                        UserDefaults.standard.unsetAuth()
                         DispatchQueue.main.async {
                             self.addContactButton.isEnabled = true
                             self.requestIndicator.isHidden = true
+                            self.present(AlertDialogProvider.authError(), animated: true)
                         }
-                        let controller = LoginViewController(nibName: nil, bundle: nil)
-                        self.present(controller, animated: false, completion: nil)
                     } else {
                         self.alertUnknownError()
                     }

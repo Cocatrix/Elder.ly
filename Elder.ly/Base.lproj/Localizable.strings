@@ -24,3 +24,5 @@
 "Search (name, email...)" = "Rechercher (par nom, email...)";
 "Delete Alert" = "Alerte Suppression";
 "Are you sure you want to delete this contact ?" = "Êtes vous sûr(e) de vouloir supprimer ce contact ?";
+"Authentification error" = "Erreur d'authentification";
+"Password" = "Mot de passe";

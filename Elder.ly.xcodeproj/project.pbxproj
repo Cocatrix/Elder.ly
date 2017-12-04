@@ -34,6 +34,7 @@
 		5118D7E01FCDBE710015E2F8 /* UserDefaultUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118D7DF1FCDBE710015E2F8 /* UserDefaultUtils.swift */; };
 		5133E0AC1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5133E0AB1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift */; };
 		518E16F81FD55A130053E053 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518E16F71FD55A130053E053 /* StringUtils.swift */; };
+		518E16FA1FD5844E0053E053 /* AlertDialogProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518E16F91FD5844E0053E053 /* AlertDialogProvider.swift */; };
 		51CD9B54318495C701BE9BDD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABCF36C8A2D1039482C85EA7 /* AVFoundation.framework */; };
 		51EC3A701FCC3F3B00EEE7D6 /* WebServicesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EC3A6F1FCC3F3B00EEE7D6 /* WebServicesProvider.swift */; };
 		51EC3A721FCC403E00EEE7D6 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EC3A711FCC403E00EEE7D6 /* Contact.swift */; };
@@ -109,6 +110,7 @@
 		5118D7DF1FCDBE710015E2F8 /* UserDefaultUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultUtils.swift; sourceTree = "<group>"; };
 		5133E0AB1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoreDataProvider.swift; sourceTree = "<group>"; };
 		518E16F71FD55A130053E053 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
+		518E16F91FD5844E0053E053 /* AlertDialogProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDialogProvider.swift; sourceTree = "<group>"; };
 		51EC3A6F1FCC3F3B00EEE7D6 /* WebServicesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServicesProvider.swift; sourceTree = "<group>"; };
 		51EC3A711FCC403E00EEE7D6 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		51EC3A731FCC405100EEE7D6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -189,25 +191,14 @@
 				41E825C21FCC1B1600566D10 /* Info.plist */,
 				37D007211FCDB76200132F68 /* AddEditViewController.swift */,
 				41E825B11FCC1B1600566D10 /* AppDelegate.swift */,
-				37FF79381FD012CF007D7047 /* CommunicationUtil.swift */,
-				37016E411FCF153400AB82C9 /* ContactTableViewCell.swift */,
 				41E825B81FCC1B1600566D10 /* DetailViewController.swift */,
-				37F562071FCEBE1A0083C0CC /* KeyboardUtil.swift */,
-				37FF79401FD04796007D7047 /* LocalizedUtil.swift */,
 				3790C15B1FCC6018001928E4 /* LoginViewController.swift */,
 				41E825B61FCC1B1600566D10 /* MasterViewController.swift */,
-				378A09471FD18684002211C1 /* MenuViewController.swift */,
-				378A094D1FD1A157002211C1 /* SegueTransitions.swift */,
 				3790C1571FCC5539001928E4 /* SignUpViewController.swift */,
-				51FB10BA1FD1978C00A9D9F1 /* SplitViewControllerUtils.swift */,
-				51FBCD1A1FD048FA004A8E73 /* UIColorUtils.swift */,
-				5118D7DF1FCDBE710015E2F8 /* UserDefaultUtils.swift */,
-				F914D2AB1FCEC911008326FB /* UserValidationUtil.swift */,
 				41E825BD1FCC1B1600566D10 /* Assets.xcassets */,
 				37D0072F1FCDC68300132F68 /* AddEditViewController.xib */,
 				41E825B31FCC1B1600566D10 /* Elder_ly.xcdatamodeld */,
 				41E825BF1FCC1B1600566D10 /* LaunchScreen.storyboard */,
-				37D007371FCDC95200132F68 /* Localizable.strings */,
 				37D007271FCDC5C500132F68 /* LoginViewController.xib */,
 				41E825BA1FCC1B1600566D10 /* Main.storyboard */,
 				51EC3A6D1FCC3EFC00EEE7D6 /* Models */,
@@ -225,7 +216,6 @@
 				378A094D1FD1A157002211C1 /* SegueTransitions.swift */,
 				518E16F71FD55A130053E053 /* StringUtils.swift */,
 				37D007341FCDC71000132F68 /* SignUpViewController.xib */,
-
 			);
 			path = Elder.ly;
 			sourceTree = "<group>";
@@ -263,6 +253,7 @@
 				51EC3A6F1FCC3F3B00EEE7D6 /* WebServicesProvider.swift */,
 				5133E0AB1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift */,
 				51FBCD121FD005D1004A8E73 /* GravatarProvider.swift */,
+				518E16F91FD5844E0053E053 /* AlertDialogProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -430,6 +421,7 @@
 				5133E0AC1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift in Sources */,
 				51FBCD131FD005D1004A8E73 /* GravatarProvider.swift in Sources */,
 				51FB10BB1FD1978C00A9D9F1 /* SplitViewControllerUtils.swift in Sources */,
+				518E16FA1FD5844E0053E053 /* AlertDialogProvider.swift in Sources */,
 				51EC3A701FCC3F3B00EEE7D6 /* WebServicesProvider.swift in Sources */,
 				3790C1591FCC5539001928E4 /* SignUpViewController.swift in Sources */,
 				518E16F81FD55A130053E053 /* StringUtils.swift in Sources */,
