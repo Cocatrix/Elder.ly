@@ -27,6 +27,9 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tabBar: UITabBar!
     
+    @IBOutlet weak var tutoNewContactImage: UIImageView!
+    @IBOutlet weak var tutoNewContactLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -107,6 +110,9 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.currentUserPhone = currentUser.phone
                 self.currentUserFirstName = currentUser.firstName
                 self.currentUserLastName = currentUser.lastName
+                DispatchQueue.main.async {
+                    self.tutoCheck()
+                }
             }) { (error) in
                 DispatchQueue.main.async {
                     let context = self.appDelegate().persistentContainer.viewContext
@@ -316,6 +322,20 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let contentInset:UIEdgeInsets = UIEdgeInsets.zero
         tableView.contentInset = contentInset
     }
+    
+    func tutoCheck() {
+        if self.tableView.numberOfRows(inSection: 0) == 0 {
+            print("No contact")
+            tutoNewContactImage.isHidden = false
+            tutoNewContactLabel.isHidden = false
+            searchBar.isHidden = true
+        } else {
+            print("Some contacts")
+            tutoNewContactImage.isHidden = true
+            tutoNewContactLabel.isHidden = true
+            searchBar.isHidden = true
+        }
+    }
 }
 
 // MARK: - Search Bar
@@ -424,6 +444,7 @@ extension MasterViewController: UITabBarDelegate {
         // Perform fetch and reload data
         try? frc.performFetch()
         self.tableView.reloadData()
+        tutoCheck()
     }
     
     func displayAllContacts() {
@@ -453,6 +474,7 @@ extension MasterViewController: UITabBarDelegate {
         // Perform fetch and reload data
         try? frc.performFetch()
         self.tableView.reloadData()
+        tutoCheck()
     }
     
     func displayFrequentContacts() {
@@ -485,6 +507,7 @@ extension MasterViewController: UITabBarDelegate {
         // Perform fetch and reload data
         try? frc.performFetch()
         self.tableView.reloadData()
+        tutoCheck()
     }
 }
 
@@ -493,6 +516,7 @@ extension MasterViewController: UITabBarDelegate {
 extension MasterViewController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.reloadData()
+        tutoCheck()
     }
 }
 
