@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var firstNameTextField: UITextField!
@@ -16,6 +16,7 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var profileView: UIPickerView!
+    @IBOutlet weak var addButton: UIButton!
     
     var selectedProfile: String = ""    
     var profilesList: [String] = [String]()
@@ -28,6 +29,9 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         self.hideKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        // Buttons Styling
+        self.addButton.layer.cornerRadius = self.addButton.frame.size.height / 2
         
         let preferencesProfiles = UserDefaults.standard.value(forKey: "elderlyProfiles")
         if ((preferencesProfiles) != nil) {
@@ -42,7 +46,29 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         profileView.dataSource = self
         profileView.delegate = self
         
+        firstNameTextField.delegate = self
+        firstNameTextField.tag = 0
+        lastNameTextField.delegate = self
+        lastNameTextField.tag = 1
+        phoneNumberTextField.delegate = self
+        phoneNumberTextField.tag = 2
+        emailTextField.delegate = self
+        emailTextField.tag = 3
+        
         loadProfilesFromWS()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        // Try to find next responder
+        if let nextField = textField.superview?.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            nextField.becomeFirstResponder()
+        } else {
+            // Not found, so remove keyboard.
+            textField.resignFirstResponder()
+        }
+        // Do not add a line break
+        return false
     }
 
     override func didReceiveMemoryWarning() {
