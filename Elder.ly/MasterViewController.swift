@@ -76,10 +76,11 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
         // Sort by first name, then by last name
         let scdProvider = SearchCoreDataProvider.sharedInstance
+        
         fetchRequest.sortDescriptors = scdProvider.getDefaultSortDescriptor()
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: self.appDelegate().persistentContainer.viewContext,
-                                             sectionNameKeyPath: nil, cacheName: nil)
+                                             sectionNameKeyPath: "firstLetter", cacheName: nil)
         frc.delegate = self
         try? frc.performFetch()
         self.resultController = frc
@@ -216,6 +217,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return frc.sections!.count
         }
         return 0
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.resultController!.sections![section].name
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
