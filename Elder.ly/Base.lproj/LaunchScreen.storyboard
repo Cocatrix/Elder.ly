@@ -1,7 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A277" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,13 +18,34 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="elderly" translatesAutoresizingMaskIntoConstraints="NO" id="Voh-UN-naf">
+                                <rect key="frame" x="94" y="172" width="188" height="324"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="elder.ly-logotype" translatesAutoresizingMaskIntoConstraints="NO" id="gPH-2g-h33">
+                                <rect key="frame" x="93" y="464" width="188" height="110"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.22352941176470587" green="0.18823529411764706" blue="0.29019607843137252" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Voh-UN-naf" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" multiplier="0.5" id="7Es-7j-Vdf"/>
+                            <constraint firstItem="Voh-UN-naf" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="8PF-lM-Eqg"/>
+                            <constraint firstItem="Voh-UN-naf" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Crs-y0-Qf9"/>
+                            <constraint firstItem="Voh-UN-naf" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" multiplier="0.5" id="J2e-Lt-QPY"/>
+                            <constraint firstItem="gPH-2g-h33" firstAttribute="width" secondItem="Voh-UN-naf" secondAttribute="width" id="Pph-d7-yxZ"/>
+                            <constraint firstItem="gPH-2g-h33" firstAttribute="top" secondItem="Voh-UN-naf" secondAttribute="bottom" constant="-32" id="aB7-LB-2jr"/>
+                            <constraint firstItem="gPH-2g-h33" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="lZI-6H-s00"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="elder.ly-logotype" width="273" height="110"/>
+        <image name="elderly" width="624" height="1112"/>
+    </resources>
 </document>
