@@ -20,8 +20,8 @@
 		37D007391FCDC95200132F68 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 37D007371FCDC95200132F68 /* Localizable.strings */; };
 		37F562081FCEBE1A0083C0CC /* KeyboardUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F562071FCEBE1A0083C0CC /* KeyboardUtil.swift */; };
 		37FF79391FD012CF007D7047 /* CommunicationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FF79381FD012CF007D7047 /* CommunicationUtil.swift */; };
-		37FF79411FD04796007D7047 /* LocalizedUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FF79401FD04796007D7047 /* LocalizedUtil.swift */; };
 		39F07E2087F6B6AE4057F0DC /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC243844D049F4A0232ECC51 /* CoreText.framework */; };
+		41391B821FD5970C003ECEEF /* LocalizedUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41391B811FD5970C003ECEEF /* LocalizedUtil.swift */; };
 		41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B11FCC1B1600566D10 /* AppDelegate.swift */; };
 		41E825B51FCC1B1600566D10 /* Elder_ly.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B31FCC1B1600566D10 /* Elder_ly.xcdatamodeld */; };
 		41E825B71FCC1B1600566D10 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E825B61FCC1B1600566D10 /* MasterViewController.swift */; };
@@ -91,7 +91,7 @@
 		37FF793D1FD0176A007D7047 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		37FF793E1FD0176A007D7047 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		37FF793F1FD0176B007D7047 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		37FF79401FD04796007D7047 /* LocalizedUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedUtil.swift; sourceTree = "<group>"; };
+		41391B811FD5970C003ECEEF /* LocalizedUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedUtil.swift; sourceTree = "<group>"; };
 		41E825AE1FCC1B1600566D10 /* Elder.ly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elder.ly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41E825B11FCC1B1600566D10 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41E825B41FCC1B1600566D10 /* Elder_ly.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Elder_ly.xcdatamodel; sourceTree = "<group>"; };
@@ -209,13 +209,13 @@
 				F914D2AB1FCEC911008326FB /* UserValidationUtil.swift */,
 				37016E411FCF153400AB82C9 /* ContactTableViewCell.swift */,
 				37FF79381FD012CF007D7047 /* CommunicationUtil.swift */,
-				37FF79401FD04796007D7047 /* LocalizedUtil.swift */,
 				51FBCD1A1FD048FA004A8E73 /* UIColorUtils.swift */,
 				51FB10BA1FD1978C00A9D9F1 /* SplitViewControllerUtils.swift */,
 				378A09471FD18684002211C1 /* MenuViewController.swift */,
 				378A094D1FD1A157002211C1 /* SegueTransitions.swift */,
 				518E16F71FD55A130053E053 /* StringUtils.swift */,
 				37D007341FCDC71000132F68 /* SignUpViewController.xib */,
+				41391B811FD5970C003ECEEF /* LocalizedUtil.swift */,
 			);
 			path = Elder.ly;
 			sourceTree = "<group>";
@@ -430,10 +430,10 @@
 				41E825B21FCC1B1600566D10 /* AppDelegate.swift in Sources */,
 				41E825B51FCC1B1600566D10 /* Elder_ly.xcdatamodeld in Sources */,
 				378A09481FD18684002211C1 /* MenuViewController.swift in Sources */,
+				41391B821FD5970C003ECEEF /* LocalizedUtil.swift in Sources */,
 				37D007231FCDB76200132F68 /* AddEditViewController.swift in Sources */,
 				37F562081FCEBE1A0083C0CC /* KeyboardUtil.swift in Sources */,
 				41E825B71FCC1B1600566D10 /* MasterViewController.swift in Sources */,
-				37FF79411FD04796007D7047 /* LocalizedUtil.swift in Sources */,
 				51FBCD1B1FD048FA004A8E73 /* UIColorUtils.swift in Sources */,
 				F914D2AC1FCEC912008326FB /* UserValidationUtil.swift in Sources */,
 				41E825B91FCC1B1600566D10 /* DetailViewController.swift in Sources */,

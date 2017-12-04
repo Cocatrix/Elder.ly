@@ -19,8 +19,8 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
     @IBOutlet weak var addFavouriteButton: UIButton!
     @IBOutlet weak var starDetailImage: UIImageView!
     
-    let addFavouritesString: String = "Add to your favourites"
-    let removeFavouritesString: String = "Remove from your favourites"
+    let addFavouritesString: String = "Add to your favourites".localized
+    let removeFavouritesString: String = "Remove from your favourites".localized
     
     weak var contact: Contact?
     
@@ -48,10 +48,10 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         // Change addFavouriteButton label depending on favourite status
         if let isFavourite = self.contact?.isFavouriteUser {
             if isFavourite {
-                self.addFavouriteButton.setTitle(self.removeFavouritesString.localized, for: .normal)
+                self.addFavouriteButton.setTitle(self.removeFavouritesString, for: .normal)
                 self.starDetailImage.image = UIImage(named: "star-fill.png")
             } else {
-                self.addFavouriteButton.setTitle(self.addFavouritesString.localized, for: .normal)
+                self.addFavouriteButton.setTitle(self.addFavouritesString, for: .normal)
                 self.starDetailImage.image = nil
             }
         }
@@ -153,14 +153,8 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
     }
     
     func deleteContact() {
-        let deleteAlertController = UIAlertController(title: "Delete Alert".localized,
-                                                      message: "Are you sure you want to delete this contact ?".localized,
-                                                      preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel) { _ in
-            return
-        }
-        deleteAlertController.addAction(cancelAction)
-        let OKAction = UIAlertAction(title: "OK", style: .default) { _ in
+        let deleteAlertController = AlertDialogProvider.deleteAlertController()
+        let OKAction = UIAlertAction(title: "Delete".localized, style: .destructive) { _ in
             guard let id = self.contact?.wsId else {
                 return
             }
@@ -210,11 +204,11 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
                 // Change addFavouriteButton label depending on favourite status
                 if !isFavourite {
                     print("Contact added to favourites")
-                    self.addFavouriteButton.setTitle(self.removeFavouritesString.localized, for: .normal)
+                    self.addFavouriteButton.setTitle(self.removeFavouritesString, for: .normal)
                     self.starDetailImage.image = starFill
                 } else {
                     print("Contact removed from favourites")
-                    self.addFavouriteButton.setTitle(self.addFavouritesString.localized, for: .normal)
+                    self.addFavouriteButton.setTitle(self.addFavouritesString, for: .normal)
                     self.starDetailImage.image = nil
                 }   
             }
