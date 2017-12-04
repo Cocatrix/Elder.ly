@@ -12,12 +12,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="Elder_ly" customModuleProvider="target">
             <connections>
+                <outlet property="forgottenPasswordButton" destination="SGC-Rz-DIS" id="A8q-fe-hwC"/>
                 <outlet property="loginButton" destination="rWb-ae-nod" id="mYe-IB-1ZR"/>
                 <outlet property="passwordField" destination="Wnn-Tg-N26" id="Ga6-kZ-4QV"/>
                 <outlet property="phoneNumberField" destination="f1l-gE-EaT" id="iOw-qg-Rie"/>
                 <outlet property="rememberSwitch" destination="E6z-U7-aon" id="XrM-Z6-11w"/>
                 <outlet property="requestIndicator" destination="S5I-N5-Pjj" id="bwd-HN-gUN"/>
                 <outlet property="scrollView" destination="LU1-UP-9GA" id="KPW-Cy-ong"/>
+                <outlet property="signUpButton" destination="48g-dS-ZkH" id="w9U-Gd-UF0"/>
                 <outlet property="view" destination="mQP-Im-gX6" id="eh3-f0-VqR"/>
             </connections>
         </placeholder>
@@ -30,7 +32,7 @@
                     <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eFU-fT-5QZ">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="584"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="616"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="yzl-bS-rZy">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="584"/>
@@ -119,7 +121,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="signUpButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="48g-dS-ZkH">
-                                            <rect key="frame" x="16" y="488" width="343" height="32"/>
+                                            <rect key="frame" x="32" y="488" width="311" height="32"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="32" id="cJY-W9-Wyu"/>
                                             </constraints>
@@ -131,7 +133,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="forgottenPasswordButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SGC-Rz-DIS">
-                                            <rect key="frame" x="16" y="552" width="343" height="32"/>
+                                            <rect key="frame" x="32" y="552" width="311" height="32"/>
                                             <state key="normal" title="J'ai oublié mon mot de passe">
                                                 <color key="titleColor" red="1" green="0.54117647058823526" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                                             </state>
@@ -142,26 +144,26 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="SGC-Rz-DIS" firstAttribute="height" secondItem="48g-dS-ZkH" secondAttribute="height" id="15D-5n-9jd"/>
-                                        <constraint firstAttribute="trailing" secondItem="SGC-Rz-DIS" secondAttribute="trailing" constant="16" id="372-eP-xkF"/>
+                                        <constraint firstAttribute="trailing" secondItem="SGC-Rz-DIS" secondAttribute="trailing" constant="32" id="372-eP-xkF"/>
                                         <constraint firstItem="W6l-Xy-bBZ" firstAttribute="leading" secondItem="yzl-bS-rZy" secondAttribute="leading" constant="16" id="Jre-G8-yat"/>
                                         <constraint firstItem="rWb-ae-nod" firstAttribute="leading" secondItem="yzl-bS-rZy" secondAttribute="leading" constant="16" id="Nmp-fq-KPv"/>
                                         <constraint firstItem="6eG-yI-U3Z" firstAttribute="leading" secondItem="yzl-bS-rZy" secondAttribute="leading" constant="16" id="RNY-a2-oIp"/>
-                                        <constraint firstAttribute="trailing" secondItem="48g-dS-ZkH" secondAttribute="trailing" constant="16" id="SGW-Wh-ygT"/>
+                                        <constraint firstAttribute="trailing" secondItem="48g-dS-ZkH" secondAttribute="trailing" constant="32" id="SGW-Wh-ygT"/>
                                         <constraint firstItem="uaA-nd-6zU" firstAttribute="leading" secondItem="yzl-bS-rZy" secondAttribute="leading" constant="16" id="Yct-XM-j3t"/>
                                         <constraint firstAttribute="trailing" secondItem="W6l-Xy-bBZ" secondAttribute="trailing" constant="16" id="YqR-Ov-8Fg"/>
                                         <constraint firstItem="48g-dS-ZkH" firstAttribute="top" secondItem="rWb-ae-nod" secondAttribute="bottom" constant="32" id="amN-ye-FEw"/>
                                         <constraint firstAttribute="trailing" secondItem="rWb-ae-nod" secondAttribute="trailing" constant="16" id="cl9-IP-sgG"/>
                                         <constraint firstAttribute="trailing" secondItem="6eG-yI-U3Z" secondAttribute="trailing" constant="16" id="eWS-uC-UXM"/>
-                                        <constraint firstItem="SGC-Rz-DIS" firstAttribute="leading" secondItem="yzl-bS-rZy" secondAttribute="leading" constant="16" id="lGH-xA-0Wl"/>
+                                        <constraint firstItem="SGC-Rz-DIS" firstAttribute="leading" secondItem="yzl-bS-rZy" secondAttribute="leading" constant="32" id="lGH-xA-0Wl"/>
                                         <constraint firstAttribute="trailing" secondItem="uaA-nd-6zU" secondAttribute="trailing" constant="16" id="pzw-ZF-nr9"/>
-                                        <constraint firstItem="48g-dS-ZkH" firstAttribute="leading" secondItem="yzl-bS-rZy" secondAttribute="leading" constant="16" id="tv0-4z-M7H"/>
+                                        <constraint firstItem="48g-dS-ZkH" firstAttribute="leading" secondItem="yzl-bS-rZy" secondAttribute="leading" constant="32" id="tv0-4z-M7H"/>
                                     </constraints>
                                 </stackView>
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="yzl-bS-rZy" secondAttribute="trailing" id="9ub-0I-gJm"/>
                                 <constraint firstItem="yzl-bS-rZy" firstAttribute="top" secondItem="eFU-fT-5QZ" secondAttribute="top" id="N6C-T5-VkD"/>
-                                <constraint firstAttribute="bottom" secondItem="yzl-bS-rZy" secondAttribute="bottom" id="PcM-xW-mlh"/>
+                                <constraint firstAttribute="bottom" secondItem="yzl-bS-rZy" secondAttribute="bottom" constant="32" id="PcM-xW-mlh"/>
                                 <constraint firstItem="yzl-bS-rZy" firstAttribute="leading" secondItem="eFU-fT-5QZ" secondAttribute="leading" id="dPs-iz-7bN"/>
                             </constraints>
                         </view>

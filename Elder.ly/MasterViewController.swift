@@ -16,6 +16,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     var currentTabPredicate : NSPredicate?
     var currentSearchPredicate : NSPredicate?
+    var currentUserPhone: String?
+    var currentUserFirstName: String?
+    var currentUserLastName: String?
+    var currentUserEmail: String?
     
     var searchPlaceholder: String = "Search (name, email...)".localized
     
@@ -31,20 +35,36 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.searchBar.delegate = self
         self.tabBar.delegate = self
         
-        /*
-         * Handle navigation bar :
-         *  Left : Edit // TODO - Burger menu instead
-         *  Right : Add button, linked to "insertNewObject()"
-         */
+        // NavigationBar colors
+        self.navigationController?.navigationBar.tintColor = UIColor.white()
+        self.navigationController?.navigationBar.barTintColor = UIColor.purple()
+        self.navigationController?.navigationBar.backgroundColor = UIColor.purple()
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white()]
+        
+        // NavigationBar items
         let menuButton = UIBarButtonItem(title: "Mon Profil".localized, style: .plain, target: self, action: #selector(openMenu(_:)))
         navigationItem.leftBarButtonItem = menuButton
         
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
+        let addButton = UIBarButtonItem(title: "Ajouter".localized, style: .plain, target: self, action: #selector(insertNewObject(_:)))
         navigationItem.rightBarButtonItem = addButton
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
+        
+        // SearchBar colors
+        self.searchBar.barTintColor = UIColor.purple()
+        let searchTextField = self.searchBar.value(forKey: "searchField") as? UITextField
+        searchTextField?.textColor = UIColor.white()
+        searchTextField?.backgroundColor = UIColor.white10()
+        
+        //TabBar
+        self.tabBar.isTranslucent = false
+        self.tabBar.backgroundColor = UIColor.purple()
+        self.tabBar.barTintColor = UIColor.purple()
+        self.tabBar.tintColor = UIColor.purpleLight()
+        
+        self.tabBar.tintColor = UIColor.orange()
    
         // Setup fetched resultController
         let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
@@ -91,6 +111,24 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 print(myError ?? "Error")
             }
         })
+        
+        wsProvider.getCurrentUser(success: { (currentUser) in
+            self.currentUserEmail = currentUser.email
+            self.currentUserPhone = currentUser.phone
+            self.currentUserFirstName = currentUser.firstName
+            self.currentUserLastName = currentUser.lastName
+        }) { (error) in
+            let myError = error as NSError?
+            if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
+                DispatchQueue.main.async {
+                    UserDefaults.standard.unsetAuth()
+                    let controller = LoginViewController(nibName: nil, bundle: nil)
+                    self.present(controller, animated: false, completion: nil)
+                }
+            } else {
+                print(myError ?? "Error")
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -131,11 +169,18 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
         
-        
         if segue.identifier == "openMenu" {
             print("openMenu")
             if let destinationViewController = segue.destination as? MenuViewController {
                 destinationViewController.transitioningDelegate = self as? UIViewControllerTransitioningDelegate
+                guard let cuPhone = currentUserPhone, let cuEmail = currentUserEmail, let cuFirstName = currentUserFirstName, let cuLastName = currentUserLastName else {
+                    return
+                }
+                destinationViewController.cuPhone = cuPhone
+                destinationViewController.cuEmail = cuEmail
+                destinationViewController.cuFirstName = cuFirstName
+                destinationViewController.cuLastName = cuLastName
+                print("updated view")
             }
         }
     }
@@ -161,11 +206,11 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let contact = resultController?.object(at: indexPath)
         // Displaying with grey background on half cells
-        if (indexPath.row+1)%2 == 0 {
-            cell.contentView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
-        } else {
-            cell.contentView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
-        }
+//        if (indexPath.row+1)%2 == 0 {
+//            cell.contentView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+//        } else {
+//            cell.contentView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
+//        }
         configureCell(cell, withContact: contact!)
         return cell
     }

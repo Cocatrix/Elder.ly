@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var firstNameTextField: UITextField!
@@ -16,6 +16,7 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var profileView: UIPickerView!
+    @IBOutlet weak var addButton: UIButton!
     
     var selectedProfile: String = ""    
     var profilesList: [String] = [String]()
@@ -31,6 +32,9 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
         
+        // Buttons Styling
+        self.addButton.layer.cornerRadius = self.addButton.frame.size.height / 2
+        
         // Fill picker
         let preferencesProfiles = UserDefaults.standard.value(forKey: "elderlyProfiles")
         if ((preferencesProfiles) != nil) {
@@ -44,6 +48,15 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
         profileView.dataSource = self
         profileView.delegate = self
+        
+        firstNameTextField.delegate = self
+        firstNameTextField.tag = 0
+        lastNameTextField.delegate = self
+        lastNameTextField.tag = 1
+        phoneNumberTextField.delegate = self
+        phoneNumberTextField.tag = 2
+        emailTextField.delegate = self
+        emailTextField.tag = 3
         
         loadProfilesFromWS()
         
@@ -61,6 +74,19 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             profileView.selectRow(profileToPick, inComponent: 0, animated: false)
         }
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        // Try to find next responder
+        if let nextField = textField.superview?.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            nextField.becomeFirstResponder()
+        } else {
+            // Not found, so remove keyboard.
+            textField.resignFirstResponder()
+        }
+        // Do not add a line break
+        return false
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -70,7 +96,7 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @objc func keyboardWillShow(notification:NSNotification){
         //give room at the bottom of the scroll view, so it doesn't cover up anything the user needs to tap
         var userInfo = notification.userInfo!
-        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         keyboardFrame = self.view.convert(keyboardFrame, from: nil)
         
         var contentInset:UIEdgeInsets = self.scrollView.contentInset
@@ -81,6 +107,7 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @objc func keyboardWillHide(notification:NSNotification) {
         let contentInset:UIEdgeInsets = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
     }
     
     @IBAction func onButtonAddClick(_ sender: Any) {
