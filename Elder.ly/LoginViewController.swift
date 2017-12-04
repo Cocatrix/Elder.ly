@@ -99,6 +99,7 @@ class LoginViewController: UIViewController {
             let wsProvider = WebServicesProvider.sharedInstance
             wsProvider.userLogin(phone: self.phoneNumberField.text!, password: self.passwordField.text!, success: {
                 UserDefaults.standard.setAuth()
+                UserDefaults.standard.unsetFirstLogin()
                 DispatchQueue.main.async {
                     UserDefaults.standard.setLoggedPhoneNumber(phone: self.phoneNumberField.text!)
                     self.loginButton.isEnabled = true

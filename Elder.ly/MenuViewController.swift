@@ -59,6 +59,7 @@ class MenuViewController: UIViewController {
         let OKAction = UIAlertAction(title: "OK", style: .default, handler: { _ in
             WebServicesProvider.sharedInstance.revokeToken()
             UserDefaults.standard.unsetAuth()
+            UserDefaults.standard.setFirstLogin()
             let controller = LoginViewController(nibName: nil, bundle: nil)
             self.present(controller, animated: false, completion: nil)
             self.dismiss(animated: true)
