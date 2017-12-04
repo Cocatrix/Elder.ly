@@ -24,13 +24,15 @@ class ContactTableViewCell: UITableViewCell {
         self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.width / 2
         self.avatarImageView.contentMode = .scaleAspectFill
         
+        // Name Label Style
+        self.nameLabel.textColor = UIColor.purple()
+        
         // Call Button style
-        self.callButton.setTitleColor(UIColor.purpleDark(), for: .normal)
-        self.callButton.setTitleColor(UIColor.purpleDarker(), for: .highlighted)
+        self.callButton.setTitleColor(UIColor.orange(), for: .normal)
         self.callButton.backgroundColor = .clear
         self.callButton.layer.cornerRadius = self.callButton.frame.size.height / 2
         self.callButton.layer.borderWidth = 1
-        self.callButton.layer.borderColor = UIColor.purpleDark().cgColor
+        self.callButton.layer.borderColor = UIColor.orange().cgColor
     
     }
     
