@@ -26,6 +26,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let addContactString: String = "Ajouter".localized
     
     
+    @IBOutlet weak var emptyTableView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tabBar: UITabBar!
@@ -40,6 +41,8 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.dataSource = self
         self.searchBar.delegate = self
         self.tabBar.delegate = self
+        
+        self.tableView.backgroundView = UIImageView(image: UIImage(named: "./xcassets/elderly"))
         
         // NavigationBar colors
         self.navigationController?.navigationBar.tintColor = UIColor.white()
@@ -329,15 +332,32 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tutoCheck() {
         if self.tableView.numberOfRows(inSection: 0) == 0 {
-            print("No contact")
-            tutoNewContactImage.isHidden = false
-            tutoNewContactLabel.isHidden = false
-            searchBar.isHidden = true
+            guard let tabs = self.tabBar.items, tabs.count == 3, let item = self.tabBar.selectedItem else {
+                print("Error in getting tab bar items or no selected item")
+                return
+            }
+            self.emptyTableView.isHidden = false
+            switch item {
+            case tabs[0]:
+                tutoNewContactImage.isHidden = true
+                tutoNewContactLabel.isHidden = true
+                searchBar.isHidden = true
+            case tabs[1]:
+                tutoNewContactImage.isHidden = false
+                tutoNewContactLabel.isHidden = false
+                searchBar.isHidden = true
+            case tabs[2]:
+                tutoNewContactImage.isHidden = true
+                tutoNewContactLabel.isHidden = true
+                searchBar.isHidden = true
+            default:
+                print("default: error")
+            }
         } else {
-            print("Some contacts")
+            self.emptyTableView.isHidden = true
             tutoNewContactImage.isHidden = true
             tutoNewContactLabel.isHidden = true
-            searchBar.isHidden = true
+            searchBar.isHidden = false
         }
     }
 }
