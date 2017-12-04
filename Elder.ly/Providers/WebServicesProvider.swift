@@ -17,7 +17,6 @@ class WebServicesProvider {
     
     let persistentContainer: NSPersistentContainer
     let url: String = "http://familink.cleverapps.io"
-    
     var token: String?
     
     class var sharedInstance: WebServicesProvider {
