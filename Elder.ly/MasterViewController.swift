@@ -17,6 +17,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var currentTabPredicate : NSPredicate?
     var currentSearchPredicate : NSPredicate?
     
+    var searchPlaceholder: String = "Search (name, email...)".localized
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -62,7 +63,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return
         }
         self.tabBar.selectedItem = items[1]
-        // TODO - Set toolbar items
+        
+        self.manageKeyboardDisplaying()
+        
+        self.searchBar.placeholder = self.searchPlaceholder
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -118,7 +122,6 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
-            print("showDetail")
             if let indexPath = tableView.indexPathForSelectedRow {
                 let object = resultController?.object(at: indexPath)
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
@@ -232,11 +235,40 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return UIApplication.shared.delegate as! AppDelegate
     }
     
-     // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
+    // MARK: - Keyboard
+    
+    func manageKeyboardDisplaying() {
+        self.hideKeyboardWhenTappedAround()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification:NSNotification){
+        //give room at the bottom of the scroll view, so it doesn't cover up anything the user needs to tap
+        var userInfo = notification.userInfo!
+        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+        
+        var contentInset:UIEdgeInsets = self.tableView.contentInset
+        contentInset.bottom = keyboardFrame.size.height
+        tableView.contentInset = contentInset
+    }
+    
+    @objc func keyboardWillHide(notification:NSNotification) {
+        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        tableView.contentInset = contentInset
+    }
 }
 
+// MARK: - Search Bar
+
 extension MasterViewController: UISearchBarDelegate {
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        /**
+         * Refresh displayed cells when text has changed. Is also called when field search is emptied.
+         * Predicate used for search works with tab predicates (favourites only, most frequent first)
+         */
         guard let frc = self.resultController else {
             return
         }
@@ -258,7 +290,28 @@ extension MasterViewController: UISearchBarDelegate {
         try? frc.performFetch()
         self.tableView.reloadData()
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if(searchBar.text == "") { // Same behaviour as cancel button, exit searching
+            self.searchBarCancelButtonClicked(searchBar)
+        } else {
+            self.searchBar.resignFirstResponder()
+        }
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        self.searchBar(searchBar, textDidChange: "")
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.resignFirstResponder()
+    }
 }
+
+// MARK: - Tab Bar
 
 extension MasterViewController: UITabBarDelegate {
     
@@ -347,7 +400,7 @@ extension MasterViewController: UITabBarDelegate {
     func displayFrequentContacts() {
         /**
          * Gets fetchResultsController and update its fetchRequest with :
-         * - a fetchLimitNumber
+         * - a fetchLimitNumber (5)
          * - sorted by frequency, then first name, then last name
          * - no predicate (except search results if applicable)
          */
@@ -377,46 +430,10 @@ extension MasterViewController: UITabBarDelegate {
     }
 }
 
+// MARK: - FetchedResultsController
+
 extension MasterViewController: NSFetchedResultsControllerDelegate {
-    // BASIC METHOD :
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.reloadData()
     }
-    // Could be replaced by following methods :
-    /*
-     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-     }
-     
-     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-         print("Inserting ? : ", type)
-         switch type {
-         case .insert:
-            tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
-         case .delete:
-            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
-         default:
-            return
-         }
-     }
-     
-     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-         print("Updating ? : ", type)
-         switch type {
-            case .insert:
-         tableView.insertRows(at: [newIndexPath!], with: .fade)
-            case .delete:
-         tableView.deleteRows(at: [indexPath!], with: .fade)
-            case .update:
-         configureCell(tableView.cellForRow(at: indexPath!)!, withContact: anObject as! Contact)
-            case .move:
-         configureCell(tableView.cellForRow(at: indexPath!)!, withContact: anObject as! Contact)
-            tableView.moveRow(at: indexPath!, to: newIndexPath!)
-         }
-     }
-     
-     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
-     }
-     */
 }
