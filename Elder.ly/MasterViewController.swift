@@ -17,6 +17,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var currentTabPredicate : NSPredicate?
     var currentSearchPredicate : NSPredicate?
     
+    var searchPlaceholder: String = "Search (name, email...)".localized
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -78,7 +79,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return
         }
         self.tabBar.selectedItem = items[1]
-        // TODO - Set toolbar items
+        
+        self.manageKeyboardDisplaying()
+        
+        self.searchBar.placeholder = self.searchPlaceholder
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -86,20 +90,22 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // It is related to selected element. Should it still be selected on viewWillAppear ? I think it's not important to comment it for now.
         super.viewWillAppear(animated)
         
-        let isUserConnected = UserDefaults.standard.isAuth()
-        
-        if !isUserConnected {
-            let controller = LoginViewController(nibName: nil, bundle: nil)
-            self.present(controller, animated: false, completion: nil)
-        }
-        
         // Use WebService to identify and load data
         let wsProvider = WebServicesProvider.sharedInstance
         
         wsProvider.getContacts(success: {
             print("Load data : success")
         }, failure: { (error) in
-            print(error ?? "unknown error")
+            let myError = error as NSError?
+            if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
+                DispatchQueue.main.async {
+                    UserDefaults.standard.unsetAuth()
+                    let controller = LoginViewController(nibName: nil, bundle: nil)
+                    self.present(controller, animated: false, completion: nil)
+                }
+            } else {
+                print(myError ?? "Error")
+            }
         })
     }
 
@@ -132,7 +138,6 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
-            print("showDetail")
             if let indexPath = tableView.indexPathForSelectedRow {
                 let object = resultController?.object(at: indexPath)
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
@@ -192,16 +197,34 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let context = self.resultController?.managedObjectContext
-            context?.delete((self.resultController?.object(at: indexPath))!)
-                
-            do {
-                try context?.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            let deleteAlertController = UIAlertController(title: "Delete Alert".localized,
+                                                          message: "Are you sure you want to delete this contact ?".localized,
+                                                          preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel) { _ in
+                return
+            }
+            deleteAlertController.addAction(cancelAction)
+            let OKAction = UIAlertAction(title: "OK", style: .default) { _ in
+                guard let id = self.resultController?.object(at: indexPath).wsId else {
+                    return
+                }
+                WebServicesProvider.sharedInstance.deleteContactOnServer(wsId: id, success: {
+                    print("delete success")
+                }, failure: { (error) in
+                    let myError = error as NSError?
+                    if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
+                        DispatchQueue.main.async {
+                            UserDefaults.standard.unsetAuth()
+                            let controller = LoginViewController(nibName: nil, bundle: nil)
+                            self.present(controller, animated: false, completion: nil)
+                        }
+                    } else {
+                        print(myError ?? "Error")
+                    }
+                })
+            }
+            deleteAlertController.addAction(OKAction)
+            self.present(deleteAlertController, animated: true) {
             }
         }
     }
@@ -228,11 +251,40 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return UIApplication.shared.delegate as! AppDelegate
     }
     
-     // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
+    // MARK: - Keyboard
+    
+    func manageKeyboardDisplaying() {
+        self.hideKeyboardWhenTappedAround()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification:NSNotification){
+        //give room at the bottom of the scroll view, so it doesn't cover up anything the user needs to tap
+        var userInfo = notification.userInfo!
+        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+        
+        var contentInset:UIEdgeInsets = self.tableView.contentInset
+        contentInset.bottom = keyboardFrame.size.height
+        tableView.contentInset = contentInset
+    }
+    
+    @objc func keyboardWillHide(notification:NSNotification) {
+        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        tableView.contentInset = contentInset
+    }
 }
 
+// MARK: - Search Bar
+
 extension MasterViewController: UISearchBarDelegate {
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        /**
+         * Refresh displayed cells when text has changed. Is also called when field search is emptied.
+         * Predicate used for search works with tab predicates (favourites only, most frequent first)
+         */
         guard let frc = self.resultController else {
             return
         }
@@ -254,7 +306,28 @@ extension MasterViewController: UISearchBarDelegate {
         try? frc.performFetch()
         self.tableView.reloadData()
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if(searchBar.text == "") { // Same behaviour as cancel button, exit searching
+            self.searchBarCancelButtonClicked(searchBar)
+        } else {
+            self.searchBar.resignFirstResponder()
+        }
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        self.searchBar(searchBar, textDidChange: "")
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.resignFirstResponder()
+    }
 }
+
+// MARK: - Tab Bar
 
 extension MasterViewController: UITabBarDelegate {
     
@@ -343,7 +416,7 @@ extension MasterViewController: UITabBarDelegate {
     func displayFrequentContacts() {
         /**
          * Gets fetchResultsController and update its fetchRequest with :
-         * - a fetchLimitNumber
+         * - a fetchLimitNumber (5)
          * - sorted by frequency, then first name, then last name
          * - no predicate (except search results if applicable)
          */
@@ -373,46 +446,10 @@ extension MasterViewController: UITabBarDelegate {
     }
 }
 
+// MARK: - FetchedResultsController
+
 extension MasterViewController: NSFetchedResultsControllerDelegate {
-    // BASIC METHOD :
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.reloadData()
     }
-    // Could be replaced by following methods :
-    /*
-     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-     }
-     
-     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-         print("Inserting ? : ", type)
-         switch type {
-         case .insert:
-            tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
-         case .delete:
-            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
-         default:
-            return
-         }
-     }
-     
-     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-         print("Updating ? : ", type)
-         switch type {
-            case .insert:
-         tableView.insertRows(at: [newIndexPath!], with: .fade)
-            case .delete:
-         tableView.deleteRows(at: [indexPath!], with: .fade)
-            case .update:
-         configureCell(tableView.cellForRow(at: indexPath!)!, withContact: anObject as! Contact)
-            case .move:
-         configureCell(tableView.cellForRow(at: indexPath!)!, withContact: anObject as! Contact)
-            tableView.moveRow(at: indexPath!, to: newIndexPath!)
-         }
-     }
-     
-     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
-     }
-     */
 }

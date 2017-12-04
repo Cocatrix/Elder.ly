@@ -142,16 +142,37 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
     }
     
     func deleteContact() {
-        guard let wsId = contact?.wsId else {
-            print("no id")
+        let deleteAlertController = UIAlertController(title: "Delete Alert".localized,
+                                                      message: "Are you sure you want to delete this contact ?".localized,
+                                                      preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel) { _ in
             return
         }
-        WebServicesProvider.sharedInstance.deleteContactOnServer(wsId: wsId, success: {
-            DispatchQueue.main.async {
-                self.splitViewController?.popToMasterViewController()
+        deleteAlertController.addAction(cancelAction)
+        let OKAction = UIAlertAction(title: "OK", style: .default) { _ in
+            guard let id = self.contact?.wsId else {
+                return
             }
-        }) { (error) in
-            print(error ?? "Error")
+            WebServicesProvider.sharedInstance.deleteContactOnServer(wsId: id, success: {
+                print("delete success")
+                DispatchQueue.main.async {
+                    self.splitViewController?.popToMasterViewController()
+                }
+            }, failure: { (error) in
+                let myError = error as NSError?
+                if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
+                    DispatchQueue.main.async {
+                        UserDefaults.standard.unsetAuth()
+                        let controller = LoginViewController(nibName: nil, bundle: nil)
+                        self.present(controller, animated: false, completion: nil)
+                    }
+                } else {
+                    print(myError ?? "Error")
+                }
+            })
+        }
+        deleteAlertController.addAction(OKAction)
+        self.present(deleteAlertController, animated: true) {
         }
     }
     
@@ -172,6 +193,7 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
             print("Not found whether favourite")
             return
         }
+        
         self.contact!.updateIsFavouriteContact(shouldBeFavourite: !isFavourite, success: {
             DispatchQueue.main.async {
                 // Change addFavouriteButton label depending on favourite status

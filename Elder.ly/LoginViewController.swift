@@ -15,6 +15,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var rememberSwitch: UISwitch!
     
+    @IBOutlet weak var requestIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var loginButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,11 +56,16 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginPressed(_ sender: Any) {
+        loginButton.isEnabled = false
+        requestIndicator.isHidden = false
+        
         var isInvalidField = false
         
         if !UserValidationUtil.validatePassword(password: self.passwordField.text!) {
             isInvalidField = true
             setHighlightTextField(field: passwordField)
+            self.loginButton.isEnabled = true
+            self.requestIndicator.isHidden = true
             passwordField.becomeFirstResponder()
         } else {
             resetHighlightTextField(field: passwordField)
@@ -67,6 +74,8 @@ class LoginViewController: UIViewController {
         if !UserValidationUtil.validatePhone(phone: self.phoneNumberField.text!) {
             isInvalidField = true
             setHighlightTextField(field: phoneNumberField)
+            self.loginButton.isEnabled = true
+            self.requestIndicator.isHidden = true
             phoneNumberField.becomeFirstResponder()
         } else {
             resetHighlightTextField(field: phoneNumberField)
@@ -76,9 +85,17 @@ class LoginViewController: UIViewController {
             let wsProvider = WebServicesProvider.sharedInstance
             wsProvider.userLogin(phone: self.phoneNumberField.text!, password: self.passwordField.text!, success: {
                 UserDefaults.standard.setAuth()
+                DispatchQueue.main.async {
+                    self.loginButton.isEnabled = true
+                    self.requestIndicator.isHidden = true
+                }
                 self.dismiss(animated: true)
             }) { (error) in
                 UserDefaults.standard.unsetAuth()
+                DispatchQueue.main.async {
+                    self.loginButton.isEnabled = true
+                    self.requestIndicator.isHidden = true
+                }
                 self.alertConnectionError()
             }
             if self.rememberSwitch.isOn {
