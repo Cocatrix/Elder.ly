@@ -15,6 +15,7 @@ class ContactTableViewCell: UITableViewCell {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var callButton: UIButton!
+    @IBOutlet weak var starFavoriteImage: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

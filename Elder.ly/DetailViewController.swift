@@ -17,6 +17,7 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
     @IBOutlet weak var callButton: UIButton!
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var addFavouriteButton: UIButton!
+    @IBOutlet weak var starDetailImage: UIImageView!
     
     let addFavouritesString: String = "Add to your favourites".localized
     let removeFavouritesString: String = "Remove from your favourites".localized
@@ -49,8 +50,10 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         if let isFavourite = self.contact?.isFavouriteUser {
             if isFavourite {
                 self.addFavouriteButton.setTitle(self.removeFavouritesString, for: .normal)
+                self.starDetailImage.image = UIImage(named: "star-fill.png")
             } else {
                 self.addFavouriteButton.setTitle(self.addFavouritesString, for: .normal)
+                self.starDetailImage.image = nil
             }
         }
         
@@ -198,14 +201,18 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         }
         
         self.contact!.updateIsFavouriteContact(shouldBeFavourite: !isFavourite, success: {
+            let starFill = UIImage(named: "star-fill.png")
+            
             DispatchQueue.main.async {
                 // Change addFavouriteButton label depending on favourite status
                 if !isFavourite {
                     print("Contact added to favourites")
                     self.addFavouriteButton.setTitle(self.removeFavouritesString, for: .normal)
+                    self.starDetailImage.image = starFill
                 } else {
                     print("Contact removed from favourites")
                     self.addFavouriteButton.setTitle(self.addFavouritesString, for: .normal)
+                    self.starDetailImage.image = nil
                 }   
             }
         }) { (error) in
