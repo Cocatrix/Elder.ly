@@ -242,10 +242,10 @@
                         <viewLayoutGuide key="safeArea" id="Uze-7f-ASd"/>
                     </view>
                     <connections>
-                        <outlet property="userEmail" destination="myJ-ls-wUY" id="Ydm-Fv-GIR"/>
-                        <outlet property="userFullName" destination="yS4-h1-SfQ" id="TVL-wS-elh"/>
                         <outlet property="closeButton" destination="zRa-u2-d2O" id="xaq-tz-Wpm"/>
                         <outlet property="logoutButton" destination="zgz-HU-uIx" id="5hL-v3-CXB"/>
+                        <outlet property="userEmail" destination="myJ-ls-wUY" id="Ydm-Fv-GIR"/>
+                        <outlet property="userFullName" destination="yS4-h1-SfQ" id="TVL-wS-elh"/>
                         <outlet property="userImage" destination="zdz-ZE-4Yc" id="uL2-I1-z11"/>
                         <outlet property="userPhoneNumer" destination="oKs-Pv-KmH" id="zBt-OY-xHX"/>
                     </connections>
