@@ -163,6 +163,9 @@
                                         <state key="normal" title="Déconnexion">
                                             <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="onDisconnectPressed:" destination="yaC-f7-cDd" eventType="touchUpInside" id="3ug-FO-9Oo"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bonjour," textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LNf-7b-sUj">
                                         <rect key="frame" x="85" y="180" width="86" height="18"/>
@@ -239,9 +242,12 @@
                         <viewLayoutGuide key="safeArea" id="Uze-7f-ASd"/>
                     </view>
                     <connections>
+                        <outlet property="userEmail" destination="myJ-ls-wUY" id="Ydm-Fv-GIR"/>
+                        <outlet property="userFullName" destination="yS4-h1-SfQ" id="TVL-wS-elh"/>
                         <outlet property="closeButton" destination="zRa-u2-d2O" id="xaq-tz-Wpm"/>
                         <outlet property="logoutButton" destination="zgz-HU-uIx" id="5hL-v3-CXB"/>
                         <outlet property="userImage" destination="zdz-ZE-4Yc" id="uL2-I1-z11"/>
+                        <outlet property="userPhoneNumer" destination="oKs-Pv-KmH" id="zBt-OY-xHX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Em6-aW-rYD" userLabel="First Responder" sceneMemberID="firstResponder"/>

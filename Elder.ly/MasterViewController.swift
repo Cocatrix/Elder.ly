@@ -16,6 +16,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     var currentTabPredicate : NSPredicate?
     var currentSearchPredicate : NSPredicate?
+    var currentUserPhone: String?
+    var currentUserFirstName: String?
+    var currentUserLastName: String?
+    var currentUserEmail: String?
     
     var searchPlaceholder: String = "Search (name, email...)".localized
     
@@ -107,6 +111,24 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 print(myError ?? "Error")
             }
         })
+        
+        wsProvider.getCurrentUser(success: { (currentUser) in
+            self.currentUserEmail = currentUser.email
+            self.currentUserPhone = currentUser.phone
+            self.currentUserFirstName = currentUser.firstName
+            self.currentUserLastName = currentUser.lastName
+        }) { (error) in
+            let myError = error as NSError?
+            if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
+                DispatchQueue.main.async {
+                    UserDefaults.standard.unsetAuth()
+                    let controller = LoginViewController(nibName: nil, bundle: nil)
+                    self.present(controller, animated: false, completion: nil)
+                }
+            } else {
+                print(myError ?? "Error")
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -147,11 +169,18 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
         
-        
         if segue.identifier == "openMenu" {
             print("openMenu")
             if let destinationViewController = segue.destination as? MenuViewController {
                 destinationViewController.transitioningDelegate = self as? UIViewControllerTransitioningDelegate
+                guard let cuPhone = currentUserPhone, let cuEmail = currentUserEmail, let cuFirstName = currentUserFirstName, let cuLastName = currentUserLastName else {
+                    return
+                }
+                destinationViewController.cuPhone = cuPhone
+                destinationViewController.cuEmail = cuEmail
+                destinationViewController.cuFirstName = cuFirstName
+                destinationViewController.cuLastName = cuLastName
+                print("updated view")
             }
         }
     }
