@@ -250,14 +250,8 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let deleteAlertController = UIAlertController(title: "Delete Alert".localized,
-                                                          message: "Are you sure you want to delete this contact ?".localized,
-                                                          preferredStyle: .alert)
-            let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel) { _ in
-                return
-            }
-            deleteAlertController.addAction(cancelAction)
-            let OKAction = UIAlertAction(title: "OK", style: .default) { _ in
+            let deleteAlertController = AlertDialogProvider.deleteAlertController()
+            let OKAction = UIAlertAction(title: "OK".localized, style: .default) { _ in
                 guard let id = self.resultController?.object(at: indexPath).wsId else {
                     return
                 }

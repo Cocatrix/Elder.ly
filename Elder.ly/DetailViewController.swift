@@ -153,13 +153,7 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
     }
     
     func deleteContact() {
-        let deleteAlertController = UIAlertController(title: "Delete Alert".localized,
-                                                      message: "Are you sure you want to delete this contact ?".localized,
-                                                      preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel) { _ in
-            return
-        }
-        deleteAlertController.addAction(cancelAction)
+        let deleteAlertController = AlertDialogProvider.deleteAlertController()
         let OKAction = UIAlertAction(title: "OK", style: .default) { _ in
             guard let id = self.contact?.wsId else {
                 return
