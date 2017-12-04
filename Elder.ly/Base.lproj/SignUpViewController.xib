@@ -18,6 +18,8 @@
                 <outlet property="passwordView" destination="ra0-ce-UUm" id="0q0-8u-LW4"/>
                 <outlet property="phoneView" destination="ysc-9s-7Lf" id="xmp-x0-rEp"/>
                 <outlet property="profileView" destination="DSk-C3-QaC" id="V4D-od-Ree"/>
+                <outlet property="registerButton" destination="cT9-1b-6xx" id="eLq-b4-Ycu"/>
+                <outlet property="requestIndicator" destination="mhQ-Tp-bv8" id="u2y-ac-cSl"/>
                 <outlet property="scrollView" destination="pbV-TT-VlR" id="M6S-XV-Cch"/>
                 <outlet property="view" destination="anX-9d-vnM" id="q4e-DG-trC"/>
             </connections>
@@ -159,14 +161,23 @@
                         <constraint firstItem="IAI-Xq-xo1" firstAttribute="leading" secondItem="pbV-TT-VlR" secondAttribute="leading" id="xNb-I6-9uw"/>
                     </constraints>
                 </scrollView>
+                <activityIndicatorView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="mhQ-Tp-bv8">
+                    <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                    <color key="backgroundColor" red="0.57254901960000004" green="0.55294117649999996" blue="0.75044642859999999" alpha="0.70483054580000004" colorSpace="calibratedRGB"/>
+                    <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="pbV-TT-VlR" firstAttribute="bottom" secondItem="lyT-6w-VRJ" secondAttribute="bottom" id="4UM-fh-lvv"/>
+                <constraint firstItem="mhQ-Tp-bv8" firstAttribute="leading" secondItem="lyT-6w-VRJ" secondAttribute="leading" id="PUq-HL-pgL"/>
                 <constraint firstItem="pbV-TT-VlR" firstAttribute="top" secondItem="lyT-6w-VRJ" secondAttribute="top" id="TBh-oC-cR5"/>
                 <constraint firstItem="pbV-TT-VlR" firstAttribute="trailing" secondItem="lyT-6w-VRJ" secondAttribute="trailing" id="ZSJ-uo-FAH"/>
+                <constraint firstItem="lyT-6w-VRJ" firstAttribute="bottom" secondItem="mhQ-Tp-bv8" secondAttribute="bottom" id="c2z-UL-wep"/>
                 <constraint firstItem="IAI-Xq-xo1" firstAttribute="width" secondItem="lyT-6w-VRJ" secondAttribute="width" id="jeG-QY-5Zd"/>
                 <constraint firstItem="pbV-TT-VlR" firstAttribute="leading" secondItem="lyT-6w-VRJ" secondAttribute="leading" id="reH-nX-03V"/>
+                <constraint firstItem="lyT-6w-VRJ" firstAttribute="trailing" secondItem="mhQ-Tp-bv8" secondAttribute="trailing" id="vEV-mc-jZx"/>
+                <constraint firstItem="mhQ-Tp-bv8" firstAttribute="top" secondItem="lyT-6w-VRJ" secondAttribute="top" id="z33-H5-Dou"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="lyT-6w-VRJ"/>
         </scrollView>
