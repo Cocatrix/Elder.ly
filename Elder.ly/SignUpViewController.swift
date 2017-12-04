@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var phoneView: UITextField!
@@ -43,7 +43,31 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         profileView.dataSource = self
         profileView.delegate = self
         
+        phoneView.delegate = self
+        phoneView.tag = 0
+        firstnameView.delegate = self
+        firstnameView.tag = 1
+        lastnameView.delegate = self
+        lastnameView.tag = 2
+        emailView.delegate = self
+        emailView.tag = 3
+        passwordView.delegate = self
+        passwordView.tag = 4
+        
         loadProfilesFromWS()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        // Try to find next responder
+        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            nextField.becomeFirstResponder()
+        } else {
+            // Not found, so remove keyboard.
+            textField.resignFirstResponder()
+        }
+        // Do not add a line break
+        return false
     }
     
     override func didReceiveMemoryWarning() {

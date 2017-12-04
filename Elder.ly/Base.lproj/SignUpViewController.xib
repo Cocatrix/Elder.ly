@@ -81,7 +81,7 @@
                                             </constraints>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="continue" textContentType="email"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next" textContentType="email"/>
                                         </textField>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ra0-ce-UUm">
                                             <rect key="frame" x="16" y="400" width="288" height="64"/>
@@ -90,7 +90,7 @@
                                             </constraints>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" returnKeyType="next" secureTextEntry="YES" textContentType="password"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" returnKeyType="continue" secureTextEntry="YES" textContentType="password"/>
                                         </textField>
                                         <pickerView contentMode="scaleToFill" restorationIdentifier="profilePicker" translatesAutoresizingMaskIntoConstraints="NO" id="DSk-C3-QaC">
                                             <rect key="frame" x="16" y="480" width="288" height="76"/>
