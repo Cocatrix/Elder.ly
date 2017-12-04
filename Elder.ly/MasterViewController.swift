@@ -13,7 +13,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var resultController: NSFetchedResultsController<Contact>?
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil // Called by AppDelegate.
-
+    
     var currentTabPredicate : NSPredicate?
     var currentSearchPredicate : NSPredicate?
     var currentUserPhone: String?
@@ -65,7 +65,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tabBar.tintColor = UIColor.purpleLight()
         
         self.tabBar.tintColor = UIColor.orange()
-   
+        
         // Setup fetched resultController
         let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
         // Sort by first name, then by last name
@@ -88,49 +88,64 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.searchBar.placeholder = self.searchPlaceholder
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         // TODO - clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         // It is related to selected element. Should it still be selected on viewWillAppear ? I think it's not important to comment it for now.
         super.viewWillAppear(animated)
         
-        // Use WebService to identify and load data
-        let wsProvider = WebServicesProvider.sharedInstance
-        
-        wsProvider.getContacts(success: {
-            print("Load data : success")
-        }, failure: { (error) in
-            let myError = error as NSError?
-            if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
+        // Check Auth
+        if !UserDefaults.standard.isAuth() {
+            let controller = LoginViewController(nibName: nil, bundle: nil)
+            self.present(controller, animated: false, completion: nil)
+        } else {
+            // Use WebService to identify and load data
+            let wsProvider = WebServicesProvider.sharedInstance
+            
+            wsProvider.getCurrentUser(success: { (currentUser) in
+                self.currentUserEmail = currentUser.email
+                self.currentUserPhone = currentUser.phone
+                self.currentUserFirstName = currentUser.firstName
+                self.currentUserLastName = currentUser.lastName
+            }) { (error) in
                 DispatchQueue.main.async {
-                    UserDefaults.standard.unsetAuth()
-                    let controller = LoginViewController(nibName: nil, bundle: nil)
-                    self.present(controller, animated: false, completion: nil)
+                    let context = self.appDelegate().persistentContainer.viewContext
+                    let fetchRequest = NSFetchRequest<User>(entityName: "User")
+                    let users = try! context.fetch(fetchRequest)
+                    let myUser: User
+                    if let user = users.first {
+                        myUser = user
+                        self.currentUserEmail = myUser.email
+                        self.currentUserPhone = myUser.phone
+                        self.currentUserFirstName = myUser.firstName
+                        self.currentUserLastName = myUser.lastName
+                    }
                 }
-            } else {
-                print(myError ?? "Error")
-            }
-        })
-        
-        wsProvider.getCurrentUser(success: { (currentUser) in
-            self.currentUserEmail = currentUser.email
-            self.currentUserPhone = currentUser.phone
-            self.currentUserFirstName = currentUser.firstName
-            self.currentUserLastName = currentUser.lastName
-        }) { (error) in
-            let myError = error as NSError?
-            if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
-                DispatchQueue.main.async {
-                    UserDefaults.standard.unsetAuth()
-                    let controller = LoginViewController(nibName: nil, bundle: nil)
-                    self.present(controller, animated: false, completion: nil)
+                let myError = error as NSError?
+                if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
+                    DispatchQueue.main.async {
+                        self.present(AlertDialogProvider.authError(), animated: true)
+                    }
+                } else {
+                    print(myError ?? "Error")
                 }
-            } else {
-                print(myError ?? "Error")
             }
+            
+            wsProvider.getContacts(success: {
+                print("Load data : success")
+            }, failure: { (error) in
+                let myError = error as NSError?
+                if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
+                    DispatchQueue.main.async {
+                        self.present(AlertDialogProvider.authError(), animated: true)
+                    }
+                } else {
+                    print(myError ?? "Error")
+                }
+            })
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -155,9 +170,9 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let segue = TransitionToLeftSegue(identifier: unwindSegue.identifier, source: unwindSegue.source, destination: unwindSegue.destination)
         segue.perform()
     }
-
+    
     // MARK: - Segues
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
@@ -184,16 +199,16 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
     }
-
+    
     // MARK: - Table View
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         if let frc = self.resultController {
             return frc.sections!.count
         }
         return 0
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sections = self.resultController?.sections else {
             fatalError("No sections in fetchedResultsController")
@@ -201,25 +216,25 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let sectionInfo = sections[section]
         return sectionInfo.numberOfObjects
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let contact = resultController?.object(at: indexPath)
         // Displaying with grey background on half cells
-//        if (indexPath.row+1)%2 == 0 {
-//            cell.contentView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
-//        } else {
-//            cell.contentView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
-//        }
+        //        if (indexPath.row+1)%2 == 0 {
+        //            cell.contentView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+        //        } else {
+        //            cell.contentView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
+        //        }
         configureCell(cell, withContact: contact!)
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 64
     }
@@ -243,9 +258,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     let myError = error as NSError?
                     if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
                         DispatchQueue.main.async {
-                            UserDefaults.standard.unsetAuth()
-                            let controller = LoginViewController(nibName: nil, bundle: nil)
-                            self.present(controller, animated: false, completion: nil)
+                            self.present(AlertDialogProvider.authError(), animated: true)
                         }
                     } else {
                         print(myError ?? "Error")
@@ -257,7 +270,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
     }
-
+    
     func configureCell(_ cell: UITableViewCell, withContact contact: Contact) {
         if let contactCell = cell as? ContactTableViewCell {
             contactCell.nameLabel.text = (
@@ -267,15 +280,15 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             } else {
                 contactCell.callButton.isHidden = true
             }
-
+            
             contactCell.setContact(contact: contact)
-
+            
             if let email = contact.email  {
                 contactCell.avatarImageView.gravatarImage(email: email)
             }
         }
     }
-
+    
     func appDelegate() -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
@@ -317,18 +330,18 @@ extension MasterViewController: UISearchBarDelegate {
         guard let frc = self.resultController else {
             return
         }
-
+        
         let scdProvider = SearchCoreDataProvider.sharedInstance
         // Get predicate corresponding to research
         let searchPredicate = scdProvider.getSearchPredicate(content: searchText)
         self.currentSearchPredicate = searchPredicate
         
         if self.currentTabPredicate != nil && searchPredicate != nil {
-             frc.fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [self.currentTabPredicate!, searchPredicate!])
+            frc.fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [self.currentTabPredicate!, searchPredicate!])
         } else if self.currentTabPredicate != nil {
             frc.fetchRequest.predicate = self.currentTabPredicate
         } else {
-             frc.fetchRequest.predicate = searchPredicate
+            frc.fetchRequest.predicate = searchPredicate
         }
         
         // Perform fetch and reload data
@@ -482,3 +495,4 @@ extension MasterViewController: NSFetchedResultsControllerDelegate {
         self.tableView.reloadData()
     }
 }
+
