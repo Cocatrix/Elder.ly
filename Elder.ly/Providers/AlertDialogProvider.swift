@@ -37,8 +37,8 @@ class AlertDialogProvider {
     }
     
     static func deleteAlertController() -> UIAlertController {
-        let deleteAlertController = UIAlertController(title: "Delete Alert".localized,
-                                                      message: "Are you sure you want to delete this contact ?".localized,
+        let deleteAlertController = UIAlertController(title: "Deleting".localized,
+                                                      message: "Are you sure ?".localized,
                                                       preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel) { _ in
             return
