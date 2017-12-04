@@ -16,6 +16,7 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var profileView: UIPickerView!
+    @IBOutlet weak var addButton: UIButton!
     
     var selectedProfile: String = ""    
     var profilesList: [String] = [String]()
@@ -28,6 +29,9 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         self.hideKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        // Buttons Styling
+        self.addButton.layer.cornerRadius = self.addButton.frame.size.height / 2
         
         let preferencesProfiles = UserDefaults.standard.value(forKey: "elderlyProfiles")
         if ((preferencesProfiles) != nil) {

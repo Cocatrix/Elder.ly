@@ -17,12 +17,25 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var requestIndicator: UIActivityIndicatorView!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var forgottenPasswordButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil) // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        
+        // Buttons Styling
+        self.loginButton.layer.cornerRadius = self.loginButton.frame.size.height / 2
+        self.signUpButton.layer.borderWidth = 1
+        self.signUpButton.layer.borderColor = UIColor.orange().cgColor
+        self.signUpButton.layer.cornerRadius = self.signUpButton.frame.size.height / 2
+        self.forgottenPasswordButton.layer.borderWidth = 1
+        self.forgottenPasswordButton.layer.borderColor = UIColor.orange().cgColor
+        self.forgottenPasswordButton.layer.cornerRadius = self.forgottenPasswordButton.frame.size.height / 2
+        
         // Setup default phone number
         phoneNumberField.text = UserDefaults.standard.getUserPhoneNumber()
     }

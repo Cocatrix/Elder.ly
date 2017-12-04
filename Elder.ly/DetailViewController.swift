@@ -40,6 +40,11 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         self.callButton.setTitleColor(UIColor.purple(), for: .normal)
         self.callButton.setTitleColor(UIColor.purpleDarker(), for: .highlighted)
         
+        // Favorites styling
+        self.addFavouriteButton.layer.borderWidth = 1
+        self.addFavouriteButton.layer.borderColor = UIColor.orange().cgColor
+        self.addFavouriteButton.layer.cornerRadius = self.addFavouriteButton.frame.size.height / 2
+        
         // Change addFavouriteButton label depending on favourite status
         if let isFavourite = self.contact?.isFavouriteUser {
             if isFavourite {
