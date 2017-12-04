@@ -71,15 +71,24 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="cellFavImage" image="star-fill" translatesAutoresizingMaskIntoConstraints="NO" id="iuq-qD-RNJ">
+                                                    <rect key="frame" x="8" y="40.5" width="16" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="7J6-RA-iBM"/>
+                                                        <constraint firstAttribute="width" constant="16" id="j4U-91-GIn"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="C1H-yd-cU7" firstAttribute="leading" secondItem="28D-Nm-ki9" secondAttribute="trailing" id="6BQ-gh-fjX"/>
+                                                <constraint firstItem="iuq-qD-RNJ" firstAttribute="bottom" secondItem="kht-6x-VEi" secondAttribute="bottom" id="9fO-kc-kgE"/>
                                                 <constraint firstAttribute="trailing" secondItem="C1H-yd-cU7" secondAttribute="trailing" constant="8" id="JJ3-lR-JXk"/>
                                                 <constraint firstItem="C1H-yd-cU7" firstAttribute="top" secondItem="z4w-8U-5Rx" secondAttribute="top" constant="16" id="Rnl-rP-eE7"/>
                                                 <constraint firstItem="kht-6x-VEi" firstAttribute="centerY" secondItem="z4w-8U-5Rx" secondAttribute="centerY" id="YlJ-YU-ZDG"/>
                                                 <constraint firstItem="kht-6x-VEi" firstAttribute="height" secondItem="z4w-8U-5Rx" secondAttribute="height" multiplier="0.8" id="c0I-TX-PWw"/>
                                                 <constraint firstItem="kht-6x-VEi" firstAttribute="leading" secondItem="z4w-8U-5Rx" secondAttribute="leading" constant="8" id="dbe-Ct-EgV"/>
                                                 <constraint firstItem="28D-Nm-ki9" firstAttribute="leading" secondItem="kht-6x-VEi" secondAttribute="trailing" constant="8" id="jIb-Bm-P4p"/>
+                                                <constraint firstItem="iuq-qD-RNJ" firstAttribute="leading" secondItem="kht-6x-VEi" secondAttribute="leading" id="kBT-KX-60Z"/>
                                                 <constraint firstItem="28D-Nm-ki9" firstAttribute="top" secondItem="z4w-8U-5Rx" secondAttribute="top" constant="8" id="lIK-5s-X1b"/>
                                                 <constraint firstAttribute="bottom" secondItem="C1H-yd-cU7" secondAttribute="bottom" constant="16" id="pje-60-KdC"/>
                                                 <constraint firstAttribute="bottom" secondItem="28D-Nm-ki9" secondAttribute="bottom" constant="8" id="zO9-LF-n5N"/>
@@ -89,6 +98,7 @@
                                             <outlet property="avatarImageView" destination="kht-6x-VEi" id="7aX-AN-39Z"/>
                                             <outlet property="callButton" destination="C1H-yd-cU7" id="m8K-fQ-jeF"/>
                                             <outlet property="nameLabel" destination="28D-Nm-ki9" id="6UA-t3-N1c"/>
+                                            <outlet property="starFavoriteImage" destination="iuq-qD-RNJ" id="phj-FC-VZA"/>
                                             <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" action="showViewController:sender:" id="zbk-nb-8X0"/>
                                         </connections>
                                     </tableViewCell>
@@ -367,12 +377,21 @@
                                                     <constraint firstAttribute="trailing" secondItem="CMW-Gd-OXo" secondAttribute="trailing" constant="16" id="vu9-Jx-IUF"/>
                                                 </constraints>
                                             </stackView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="detailStarImage" image="star-fill" translatesAutoresizingMaskIntoConstraints="NO" id="VA3-xD-9jc">
+                                                <rect key="frame" x="110" y="91" width="25" height="25"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="25" id="XTa-D0-6gM"/>
+                                                    <constraint firstAttribute="height" constant="25" id="ysD-KQ-sYP"/>
+                                                </constraints>
+                                            </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstItem="VA3-xD-9jc" firstAttribute="bottom" secondItem="gnb-5Q-Ozk" secondAttribute="bottom" id="9mb-0W-gbY"/>
                                             <constraint firstItem="4v4-J1-p6i" firstAttribute="leading" secondItem="c1z-yF-Wam" secondAttribute="leading" id="GpI-Rr-jvC"/>
                                             <constraint firstItem="4v4-J1-p6i" firstAttribute="top" secondItem="c1z-yF-Wam" secondAttribute="top" constant="16" id="rae-Xi-PfF"/>
                                             <constraint firstAttribute="trailing" secondItem="4v4-J1-p6i" secondAttribute="trailing" id="u9k-9O-lqN"/>
+                                            <constraint firstItem="VA3-xD-9jc" firstAttribute="leading" secondItem="gnb-5Q-Ozk" secondAttribute="leading" id="y1f-gb-dZq"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -405,6 +424,7 @@
                         <outlet property="contactImage" destination="gnb-5Q-Ozk" id="56m-nT-Ncz"/>
                         <outlet property="emailButton" destination="le8-vv-d37" id="dvn-YU-3mS"/>
                         <outlet property="segmentControl" destination="CMW-Gd-OXo" id="E5t-KR-Wwh"/>
+                        <outlet property="starDetailImage" destination="VA3-xD-9jc" id="AVm-MM-5fd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
@@ -448,6 +468,7 @@
     </scenes>
     <resources>
         <image name="default-avatar" width="200" height="200"/>
+        <image name="star-fill" width="124" height="124"/>
         <image name="tuto-new-contact" width="111" height="92"/>
     </resources>
     <inferredMetricsTieBreakers>

@@ -292,6 +292,13 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if let email = contact.email  {
                 contactCell.avatarImageView.gravatarImage(email: email)
             }
+            
+            if contact.isFavouriteUser {
+                //UIImage(named: "star-fill.png")
+                contactCell.starFavoriteImage.image = UIImage(named: "star-fill.png")
+            } else {
+                contactCell.starFavoriteImage.image = nil
+            } 
         }
     }
     
