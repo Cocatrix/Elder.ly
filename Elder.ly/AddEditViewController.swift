@@ -20,6 +20,8 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     var selectedProfile: String = ""    
     var profilesList: [String] = [String]()
     
+    var contact: Contact?
+    
     @IBOutlet weak var requestIndicator: UIActivityIndicatorView!
     @IBOutlet weak var addContactButton: UIButton!
     
@@ -29,6 +31,7 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
         
+        // Fill picker
         let preferencesProfiles = UserDefaults.standard.value(forKey: "elderlyProfiles")
         if ((preferencesProfiles) != nil) {
             print("Preferences set")
@@ -43,6 +46,20 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         profileView.delegate = self
         
         loadProfilesFromWS()
+        
+        if let contactToEdit = contact {
+            // Fill fields with contact info
+            firstNameTextField.text! = contactToEdit.firstName!
+            lastNameTextField.text! = contactToEdit.lastName!
+            phoneNumberTextField.text! = contactToEdit.phone!
+            emailTextField.text! = contactToEdit.email!
+            guard let profileToPick = profilesList.index(of: contactToEdit.profile!) else {
+                print("Profile not found")
+                return
+            }
+            self.selectedProfile = contactToEdit.profile!
+            profileView.selectRow(profileToPick, inComponent: 0, animated: false)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,7 +84,7 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     @IBAction func onButtonAddClick(_ sender: Any) {
-        print("adding contact")
+        print("Adding or updating contact")
         let firstName = firstNameTextField.text!
         let lastName = lastNameTextField.text!
         let phone = phoneNumberTextField.text!
@@ -120,28 +137,64 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
         
         if (!isInvalidField) {
-            WebServicesProvider.sharedInstance.createContactOnServer(email: email, phone: phone, firstName: firstName, lastName: lastName, profile: profile, gravatar: "", isFamilinkUser: false, isEmergencyUser: false, success: {
-                print("contact successfully created with profile " + profile)
-                DispatchQueue.main.async {
-                    self.addContactButton.isEnabled = true
-                    self.requestIndicator.isHidden = true
-                    self.navigationController?.popViewController(animated: true)
-                }
-            }, failure: { (error) in
-                print("Phone : " + phone + ", Firstname : " + firstName + ", Lastname : " + lastName + ", Email : " + email + ", Profile : " + profile)
-                let myError = error as NSError?
-                if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
-                    UserDefaults.standard.unsetAuth()
+            if (self.contact == nil) { // Create contact on server
+                WebServicesProvider.sharedInstance.createContactOnServer(email: email, phone: phone, firstName: firstName, lastName: lastName, profile: profile, gravatar: "", isFamilinkUser: false, isEmergencyUser: false, success: {
+                    print("contact successfully created with profile " + profile)
                     DispatchQueue.main.async {
                         self.addContactButton.isEnabled = true
                         self.requestIndicator.isHidden = true
+                        self.navigationController?.popViewController(animated: true)
                     }
-                    let controller = LoginViewController(nibName: nil, bundle: nil)
-                    self.present(controller, animated: false, completion: nil)
-                } else {
-                    self.alertUnknownError()
-                }
-            })
+                }, failure: { (error) in
+                    print("Phone : " + phone + ", Firstname : " + firstName + ", Lastname : " + lastName + ", Email : " + email + ", Profile : " + profile)
+                    let myError = error as NSError?
+                    if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
+                        UserDefaults.standard.unsetAuth()
+                        DispatchQueue.main.async {
+                            self.addContactButton.isEnabled = true
+                            self.requestIndicator.isHidden = true
+                        }
+                        let controller = LoginViewController(nibName: nil, bundle: nil)
+                        self.present(controller, animated: false, completion: nil)
+                    } else {
+                        self.alertUnknownError()
+                    }
+                })
+            } else {  // Updating contact on server
+                WebServicesProvider.sharedInstance.updateContactOnServer(wsId: contact!.wsId!, email: email, phone: phone, firstName: firstName, lastName: lastName, profile: profile,  gravatar: contact!.gravatar!, isFamilinkUser: false, isEmergencyUser: false, success: {
+                        print("contact successfully updated with profile " + profile)
+                        // Update Contact to be sent to detailVC
+                        self.contact?.firstName = firstName
+                        self.contact?.lastName = lastName
+                        self.contact?.phone = phone
+                        self.contact?.email = email
+                        self.contact?.profile = profile
+                        DispatchQueue.main.async {
+                            self.addContactButton.isEnabled = true
+                            self.requestIndicator.isHidden = true
+                            guard let viewControllers = self.navigationController?.viewControllers, let detailVC = viewControllers[viewControllers.count - 2] as? DetailViewController else {
+                                return
+                            }
+                            detailVC.contact = self.contact!
+                            detailVC.configureView()
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                }, failure: { (error) in
+                    print("Phone : " + phone + ", Firstname : " + firstName + ", Lastname : " + lastName + ", Email : " + email + ", Profile : " + profile)
+                    let myError = error as NSError?
+                    if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
+                        UserDefaults.standard.unsetAuth()
+                        DispatchQueue.main.async {
+                            self.addContactButton.isEnabled = true
+                            self.requestIndicator.isHidden = true
+                        }
+                        let controller = LoginViewController(nibName: nil, bundle: nil)
+                        self.present(controller, animated: false, completion: nil)
+                    } else {
+                        self.alertUnknownError()
+                    }
+                })
+            }
         }
     }
     
