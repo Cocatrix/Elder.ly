@@ -55,7 +55,11 @@ class MenuViewController: UIViewController {
     }
     
     @IBAction func onDisconnectPressed(_ sender: Any) {
-
+        WebServicesProvider.sharedInstance.revokeToken()
+        UserDefaults.standard.unsetAuth()
+        let controller = LoginViewController(nibName: nil, bundle: nil)
+        self.present(controller, animated: false, completion: nil)
+        self.dismiss(animated: true)
     }
     
     override func didReceiveMemoryWarning() {

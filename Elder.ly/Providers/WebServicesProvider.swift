@@ -30,6 +30,10 @@ class WebServicesProvider {
         persistentContainer.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
     
+    func revokeToken() {
+        token = nil
+    }
+    
     func userLogin(phone: String, password: String, success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
         let url = URL(string: self.url + "/public/login")
         var request = URLRequest(url: url!)
