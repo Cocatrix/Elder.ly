@@ -35,10 +35,10 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         // Email and PhoneNumber buttons tyiyle and style
         self.emailButton.setTitle(contact.email, for: .normal)
         self.emailButton.setTitleColor(UIColor.purple(), for: .normal)
-        self.emailButton.setTitleColor(UIColor.purpleDarker(), for: .highlighted)
+        self.emailButton.setTitleColor(UIColor.purpleDark(), for: .highlighted)
         self.callButton.setTitle(contact.phone, for: .normal)
         self.callButton.setTitleColor(UIColor.purple(), for: .normal)
-        self.callButton.setTitleColor(UIColor.purpleDarker(), for: .highlighted)
+        self.callButton.setTitleColor(UIColor.purpleDark(), for: .highlighted)
         
         // Favorites styling
         self.addFavouriteButton.layer.borderWidth = 1
@@ -70,11 +70,10 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         let font = UIFont.systemFont(ofSize: 17)
         self.segmentControl.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
         self.segmentControl.layer.cornerRadius = self.segmentControl.frame.size.height / 2
-        self.segmentControl.layer.borderColor = UIColor.white().cgColor
-        self.segmentControl.layer.borderWidth = 3
-        self.segmentControl.tintColor = UIColor.white()
-        self.segmentControl.backgroundColor = UIColor.purple()
+        self.segmentControl.layer.borderColor = UIColor.purple().cgColor
         self.segmentControl.layer.borderWidth = 1
+        self.segmentControl.tintColor = UIColor.purple()
+        //self.segmentControl.backgroundColor = UIColor.purple()
         self.segmentControl.layer.masksToBounds = true
         
         let options = UIBarButtonItem(title: "Options".localized, style: .plain, target: self, action: #selector(displayOptions))
