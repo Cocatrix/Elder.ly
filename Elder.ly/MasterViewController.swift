@@ -229,9 +229,6 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            guard let id = self.resultController?.object(at: indexPath).wsId else {
-                return
-            }
             let deleteAlertController = UIAlertController(title: "Delete Alert".localized,
                                                           message: "Are you sure you want to delete this contact ?".localized,
                                                           preferredStyle: .alert)
@@ -240,7 +237,9 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
             deleteAlertController.addAction(cancelAction)
             let OKAction = UIAlertAction(title: "OK", style: .default) { _ in
-                
+                guard let id = self.resultController?.object(at: indexPath).wsId else {
+                    return
+                }
                 WebServicesProvider.sharedInstance.deleteContactOnServer(wsId: id, success: {
                     print("delete success")
                 }, failure: { (error) in
@@ -257,7 +256,6 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 })
             }
             deleteAlertController.addAction(OKAction)
-           
             self.present(deleteAlertController, animated: true) {
             }
         }
