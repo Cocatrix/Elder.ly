@@ -78,6 +78,17 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         let options = UIBarButtonItem(title: "Options".localized, style: .plain, target: self, action: #selector(displayOptions))
         self.navigationController?.isToolbarHidden = false
         self.navigationController?.navigationBar.topItem?.rightBarButtonItem = options
+        
+        //Adding motion on Labels
+        let xAxisMotionStrong = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
+        xAxisMotionStrong.maximumRelativeValue = 20
+        xAxisMotionStrong.minimumRelativeValue = -20
+        self.contactFullname.addMotionEffect(xAxisMotionStrong)
+        
+        let xAxisMotionLightInverted = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
+        xAxisMotionLightInverted.maximumRelativeValue = -10
+        xAxisMotionLightInverted.minimumRelativeValue = 10
+        self.contactImage.addMotionEffect(xAxisMotionLightInverted)
     }
     
     @objc func displayOptions() {
