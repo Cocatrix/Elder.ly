@@ -48,10 +48,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white()]
         
         // NavigationBar items
-        let menuButton = UIBarButtonItem(title: myProfileString, style: .plain, target: self, action: #selector(openMenu(_:)))
+        let menuButton = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(openMenu(_:)))
         navigationItem.leftBarButtonItem = menuButton
         
-        let addButton = UIBarButtonItem(title: addContactString, style: .plain, target: self, action: #selector(insertNewObject(_:)))
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         navigationItem.rightBarButtonItem = addButton
         if let split = splitViewController {
             let controllers = split.viewControllers
