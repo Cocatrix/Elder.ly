@@ -33,8 +33,7 @@ class SearchCoreDataProvider {
             return nil
         }
         let predicateContent = "(firstName CONTAINS[cd] %@) || (lastName CONTAINS[cd] %@) || (phone CONTAINS[cd] %@) || (email CONTAINS[cd] %@)"
-        let searchPredicate: NSPredicate
-        searchPredicate = NSPredicate(format: predicateContent, content, content, content, content)
+        let searchPredicate = NSPredicate(format: predicateContent, content, content, content, content)
         return searchPredicate
     }
     
@@ -42,8 +41,7 @@ class SearchCoreDataProvider {
         /**
          * Returns a predicate that filters the results with favourite contacts
          */
-        let favouritePredicate: NSPredicate
-        favouritePredicate = NSPredicate(format: "isFavouriteUser == true")
+        let favouritePredicate = NSPredicate(format: "isFavouriteUser == true")
         return favouritePredicate
     }
     
@@ -51,8 +49,7 @@ class SearchCoreDataProvider {
         /**
          * Returns a predicate that filters the results with frequent contacts (at least interacted once with)
          */
-        let frequentPredicate: NSPredicate
-        frequentPredicate = NSPredicate(format: "frequency != 0")
+        let frequentPredicate = NSPredicate(format: "frequency != 0")
         return frequentPredicate
     }
     

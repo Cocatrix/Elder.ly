@@ -20,7 +20,7 @@ class ContactTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // Avtar round
+        // Avatar round
         self.avatarImageView.image = UIImage(named: "default-avatar")
         self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.width / 2
         self.avatarImageView.contentMode = .scaleAspectFill
@@ -34,7 +34,6 @@ class ContactTableViewCell: UITableViewCell {
         self.callButton.layer.cornerRadius = self.callButton.frame.size.height / 2
         self.callButton.layer.borderWidth = 1
         self.callButton.layer.borderColor = UIColor.orange().cgColor
-    
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

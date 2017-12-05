@@ -62,7 +62,6 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         } else {
             self.contactImage.image = UIImage(named: "default-avatar")
         }
-        self.contactImage.image = UIImage(named: "default-avatar")
         self.contactImage.layer.cornerRadius = self.contactImage.frame.size.width / 2
         self.contactImage.contentMode = .scaleAspectFill
         
