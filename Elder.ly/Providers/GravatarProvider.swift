@@ -27,10 +27,6 @@ extension String {
     }
 }
 
-private protocol QueryItemConvertible {
-    var queryItem: URLQueryItem {get}
-}
-
 public class Gravatar {
     public enum Size: CGFloat {
         case small = 80
