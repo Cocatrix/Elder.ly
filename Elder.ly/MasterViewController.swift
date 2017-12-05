@@ -48,6 +48,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.searchBar.delegate = self
         self.tabBar.delegate = self
         
+
         // NavigationBar colors
         self.navigationController?.navigationBar.tintColor = UIColor.white()
         self.navigationController?.navigationBar.barTintColor = UIColor.purple()
@@ -352,7 +353,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tutoCheck() {
         print("tuto check")
-        if self.tableView.numberOfRows(inSection: 0) == 0 {
+        if self.resultController?.fetchedObjects?.isEmpty ?? true {
             guard let tabs = self.tabBar.items, tabs.count == 3, let item = self.tabBar.selectedItem else {
                 print("Error in getting tab bar items or no selected item")
                 return
