@@ -197,6 +197,7 @@
                         <outlet property="searchBar" destination="yab-1u-5Dw" id="Jch-nv-TCj"/>
                         <outlet property="tabBar" destination="lWB-nf-AJg" id="ugn-jr-wel"/>
                         <outlet property="tableView" destination="qhS-qq-l2R" id="BJj-RH-Gko"/>
+                        <outlet property="tutoAddFavouriteImage" destination="Ymq-17-y58" id="bdu-hC-M4w"/>
                         <outlet property="tutoAddFavouriteLabel" destination="Ve3-ug-Opj" id="NlN-sA-9Al"/>
                         <outlet property="tutoNewContactImage" destination="Cl4-Pc-pNL" id="WX3-Eb-fkK"/>
                         <outlet property="tutoNewContactLabel" destination="5dZ-bf-oSn" id="dLw-HD-XN3"/>

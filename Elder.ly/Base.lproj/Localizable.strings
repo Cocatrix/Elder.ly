@@ -32,4 +32,5 @@
 "Disconnection" = "Déconnexion";
 "Are you sure you want to disconnect ?" = "Êtes vous sûr(e) de vouloir vous déconnecter ?";
 "Add your first contact here" = "Ajoutez votre premier contact ici";
-"No favourite" = "Pour ajouter un favori, sur un contact, cliquez sur le bouton comme ci-dessous.";
+"No favourite" = "Trouvez ce bouton sur un contact pour l'ajouter aux favoris.";
+"No frequent" = "Vos contacts les plus fréquemment appelés s'afficheront ici.";

@@ -26,6 +26,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let addContactString: String = "Add".localized
     let noContactString: String = "Add your first contact here".localized
     let noFavouriteString: String = "No favourite".localized
+    let noFrequentString: String = "No frequent".localized
     let addFavouriteString: String = "Add to your favourites".localized
     
     @IBOutlet weak var emptyTableView: UIView!
@@ -37,6 +38,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tutoNewContactLabel: UILabel!
     @IBOutlet weak var noFavouriteLabel: UILabel!
     @IBOutlet weak var tutoAddFavouriteLabel: UILabel!
+    @IBOutlet weak var tutoAddFavouriteImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,7 +114,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // TODO - clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         // It is related to selected element. Should it still be selected on viewWillAppear ? I think it's not important to comment it for now.
         super.viewWillAppear(animated)
-        
+        self.tutoCheck()
         // Check Auth
         if !UserDefaults.standard.isAuth() && UserDefaults.standard.isFirstLogin() {
             let controller = LoginViewController(nibName: nil, bundle: nil)
@@ -155,6 +157,9 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             wsProvider.getContacts(success: {
                 print("Load data : success")
+                DispatchQueue.main.async {
+                    self.tutoCheck()
+                }
             }, failure: { (error) in
                 let myError = error as NSError?
                 if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
@@ -341,26 +346,38 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tutoCheck() {
+        print("tuto check")
         if self.tableView.numberOfRows(inSection: 0) == 0 {
             guard let tabs = self.tabBar.items, tabs.count == 3, let item = self.tabBar.selectedItem else {
                 print("Error in getting tab bar items or no selected item")
                 return
             }
             self.emptyTableView.isHidden = false
-            /*
+            
             switch item {
             case tabs[0]: // Favourites
-                tutoNewContactImage.isHidden = false
-                tutoNewContactLabel.isHidden = true
+                self.tutoNewContactImage.isHidden = true
+                self.tutoNewContactLabel.isHidden = true
+                self.noFavouriteLabel.isHidden = false
+                self.noFavouriteLabel.text = self.noFavouriteString
+                self.tutoAddFavouriteLabel.isHidden = false
+                self.tutoAddFavouriteImage.isHidden = false
             case tabs[1]: // All contacts
-                tutoNewContactImage.isHidden = false
-                tutoNewContactLabel.isHidden = false
+                self.tutoNewContactImage.isHidden = false
+                self.tutoNewContactLabel.isHidden = false
+                self.noFavouriteLabel.isHidden = true
+                self.tutoAddFavouriteLabel.isHidden = true
+                self.tutoAddFavouriteImage.isHidden = true
             case tabs[2]: // Frequents
-                tutoNewContactImage.isHidden = true
-                tutoNewContactLabel.isHidden = true
+                self.tutoNewContactImage.isHidden = true
+                self.tutoNewContactLabel.isHidden = true
+                self.noFavouriteLabel.isHidden = false
+                self.noFavouriteLabel.text = self.noFrequentString
+                self.tutoAddFavouriteLabel.isHidden = true
+                self.tutoAddFavouriteImage.isHidden = true
             default:
                 print("default: error")
-            }*/
+            }
         } else {
             self.emptyTableView.isHidden = true
         }
