@@ -1,13 +1,15 @@
-<img src="https://raw.githubusercontent.com/Cocatrix/Elder.ly/master/Elder.ly/Assets.xcassets/AppIcon.appiconset/Elder.ly.png" alt="Elder.ly logo" height="175" >
+<img src="https://raw.githubusercontent.com/Cocatrix/Elder.ly/master/Elder.ly/Assets.xcassets/AppIcon.appiconset/Elder.ly.png" alt="Elder.ly logo" height="175" />
 
-# Elder.ly
+# <img src="https://raw.githubusercontent.com/Cocatrix/Elder.ly/master/Elder.ly/Assets.xcassets/elder.ly-logotype.imageset/elderly-logotype.png" alt="Elder.ly logo" height="70" />
+
 Our final project in Swift 4.
 
 ## Screenshots
-<!---![Screen](filename.png)-->
+<img src="./Screenshots/screenshot-list.png" alt="Elder.ly screenshot list" height="400" /> &nbsp;
+<img src="./Screenshots/screenshot-details.png" alt="Elder.ly screenshot details" height="400" /> &nbsp;
+<img src="./Screenshots/screenshot-menu.png" alt="Elder.ly screenshot menu" height="400" />
 
 ## Features
-
 - Manage phone contacts (add, edit, delete)
 - Interact in-app (calls, texts, emails)
 - Authenticate with a Web Service
@@ -17,7 +19,6 @@ Our final project in Swift 4.
 - Access contacts offline
 - Search within contacts
 - Display Gravatars
-
 
 ## Environment / Techs
 - <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Swift_logo.svg/2000px-Swift_logo.svg.png" alt="Swift logo" width="30" > &nbsp;

@@ -17,6 +17,7 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var profileView: UIPickerView!
     @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var addEditLabel: UILabel!
     
     var selectedProfile: String = ""    
     var profilesList: [String] = [String]()
@@ -61,6 +62,8 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         loadProfilesFromWS()
         
         if let contactToEdit = contact {
+            
+            self.addEditLabel.text = "Edit a contact".localized
             // Fill fields with contact info
             firstNameTextField.text! = contactToEdit.firstName!
             lastNameTextField.text! = contactToEdit.lastName!
@@ -72,6 +75,8 @@ class AddEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             }
             self.selectedProfile = contactToEdit.profile!
             profileView.selectRow(profileToPick, inComponent: 0, animated: false)
+        } else {
+            self.addEditLabel.text = "Add a contact".localized
         }
     }
     
