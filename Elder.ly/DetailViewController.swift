@@ -75,7 +75,7 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         //self.segmentControl.backgroundColor = UIColor.purple()
         self.segmentControl.layer.masksToBounds = true
         
-        let options = UIBarButtonItem(title: "Options".localized, style: .plain, target: self, action: #selector(displayOptions))
+        let options = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(displayOptions))
         self.navigationController?.isToolbarHidden = false
         self.navigationController?.navigationBar.topItem?.rightBarButtonItem = options
     }
