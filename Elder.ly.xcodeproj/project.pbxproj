@@ -10,7 +10,6 @@
 		00EF402178A187FB8996946E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF07CD3234CE34238AAF00CF /* SystemConfiguration.framework */; };
 		37016E421FCF153400AB82C9 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37016E411FCF153400AB82C9 /* ContactTableViewCell.swift */; };
 		378A09481FD18684002211C1 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378A09471FD18684002211C1 /* MenuViewController.swift */; };
-		378A094E1FD1A157002211C1 /* SegueTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378A094D1FD1A157002211C1 /* SegueTransitions.swift */; };
 		3790C1591FCC5539001928E4 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3790C1571FCC5539001928E4 /* SignUpViewController.swift */; };
 		3790C15C1FCC6018001928E4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3790C15B1FCC6018001928E4 /* LoginViewController.swift */; };
 		37D007231FCDB76200132F68 /* AddEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D007211FCDB76200132F68 /* AddEditViewController.swift */; };
@@ -75,7 +74,6 @@
 		2410B9AB82100003E207B63C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		37016E411FCF153400AB82C9 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
 		378A09471FD18684002211C1 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
-		378A094D1FD1A157002211C1 /* SegueTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueTransitions.swift; sourceTree = "<group>"; };
 		3790C1571FCC5539001928E4 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		3790C15B1FCC6018001928E4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		37D007211FCDB76200132F68 /* AddEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditViewController.swift; sourceTree = "<group>"; };
@@ -212,7 +210,6 @@
 				51FBCD1A1FD048FA004A8E73 /* UIColorUtils.swift */,
 				51FB10BA1FD1978C00A9D9F1 /* SplitViewControllerUtils.swift */,
 				378A09471FD18684002211C1 /* MenuViewController.swift */,
-				378A094D1FD1A157002211C1 /* SegueTransitions.swift */,
 				518E16F71FD55A130053E053 /* StringUtils.swift */,
 				37D007341FCDC71000132F68 /* SignUpViewController.xib */,
 				41391B811FD5970C003ECEEF /* LocalizedUtil.swift */,
@@ -416,7 +413,6 @@
 			files = (
 				3790C15C1FCC6018001928E4 /* LoginViewController.swift in Sources */,
 				51EC3A721FCC403E00EEE7D6 /* Contact.swift in Sources */,
-				378A094E1FD1A157002211C1 /* SegueTransitions.swift in Sources */,
 				5118D7E01FCDBE710015E2F8 /* UserDefaultUtils.swift in Sources */,
 				5133E0AC1FCEC0AB00AFB6CA /* SearchCoreDataProvider.swift in Sources */,
 				51FBCD131FD005D1004A8E73 /* GravatarProvider.swift in Sources */,

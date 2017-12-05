@@ -10,7 +10,8 @@ import UIKit
 
 class MenuViewController: UIViewController {
     
-    @IBOutlet weak var userPhoneNumer: UILabel!
+	@IBOutlet weak var backgroundView: UIView!
+	@IBOutlet weak var userPhoneNumer: UILabel!
     @IBOutlet weak var userEmail: UILabel!
     @IBOutlet weak var userFullName: UILabel!
     @IBOutlet weak var userImage: UIImageView!
@@ -37,7 +38,46 @@ class MenuViewController: UIViewController {
         // Close Button style
         self.closeButton.setTitleColor(UIColor.purpleLight(), for: .normal)
         self.closeButton.setTitleColor(UIColor.purpleDark(), for: .highlighted)
+		
+		
+		
+		//Adding the blur effet on the view
+		let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+		let blurEffectView = UIVisualEffectView(effect: blurEffect)
+		blurEffectView.frame = backgroundView.bounds
+		blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		backgroundView.addSubview(blurEffectView)
+		backgroundView.sendSubview(toBack: blurEffectView)
+		
+		//Adding motion on Labels
+		let xAxisMotionStrong = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
+		xAxisMotionStrong.maximumRelativeValue = 20
+		xAxisMotionStrong.minimumRelativeValue = -20
+		userPhoneNumer.addMotionEffect(xAxisMotionStrong)
+		userFullName.addMotionEffect(xAxisMotionStrong)
+		userEmail.addMotionEffect(xAxisMotionStrong)
+		
+		let xAxisMotionLightInverted = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
+		xAxisMotionLightInverted.maximumRelativeValue = -10
+		xAxisMotionLightInverted.minimumRelativeValue = 10
+		userImage.addMotionEffect(xAxisMotionLightInverted)
     }
+	
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		self.view.isHidden = true // hinding the view before animations
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		//Animation on the view
+		view.layer.transform = CATransform3DMakeTranslation(-view.frame.width, 0, 0)
+		self.view.isHidden = false
+		UIView.animate(withDuration: 0.22) {
+			self.view.layer.transform = CATransform3DMakeTranslation(0, 0, 0)
+		}
+	}
     
     func updateMenuView() {
         guard let phone = cuPhone, let email = cuEmail, let firstName = cuFirstName, let lastName = cuLastName else {
@@ -54,7 +94,18 @@ class MenuViewController: UIViewController {
         userFullName.text = "\(firstName) \(lastName)"
     }
     
-    @IBAction func onDisconnectPressed(_ sender: Any) {
+	@IBAction func dismissMenu(_ sender: Any) {
+		
+		//Closing with animation, making sure the user cannot tap twice on the close button
+		self.closeButton.isEnabled = false
+		UIView.animate(withDuration: 0.22, animations: {
+			self.view.layer.transform = CATransform3DMakeTranslation(-self.view.frame.width, 0, 0)
+		}) { (_) in
+			self.dismiss(animated: false, completion: nil)
+		}
+		
+	}
+	@IBAction func onDisconnectPressed(_ sender: Any) {
         let disconnectionAlert = UIAlertController(title: "Disconnection".localized, message: "Are you sure you want to disconnect ?".localized, preferredStyle: .alert)
         let OKAction = UIAlertAction(title: "OK", style: .default, handler: { _ in
             WebServicesProvider.sharedInstance.revokeToken()

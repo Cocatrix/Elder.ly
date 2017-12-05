@@ -152,7 +152,7 @@
                         <outlet property="tableView" destination="qhS-qq-l2R" id="BJj-RH-Gko"/>
                         <outlet property="tutoNewContactImage" destination="Cl4-Pc-pNL" id="WX3-Eb-fkK"/>
                         <outlet property="tutoNewContactLabel" destination="5dZ-bf-oSn" id="dLw-HD-XN3"/>
-                        <segue destination="yaC-f7-cDd" kind="presentation" identifier="openMenu" customClass="TransitionToRightSegue" customModule="Elder_ly" customModuleProvider="target" modalPresentationStyle="overCurrentContext" id="RWz-Me-Mtb"/>
+                        <segue destination="yaC-f7-cDd" kind="presentation" identifier="openMenu" animates="NO" modalPresentationStyle="overCurrentContext" id="RWz-Me-Mtb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="smO-UO-uLI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -167,7 +167,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OLY-wq-Gdh">
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OLY-wq-Gdh">
                                 <rect key="frame" x="0.0" y="20" width="256" height="548"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="contactImage" image="default-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="zdz-ZE-4Yc">
@@ -227,11 +227,10 @@
                                             <color key="titleColor" red="1" green="0.54117647059999996" blue="0.14901960780000001" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="itq-Bh-n9y" kind="unwind" customClass="TransitionToLeftSegue" customModule="Elder_ly" customModuleProvider="target" unwindAction="prepareForUnwindWithSegue:" id="WRt-qg-KvP"/>
+                                            <action selector="dismissMenu:" destination="yaC-f7-cDd" eventType="touchUpInside" id="OgK-o8-JrP"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.22352941179999999" green="0.18823529410000001" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="LNf-7b-sUj" firstAttribute="centerX" secondItem="OLY-wq-Gdh" secondAttribute="centerX" id="0Dp-an-Cnl"/>
                                     <constraint firstItem="zdz-ZE-4Yc" firstAttribute="centerX" secondItem="OLY-wq-Gdh" secondAttribute="centerX" id="1pA-Bx-lQT"/>
@@ -265,6 +264,7 @@
                         <viewLayoutGuide key="safeArea" id="Uze-7f-ASd"/>
                     </view>
                     <connections>
+                        <outlet property="backgroundView" destination="OLY-wq-Gdh" id="o3w-pA-KF2"/>
                         <outlet property="closeButton" destination="zRa-u2-d2O" id="xaq-tz-Wpm"/>
                         <outlet property="logoutButton" destination="zgz-HU-uIx" id="5hL-v3-CXB"/>
                         <outlet property="userEmail" destination="myJ-ls-wUY" id="Ydm-Fv-GIR"/>
@@ -274,7 +274,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Em6-aW-rYD" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="itq-Bh-n9y" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1710" y="-633"/>
         </scene>
