@@ -11,12 +11,14 @@ import Foundation
 class AlertDialogProvider {
     static func authError() -> UIAlertController {
         UserDefaults.standard.unsetAuth()
-        let authAlert = UIAlertController(title: "Error".localized, message: "Authentification error".localized, preferredStyle: .alert)
+        let authAlert = UIAlertController(title: "Disconnected".localized, message:
+            "Please enter your password".localized, preferredStyle: .alert)
         authAlert.addTextField { (passwordField) in
             passwordField.placeholder = "Password".localized
             passwordField.isSecureTextEntry = true
+            passwordField.keyboardType = UIKeyboardType.numberPad
         }
-        let OKAction = UIAlertAction(title: "OK", style: .default, handler: { _ in
+        let OKAction = UIAlertAction(title: "Connect".localized, style: .default, handler: { _ in
             guard let fields = authAlert.textFields else {
                 return
             }

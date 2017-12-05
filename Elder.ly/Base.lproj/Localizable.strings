@@ -29,3 +29,6 @@
 "Password" = "Mot de passe";
 "Disconnection" = "Déconnexion";
 "Are you sure you want to disconnect ?" = "Êtes vous sûr(e) de vouloir vous déconnecter ?";
+"Connect" = "Connexion";
+"Disconnected" = "Déconnecté";
+"Please enter your password" = "Merci de rentrer à nouveau votre mot de passe";

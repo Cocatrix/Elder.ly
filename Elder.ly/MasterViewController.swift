@@ -101,6 +101,15 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // It is related to selected element. Should it still be selected on viewWillAppear ? I think it's not important to comment it for now.
         super.viewWillAppear(animated)
         
+        // Setup background image
+        let backgroundImage = UIImage(named: "elderly")
+        let imageView = UIImageView(image: backgroundImage)
+        self.tableView.backgroundView = imageView
+        
+        imageView.contentMode = .scaleAspectFit
+        imageView.alpha = 0.15
+        tableView.backgroundColor = .white
+        
         // Check Auth
         if !UserDefaults.standard.isAuth() && UserDefaults.standard.isFirstLogin() {
             let controller = LoginViewController(nibName: nil, bundle: nil)
@@ -232,6 +241,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //            cell.contentView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
         //        }
         configureCell(cell, withContact: contact!)
+        cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
         return cell
     }
     
