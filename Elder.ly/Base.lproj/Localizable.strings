@@ -13,6 +13,8 @@
 "Edit" = "Modifier";
 "Delete" = "Supprimer";
 "Cancel" = "Annuler";
+"Add" = "Ajouter";
+"My Profile" = "Mon Profil";
 "Forgotten password" = "Mot de passe oublié";
 "Please enter your phone number" = "Veuillez renseigner votre numéro de téléphone";
 "Phone number" = "Numéro de téléphone";
@@ -29,6 +31,9 @@
 "Password" = "Mot de passe";
 "Disconnection" = "Déconnexion";
 "Are you sure you want to disconnect ?" = "Êtes vous sûr(e) de vouloir vous déconnecter ?";
+"Add your first contact here" = "Ajoutez votre premier contact ici";
+"No favourite" = "Trouvez ce bouton sur un contact pour l'ajouter aux favoris.";
+"No frequent" = "Vos contacts les plus fréquemment appelés s'afficheront ici.";
 "Connect" = "Connexion";
 "Disconnected" = "Déconnecté";
 "Please enter your password" = "Merci de rentrer à nouveau votre mot de passe";

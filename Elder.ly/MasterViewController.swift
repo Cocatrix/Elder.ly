@@ -22,16 +22,23 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var currentUserEmail: String?
     
     let searchPlaceholder: String = "Search (by name, email...)".localized
-    let myProfileString: String = "Mon Profil".localized
-    let addContactString: String = "Ajouter".localized
+    let myProfileString: String = "My Profile".localized
+    let addContactString: String = "Add".localized
+    let noContactString: String = "Add your first contact here".localized
+    let noFavouriteString: String = "No favourite".localized
+    let noFrequentString: String = "No frequent".localized
+    let addFavouriteString: String = "Add to your favourites".localized
     
-    
+    @IBOutlet weak var emptyTableView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tabBar: UITabBar!
     
     @IBOutlet weak var tutoNewContactImage: UIImageView!
     @IBOutlet weak var tutoNewContactLabel: UILabel!
+    @IBOutlet weak var noFavouriteLabel: UILabel!
+    @IBOutlet weak var tutoAddFavouriteLabel: UILabel!
+    @IBOutlet weak var tutoAddFavouriteImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +48,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.searchBar.delegate = self
         self.tabBar.delegate = self
         
+
         // NavigationBar colors
         self.navigationController?.navigationBar.tintColor = UIColor.white()
         self.navigationController?.navigationBar.barTintColor = UIColor.purple()
@@ -64,6 +72,12 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         searchTextField?.textColor = UIColor.white()
         searchTextField?.backgroundColor = UIColor.white10()
         
+        // Empty Table View
+        self.tutoNewContactLabel.text = self.noContactString
+        self.noFavouriteLabel.text = self.noFavouriteString
+        self.tutoAddFavouriteLabel.text = self.addFavouriteString
+        self.tutoAddFavouriteLabel.textColor = UIColor.orange()
+        
         //TabBar
         self.tabBar.isTranslucent = false
         self.tabBar.backgroundColor = UIColor.purple()
@@ -72,18 +86,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.tabBar.tintColor = UIColor.orange()
         
-        // Setup fetched resultController
-        let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
-        // Sort by first name, then by last name
-        let scdProvider = SearchCoreDataProvider.sharedInstance
-        
-        fetchRequest.sortDescriptors = scdProvider.getDefaultSortDescriptor()
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                             managedObjectContext: self.appDelegate().persistentContainer.viewContext,
-                                             sectionNameKeyPath: "firstLetter", cacheName: nil)
-        frc.delegate = self
-        try? frc.performFetch()
-        self.resultController = frc
+        displayAllContacts()
         
         // Select Contacts tab at launch
         guard let items = self.tabBar.items, items.count == 3 else {
@@ -100,6 +103,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // TODO - clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         // It is related to selected element. Should it still be selected on viewWillAppear ? I think it's not important to comment it for now.
         super.viewWillAppear(animated)
+        //self.tutoCheck()
         
         // Setup background image
         let backgroundImage = UIImage(named: "elderly")
@@ -152,6 +156,9 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             wsProvider.getContacts(success: {
                 print("Load data : success")
+                DispatchQueue.main.async {
+                    self.tutoCheck()
+                }
             }, failure: { (error) in
                 let myError = error as NSError?
                 if myError?.code == 401 || myError?.code == WebServicesProvider.AUTH_ERROR {
@@ -334,16 +341,45 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tutoCheck() {
-        if self.tableView.numberOfRows(inSection: 0) == 0 {
-            print("No contact")
-            tutoNewContactImage.isHidden = false
-            tutoNewContactLabel.isHidden = false
-            searchBar.isHidden = true
+        print("tuto check")
+        if (self.searchBar.text != "") {
+            self.emptyTableView.isHidden = true
+            return
+        }
+        
+        if self.resultController?.fetchedObjects?.isEmpty ?? true {
+            guard let tabs = self.tabBar.items, tabs.count == 3, let item = self.tabBar.selectedItem else {
+                print("Error in getting tab bar items or no selected item")
+                return
+            }
+            self.emptyTableView.isHidden = false
+            
+            switch item {
+            case tabs[0]: // Favourites
+                self.tutoNewContactImage.isHidden = true
+                self.tutoNewContactLabel.isHidden = true
+                self.noFavouriteLabel.isHidden = false
+                self.noFavouriteLabel.text = self.noFavouriteString
+                self.tutoAddFavouriteLabel.isHidden = false
+                self.tutoAddFavouriteImage.isHidden = false
+            case tabs[1]: // All contacts
+                self.tutoNewContactImage.isHidden = false
+                self.tutoNewContactLabel.isHidden = false
+                self.noFavouriteLabel.isHidden = true
+                self.tutoAddFavouriteLabel.isHidden = true
+                self.tutoAddFavouriteImage.isHidden = true
+            case tabs[2]: // Frequents
+                self.tutoNewContactImage.isHidden = true
+                self.tutoNewContactLabel.isHidden = true
+                self.noFavouriteLabel.isHidden = false
+                self.noFavouriteLabel.text = self.noFrequentString
+                self.tutoAddFavouriteLabel.isHidden = true
+                self.tutoAddFavouriteImage.isHidden = true
+            default:
+                print("default: error")
+            }
         } else {
-            print("Some contacts")
-            tutoNewContactImage.isHidden = true
-            tutoNewContactLabel.isHidden = true
-            searchBar.isHidden = true
+            self.emptyTableView.isHidden = true
         }
     }
 }
@@ -396,6 +432,7 @@ extension MasterViewController: UISearchBarDelegate {
         self.searchBar(searchBar, textDidChange: "")
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
+        self.tutoCheck()
     }
 }
 
@@ -412,6 +449,8 @@ extension MasterViewController: UITabBarDelegate {
             print("Error in getting tab bar items")
             return
         }
+        
+        //self.tableView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         
         switch item {
         case tabs[0]:
@@ -432,14 +471,17 @@ extension MasterViewController: UITabBarDelegate {
          * - sorted by first name, then last name
          * - predicate to display favourite contacts only (and search results if applicable)
          */
-        guard let frc = self.resultController else {
-            return
-        }
+        let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
+        let scdProvider = SearchCoreDataProvider.sharedInstance
+        fetchRequest.sortDescriptors = scdProvider.getDefaultSortDescriptor()
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                           managedObjectContext: self.appDelegate().persistentContainer.viewContext,
+                                                           sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
         // Reset fetch limit number
         frc.fetchRequest.fetchLimit = 0
         
         // Get predicate corresponding to favourite (manage search predicate if existing)
-        let scdProvider = SearchCoreDataProvider.sharedInstance
         let favouritePredicate = scdProvider.getFavouritePredicate()
         if self.currentSearchPredicate != nil && favouritePredicate != nil {
             frc.fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [self.currentSearchPredicate!, favouritePredicate!])
@@ -453,6 +495,7 @@ extension MasterViewController: UITabBarDelegate {
         
         // Perform fetch and reload data
         try? frc.performFetch()
+        self.resultController = frc
         self.tableView.reloadData()
         tutoCheck()
     }
@@ -464,14 +507,19 @@ extension MasterViewController: UITabBarDelegate {
          * - sorted by first name, then last name
          * - no predicate (except search results if applicable)
          */
-        guard let frc = self.resultController else {
-            return
-        }
+        let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
+        // Sort by first name, then by last name
+        let scdProvider = SearchCoreDataProvider.sharedInstance
+        
+        fetchRequest.sortDescriptors = scdProvider.getDefaultSortDescriptor()
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                             managedObjectContext: self.appDelegate().persistentContainer.viewContext,
+                                             sectionNameKeyPath: "firstLetter", cacheName: nil)
+        frc.delegate = self
         // Reset fetch limit number
         frc.fetchRequest.fetchLimit = 0
         
         // Sort by first name, then by last name
-        let scdProvider = SearchCoreDataProvider.sharedInstance
         frc.fetchRequest.sortDescriptors = scdProvider.getDefaultSortDescriptor()
         
         // Reset predicate (or keep search predicate)
@@ -483,6 +531,7 @@ extension MasterViewController: UITabBarDelegate {
         self.currentTabPredicate = nil
         // Perform fetch and reload data
         try? frc.performFetch()
+        self.resultController = frc
         self.tableView.reloadData()
         tutoCheck()
     }
@@ -494,15 +543,18 @@ extension MasterViewController: UITabBarDelegate {
          * - sorted by frequency, then first name, then last name
          * - no predicate (except search results if applicable)
          */
-        guard let frc = self.resultController else {
-            return
-        }
+        let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
+        let scdProvider = SearchCoreDataProvider.sharedInstance
+        fetchRequest.sortDescriptors = scdProvider.getDefaultSortDescriptor()
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                           managedObjectContext: self.appDelegate().persistentContainer.viewContext,
+                                                           sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
         // Set fetch limit number
         let fetchLimitNumber = 5
         frc.fetchRequest.fetchLimit = fetchLimitNumber
         
         // Sort by frequency, then by first name, then by last name
-        let scdProvider = SearchCoreDataProvider.sharedInstance
         frc.fetchRequest.sortDescriptors = scdProvider.getFrequentSortDescriptor()
         
         // Get predicate corresponding to frequency (manage search predicate if existing)
@@ -516,6 +568,7 @@ extension MasterViewController: UITabBarDelegate {
         
         // Perform fetch and reload data
         try? frc.performFetch()
+        self.resultController = frc
         self.tableView.reloadData()
         tutoCheck()
     }

@@ -32,11 +32,11 @@ class DetailViewController: UIViewController, UIActionSheetDelegate {
         // Display contact fullname
         self.contactFullname.text = contact.firstName! + " " + contact.lastName!
         
-        // Email and PhoneNumber buttons tyiyle and style
+        // Email and PhoneNumber buttons colors and style
         self.emailButton.setTitle(contact.email, for: .normal)
         self.emailButton.setTitleColor(UIColor.purple(), for: .normal)
         self.emailButton.setTitleColor(UIColor.purpleDark(), for: .highlighted)
-        self.callButton.setTitle(contact.phone, for: .normal)
+        self.callButton.setTitle(contact.phone?.toPhoneNumber(), for: .normal)
         self.callButton.setTitleColor(UIColor.purple(), for: .normal)
         self.callButton.setTitleColor(UIColor.purpleDark(), for: .highlighted)
         
