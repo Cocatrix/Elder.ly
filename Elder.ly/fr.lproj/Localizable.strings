@@ -1,10 +1,10 @@
-/* 
-  Localizable.strings
-  Elder.ly
-
-  Created by Nicolas Vergoz on 28/11/2017.
-  Copyright © 2017 Old Mojito. All rights reserved.
-*/
+/*
+ Localizable.strings
+ Elder.ly
+ 
+ Created by Nicolas Vergoz on 28/11/2017.
+ Copyright © 2017 Old Mojito. All rights reserved.
+ */
 "Error" = "Erreur";
 "Connection error" = "Erreur de connexion";
 "Unknown error" = "Erreur inconnue";
@@ -37,3 +37,5 @@
 "Connect" = "Connexion";
 "Disconnected" = "Déconnecté";
 "Please enter your password" = "Merci de rentrer à nouveau votre mot de passe";
+"Add a contact" = "Ajouter un contact";
+"Edit a contact" = "Modifier un contact";
