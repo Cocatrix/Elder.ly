@@ -22,9 +22,11 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var currentUserEmail: String?
     
     let searchPlaceholder: String = "Search (by name, email...)".localized
-    let myProfileString: String = "Mon Profil".localized
-    let addContactString: String = "Ajouter".localized
-    
+    let myProfileString: String = "My Profile".localized
+    let addContactString: String = "Add".localized
+    let noContactString: String = "Add your first contact here".localized
+    let noFavouriteString: String = "No favourite".localized
+    let addFavouriteString: String = "Add to your favourites".localized
     
     @IBOutlet weak var emptyTableView: UIView!
     @IBOutlet weak var tableView: UITableView!
@@ -33,6 +35,8 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var tutoNewContactImage: UIImageView!
     @IBOutlet weak var tutoNewContactLabel: UILabel!
+    @IBOutlet weak var noFavouriteLabel: UILabel!
+    @IBOutlet weak var tutoAddFavouriteLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +46,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.searchBar.delegate = self
         self.tabBar.delegate = self
         
-        self.tableView.backgroundView = UIImageView(image: UIImage(named: "./xcassets/elderly"))
+        // Not working // self.tableView.backgroundView = UIImageView(image: UIImage(named: "./xcassets/elderly"))
         
         // NavigationBar colors
         self.navigationController?.navigationBar.tintColor = UIColor.white()
@@ -66,6 +70,12 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let searchTextField = self.searchBar.value(forKey: "searchField") as? UITextField
         searchTextField?.textColor = UIColor.white()
         searchTextField?.backgroundColor = UIColor.white10()
+        
+        // Empty Table View
+        self.tutoNewContactLabel.text = self.noContactString
+        self.noFavouriteLabel.text = self.noFavouriteString
+        self.tutoAddFavouriteLabel.text = self.addFavouriteString
+        self.tutoAddFavouriteLabel.textColor = UIColor.orange()
         
         //TabBar
         self.tabBar.isTranslucent = false
@@ -337,27 +347,22 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 return
             }
             self.emptyTableView.isHidden = false
+            /*
             switch item {
-            case tabs[0]:
-                tutoNewContactImage.isHidden = true
+            case tabs[0]: // Favourites
+                tutoNewContactImage.isHidden = false
                 tutoNewContactLabel.isHidden = true
-                searchBar.isHidden = true
-            case tabs[1]:
+            case tabs[1]: // All contacts
                 tutoNewContactImage.isHidden = false
                 tutoNewContactLabel.isHidden = false
-                searchBar.isHidden = true
-            case tabs[2]:
+            case tabs[2]: // Frequents
                 tutoNewContactImage.isHidden = true
                 tutoNewContactLabel.isHidden = true
-                searchBar.isHidden = true
             default:
                 print("default: error")
-            }
+            }*/
         } else {
             self.emptyTableView.isHidden = true
-            tutoNewContactImage.isHidden = true
-            tutoNewContactLabel.isHidden = true
-            searchBar.isHidden = false
         }
     }
 }

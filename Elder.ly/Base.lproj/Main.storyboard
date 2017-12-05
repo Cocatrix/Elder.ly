@@ -36,6 +36,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="yab-1u-5Dw">
+                                <rect key="frame" x="0.0" y="64" width="320" height="56"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qhS-qq-l2R">
                                 <rect key="frame" x="0.0" y="120" width="320" height="399"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -105,8 +109,56 @@
                                 </prototypes>
                             </tableView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2db-bQ-lQ0">
-                                <rect key="frame" x="0.0" y="125" width="320" height="394"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tuto-new-contact" translatesAutoresizingMaskIntoConstraints="NO" id="Cl4-Pc-pNL">
+                                        <rect key="frame" x="189" y="5" width="111" height="116"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Cl4-Pc-pNL" secondAttribute="height" multiplier="22:23" id="xuR-j1-2Uh"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Contact" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5dZ-bf-oSn">
+                                        <rect key="frame" x="0.0" y="37" width="189" height="107"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="107" id="SvJ-GQ-tmB"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Explanation to add Favourite" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qne-W4-fea">
+                                        <rect key="frame" x="20" y="214" width="280" height="119"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fav-pseudo-button" translatesAutoresizingMaskIntoConstraints="NO" id="Ymq-17-y58">
+                                        <rect key="frame" x="15" y="363" width="290" height="77"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add button" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ve3-ug-Opj">
+                                        <rect key="frame" x="47" y="390.5" width="226" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="5dZ-bf-oSn" firstAttribute="leading" secondItem="2db-bQ-lQ0" secondAttribute="leading" id="2Ge-bR-QlP"/>
+                                    <constraint firstItem="Cl4-Pc-pNL" firstAttribute="leading" secondItem="5dZ-bf-oSn" secondAttribute="trailing" id="8PW-Vj-wd5"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ymq-17-y58" secondAttribute="trailing" constant="15" id="Dj1-5O-Wrs"/>
+                                    <constraint firstItem="Ve3-ug-Opj" firstAttribute="centerY" secondItem="Ymq-17-y58" secondAttribute="centerY" constant="-2" id="IvH-2f-8FT"/>
+                                    <constraint firstItem="Ve3-ug-Opj" firstAttribute="trailing" secondItem="Ymq-17-y58" secondAttribute="trailing" constant="-32" id="Msj-co-QqH"/>
+                                    <constraint firstItem="5dZ-bf-oSn" firstAttribute="top" secondItem="2db-bQ-lQ0" secondAttribute="top" constant="37" id="NsN-z1-VcV"/>
+                                    <constraint firstItem="Qne-W4-fea" firstAttribute="leading" secondItem="2db-bQ-lQ0" secondAttribute="leading" constant="20" id="W8B-xh-WuA"/>
+                                    <constraint firstItem="Cl4-Pc-pNL" firstAttribute="top" secondItem="2db-bQ-lQ0" secondAttribute="top" constant="5" id="ZBc-h5-S4N"/>
+                                    <constraint firstAttribute="trailing" secondItem="Cl4-Pc-pNL" secondAttribute="trailing" constant="20" id="a93-tJ-2C5"/>
+                                    <constraint firstItem="Ymq-17-y58" firstAttribute="top" secondItem="Qne-W4-fea" secondAttribute="bottom" constant="30" id="did-cA-wuI"/>
+                                    <constraint firstAttribute="trailing" secondItem="Qne-W4-fea" secondAttribute="trailing" constant="20" id="gPf-rU-Cr5"/>
+                                    <constraint firstItem="Ve3-ug-Opj" firstAttribute="leading" secondItem="Ymq-17-y58" secondAttribute="leading" constant="32" id="ojq-GE-DcR"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ymq-17-y58" secondAttribute="bottom" constant="15" id="td3-mP-1l2"/>
+                                    <constraint firstItem="Ymq-17-y58" firstAttribute="leading" secondItem="2db-bQ-lQ0" secondAttribute="leading" constant="15" id="x8o-sY-tEp"/>
+                                </constraints>
                             </view>
                             <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lWB-nf-AJg">
                                 <rect key="frame" x="0.0" y="519" width="320" height="49"/>
@@ -117,32 +169,12 @@
                                     <tabBarItem systemItem="history" id="SfK-W1-db3"/>
                                 </items>
                             </tabBar>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="yab-1u-5Dw">
-                                <rect key="frame" x="0.0" y="64" width="320" height="56"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="search"/>
-                            </searchBar>
-                            <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tuto-new-contact" translatesAutoresizingMaskIntoConstraints="NO" id="Cl4-Pc-pNL">
-                                <rect key="frame" x="240" y="64" width="46" height="48"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="L92-ph-x7o"/>
-                                </constraints>
-                            </imageView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Contact" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5dZ-bf-oSn">
-                                <rect key="frame" x="73" y="74" width="162" height="51"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="51" id="FbD-ki-SAa"/>
-                                    <constraint firstAttribute="width" constant="162" id="gK9-or-ZUM"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="lWB-nf-AJg" firstAttribute="top" secondItem="2db-bQ-lQ0" secondAttribute="bottom" id="8vQ-Ze-cB0"/>
                             <constraint firstItem="lWB-nf-AJg" firstAttribute="bottom" secondItem="zvW-wU-SmZ" secondAttribute="bottom" id="A1o-fY-3Sy"/>
-                            <constraint firstItem="5dZ-bf-oSn" firstAttribute="top" secondItem="zvW-wU-SmZ" secondAttribute="top" constant="10" id="Aww-2X-XIR"/>
+                            <constraint firstItem="2db-bQ-lQ0" firstAttribute="top" secondItem="zvW-wU-SmZ" secondAttribute="top" id="AhE-54-4sN"/>
                             <constraint firstItem="qhS-qq-l2R" firstAttribute="top" secondItem="yab-1u-5Dw" secondAttribute="bottom" id="Cdp-oW-GC7"/>
                             <constraint firstItem="lWB-nf-AJg" firstAttribute="top" secondItem="qhS-qq-l2R" secondAttribute="bottom" id="Cjl-ak-CRH"/>
                             <constraint firstItem="qhS-qq-l2R" firstAttribute="leading" secondItem="zvW-wU-SmZ" secondAttribute="leading" id="DId-mC-CDK"/>
@@ -150,14 +182,9 @@
                             <constraint firstItem="yab-1u-5Dw" firstAttribute="trailing" secondItem="zvW-wU-SmZ" secondAttribute="trailing" id="Il0-lt-hBC"/>
                             <constraint firstItem="qhS-qq-l2R" firstAttribute="trailing" secondItem="zvW-wU-SmZ" secondAttribute="trailing" id="Med-cl-E8w"/>
                             <constraint firstItem="2db-bQ-lQ0" firstAttribute="leading" secondItem="zvW-wU-SmZ" secondAttribute="leading" id="O8R-oS-BGe"/>
-                            <constraint firstItem="zvW-wU-SmZ" firstAttribute="trailing" secondItem="Cl4-Pc-pNL" secondAttribute="trailing" constant="34" id="OjU-cF-3Ua"/>
-                            <constraint firstItem="2db-bQ-lQ0" firstAttribute="top" secondItem="5dZ-bf-oSn" secondAttribute="bottom" id="Rpe-zI-5MV"/>
                             <constraint firstItem="lWB-nf-AJg" firstAttribute="top" secondItem="qhS-qq-l2R" secondAttribute="bottom" id="Seq-9f-DdN"/>
                             <constraint firstItem="yab-1u-5Dw" firstAttribute="top" secondItem="zvW-wU-SmZ" secondAttribute="top" id="TxE-k7-Cfo"/>
-                            <constraint firstItem="Cl4-Pc-pNL" firstAttribute="top" secondItem="zvW-wU-SmZ" secondAttribute="top" id="Y39-uI-XQh"/>
-                            <constraint firstItem="Cl4-Pc-pNL" firstAttribute="leading" secondItem="5dZ-bf-oSn" secondAttribute="trailing" constant="5" id="ZVT-OZ-WkG"/>
                             <constraint firstItem="lWB-nf-AJg" firstAttribute="leading" secondItem="zvW-wU-SmZ" secondAttribute="leading" id="c1q-XX-aQi"/>
-                            <constraint firstItem="5dZ-bf-oSn" firstAttribute="leading" secondItem="zvW-wU-SmZ" secondAttribute="leading" constant="73" id="cEA-wI-A96"/>
                             <constraint firstItem="yab-1u-5Dw" firstAttribute="leading" secondItem="zvW-wU-SmZ" secondAttribute="leading" id="cmE-BJ-zkE"/>
                             <constraint firstItem="zvW-wU-SmZ" firstAttribute="trailing" secondItem="2db-bQ-lQ0" secondAttribute="trailing" id="xeB-lq-1Gc"/>
                         </constraints>
@@ -166,9 +193,11 @@
                     <navigationItem key="navigationItem" id="Fl6-x6-Ncj"/>
                     <connections>
                         <outlet property="emptyTableView" destination="2db-bQ-lQ0" id="WHh-CC-9O1"/>
+                        <outlet property="noFavouriteLabel" destination="Qne-W4-fea" id="sKD-vq-r9M"/>
                         <outlet property="searchBar" destination="yab-1u-5Dw" id="Jch-nv-TCj"/>
                         <outlet property="tabBar" destination="lWB-nf-AJg" id="ugn-jr-wel"/>
                         <outlet property="tableView" destination="qhS-qq-l2R" id="BJj-RH-Gko"/>
+                        <outlet property="tutoAddFavouriteLabel" destination="Ve3-ug-Opj" id="NlN-sA-9Al"/>
                         <outlet property="tutoNewContactImage" destination="Cl4-Pc-pNL" id="WX3-Eb-fkK"/>
                         <outlet property="tutoNewContactLabel" destination="5dZ-bf-oSn" id="dLw-HD-XN3"/>
                         <segue destination="yaC-f7-cDd" kind="presentation" identifier="openMenu" customClass="TransitionToRightSegue" customModule="Elder_ly" customModuleProvider="target" modalPresentationStyle="overCurrentContext" id="RWz-Me-Mtb"/>
@@ -487,6 +516,7 @@
     </scenes>
     <resources>
         <image name="default-avatar" width="200" height="200"/>
+        <image name="fav-pseudo-button" width="294" height="77"/>
         <image name="star-fill" width="124" height="124"/>
         <image name="tuto-new-contact" width="111" height="92"/>
     </resources>
