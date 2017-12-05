@@ -425,6 +425,7 @@ extension MasterViewController: UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.searchBar.showsCancelButton = true
+        self.searchBar.tintColor = UIColor.white()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
