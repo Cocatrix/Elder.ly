@@ -171,16 +171,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let controller = AddEditViewController(nibName: nil, bundle: nil)
         self.navigationController?.pushViewController(controller, animated: false)
     }
-    
-    // MARK: - Unwind with Segues
-    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
-    }
-    
-    override func unwind(for unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
-        let segue = TransitionToLeftSegue(identifier: unwindSegue.identifier, source: unwindSegue.source, destination: unwindSegue.destination)
-        segue.perform()
-    }
-    
+
     // MARK: - Segues
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
