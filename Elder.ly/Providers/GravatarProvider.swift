@@ -27,10 +27,6 @@ extension String {
     }
 }
 
-private protocol QueryItemConvertible {
-    var queryItem: URLQueryItem {get}
-}
-
 public class Gravatar {
     public enum Size: CGFloat {
         case small = 80
@@ -55,7 +51,7 @@ public class Gravatar {
         let url = Gravatar.baseURL.appendingPathComponent(email.md5)
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         
-        components.queryItems = [URLQueryItem(name: "d", value: "mm"), URLQueryItem(name: "s", value: String(format: "%.0f",size))]
+        components.queryItems = [URLQueryItem(name: "d", value: "retro"), URLQueryItem(name: "s", value: String(format: "%.0f",size))]
         
         return components.url!
     }

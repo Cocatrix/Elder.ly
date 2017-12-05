@@ -34,3 +34,6 @@
 "Add your first contact here" = "Ajoutez votre premier contact ici";
 "No favourite" = "Trouvez ce bouton sur un contact pour l'ajouter aux favoris.";
 "No frequent" = "Vos contacts les plus fréquemment appelés s'afficheront ici.";
+"Connect" = "Connexion";
+"Disconnected" = "Déconnecté";
+"Please enter your password" = "Merci de rentrer à nouveau votre mot de passe";

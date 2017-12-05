@@ -91,10 +91,11 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
         // Sort by first name, then by last name
         let scdProvider = SearchCoreDataProvider.sharedInstance
+        
         fetchRequest.sortDescriptors = scdProvider.getDefaultSortDescriptor()
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: self.appDelegate().persistentContainer.viewContext,
-                                             sectionNameKeyPath: nil, cacheName: nil)
+                                             sectionNameKeyPath: "firstLetter", cacheName: nil)
         frc.delegate = self
         try? frc.performFetch()
         self.resultController = frc
@@ -115,6 +116,16 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // It is related to selected element. Should it still be selected on viewWillAppear ? I think it's not important to comment it for now.
         super.viewWillAppear(animated)
         self.tutoCheck()
+        
+        // Setup background image
+        let backgroundImage = UIImage(named: "elderly")
+        let imageView = UIImageView(image: backgroundImage)
+        self.tableView.backgroundView = imageView
+        
+        imageView.contentMode = .scaleAspectFit
+        imageView.alpha = 0.15
+        tableView.backgroundColor = .white
+        
         // Check Auth
         if !UserDefaults.standard.isAuth() && UserDefaults.standard.isFirstLogin() {
             let controller = LoginViewController(nibName: nil, bundle: nil)
@@ -188,16 +199,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let controller = AddEditViewController(nibName: nil, bundle: nil)
         self.navigationController?.pushViewController(controller, animated: false)
     }
-    
-    // MARK: - Unwind with Segues
-    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
-    }
-    
-    override func unwind(for unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
-        let segue = TransitionToLeftSegue(identifier: unwindSegue.identifier, source: unwindSegue.source, destination: unwindSegue.destination)
-        segue.perform()
-    }
-    
+
     // MARK: - Segues
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -236,6 +238,10 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return 0
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.resultController!.sections![section].name
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sections = self.resultController?.sections else {
             fatalError("No sections in fetchedResultsController")
@@ -254,6 +260,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //            cell.contentView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
         //        }
         configureCell(cell, withContact: contact!)
+        cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
         return cell
     }
     
