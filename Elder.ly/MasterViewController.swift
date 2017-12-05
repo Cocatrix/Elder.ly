@@ -72,18 +72,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.tabBar.tintColor = UIColor.orange()
         
-        // Setup fetched resultController
-        let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
-        // Sort by first name, then by last name
-        let scdProvider = SearchCoreDataProvider.sharedInstance
-        
-        fetchRequest.sortDescriptors = scdProvider.getDefaultSortDescriptor()
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                             managedObjectContext: self.appDelegate().persistentContainer.viewContext,
-                                             sectionNameKeyPath: "firstLetter", cacheName: nil)
-        frc.delegate = self
-        try? frc.performFetch()
-        self.resultController = frc
+        displayAllContacts()
         
         // Select Contacts tab at launch
         guard let items = self.tabBar.items, items.count == 3 else {
@@ -432,14 +421,17 @@ extension MasterViewController: UITabBarDelegate {
          * - sorted by first name, then last name
          * - predicate to display favourite contacts only (and search results if applicable)
          */
-        guard let frc = self.resultController else {
-            return
-        }
+        let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
+        let scdProvider = SearchCoreDataProvider.sharedInstance
+        fetchRequest.sortDescriptors = scdProvider.getDefaultSortDescriptor()
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                           managedObjectContext: self.appDelegate().persistentContainer.viewContext,
+                                                           sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
         // Reset fetch limit number
         frc.fetchRequest.fetchLimit = 0
         
         // Get predicate corresponding to favourite (manage search predicate if existing)
-        let scdProvider = SearchCoreDataProvider.sharedInstance
         let favouritePredicate = scdProvider.getFavouritePredicate()
         if self.currentSearchPredicate != nil && favouritePredicate != nil {
             frc.fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [self.currentSearchPredicate!, favouritePredicate!])
@@ -453,6 +445,7 @@ extension MasterViewController: UITabBarDelegate {
         
         // Perform fetch and reload data
         try? frc.performFetch()
+        self.resultController = frc
         self.tableView.reloadData()
         tutoCheck()
     }
@@ -464,14 +457,19 @@ extension MasterViewController: UITabBarDelegate {
          * - sorted by first name, then last name
          * - no predicate (except search results if applicable)
          */
-        guard let frc = self.resultController else {
-            return
-        }
+        let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
+        // Sort by first name, then by last name
+        let scdProvider = SearchCoreDataProvider.sharedInstance
+        
+        fetchRequest.sortDescriptors = scdProvider.getDefaultSortDescriptor()
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                             managedObjectContext: self.appDelegate().persistentContainer.viewContext,
+                                             sectionNameKeyPath: "firstLetter", cacheName: nil)
+        frc.delegate = self
         // Reset fetch limit number
         frc.fetchRequest.fetchLimit = 0
         
         // Sort by first name, then by last name
-        let scdProvider = SearchCoreDataProvider.sharedInstance
         frc.fetchRequest.sortDescriptors = scdProvider.getDefaultSortDescriptor()
         
         // Reset predicate (or keep search predicate)
@@ -483,6 +481,7 @@ extension MasterViewController: UITabBarDelegate {
         self.currentTabPredicate = nil
         // Perform fetch and reload data
         try? frc.performFetch()
+        self.resultController = frc
         self.tableView.reloadData()
         tutoCheck()
     }
@@ -494,15 +493,17 @@ extension MasterViewController: UITabBarDelegate {
          * - sorted by frequency, then first name, then last name
          * - no predicate (except search results if applicable)
          */
-        guard let frc = self.resultController else {
-            return
-        }
+        let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
+        let scdProvider = SearchCoreDataProvider.sharedInstance
+        fetchRequest.sortDescriptors = scdProvider.getDefaultSortDescriptor()
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                           managedObjectContext: self.appDelegate().persistentContainer.viewContext,
+                                                           sectionNameKeyPath: nil, cacheName: nil)
         // Set fetch limit number
         let fetchLimitNumber = 5
         frc.fetchRequest.fetchLimit = fetchLimitNumber
         
         // Sort by frequency, then by first name, then by last name
-        let scdProvider = SearchCoreDataProvider.sharedInstance
         frc.fetchRequest.sortDescriptors = scdProvider.getFrequentSortDescriptor()
         
         // Get predicate corresponding to frequency (manage search predicate if existing)
@@ -516,6 +517,7 @@ extension MasterViewController: UITabBarDelegate {
         
         // Perform fetch and reload data
         try? frc.performFetch()
+        self.resultController = frc
         self.tableView.reloadData()
         tutoCheck()
     }
