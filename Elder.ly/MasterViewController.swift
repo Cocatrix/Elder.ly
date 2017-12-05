@@ -298,7 +298,8 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
             
             contactCell.setContact(contact: contact)
-            
+        
+            contactCell.avatarImageView.image = UIImage(named: "default-avatar")
             if let email = contact.email  {
                 contactCell.avatarImageView.gravatarImage(email: email)
             }
@@ -450,8 +451,6 @@ extension MasterViewController: UITabBarDelegate {
             return
         }
         
-        //self.tableView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-        
         switch item {
         case tabs[0]:
             self.displayFavouriteContacts()
@@ -566,10 +565,13 @@ extension MasterViewController: UITabBarDelegate {
         }
         self.currentTabPredicate = frequentPredicate
         
+        
         // Perform fetch and reload data
         try? frc.performFetch()
         self.resultController = frc
+        
         self.tableView.reloadData()
+        
         tutoCheck()
     }
 }
