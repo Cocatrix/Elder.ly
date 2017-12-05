@@ -103,7 +103,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // TODO - clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         // It is related to selected element. Should it still be selected on viewWillAppear ? I think it's not important to comment it for now.
         super.viewWillAppear(animated)
-        self.tutoCheck()
+        //self.tutoCheck()
         
         // Setup background image
         let backgroundImage = UIImage(named: "elderly")
@@ -342,6 +342,11 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tutoCheck() {
         print("tuto check")
+        if (self.searchBar.text != "") {
+            self.emptyTableView.isHidden = true
+            return
+        }
+        
         if self.resultController?.fetchedObjects?.isEmpty ?? true {
             guard let tabs = self.tabBar.items, tabs.count == 3, let item = self.tabBar.selectedItem else {
                 print("Error in getting tab bar items or no selected item")
@@ -427,6 +432,7 @@ extension MasterViewController: UISearchBarDelegate {
         self.searchBar(searchBar, textDidChange: "")
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
+        self.tutoCheck()
     }
 }
 
@@ -443,6 +449,8 @@ extension MasterViewController: UITabBarDelegate {
             print("Error in getting tab bar items")
             return
         }
+        
+        //self.tableView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         
         switch item {
         case tabs[0]:
@@ -541,6 +549,7 @@ extension MasterViewController: UITabBarDelegate {
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                            managedObjectContext: self.appDelegate().persistentContainer.viewContext,
                                                            sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
         // Set fetch limit number
         let fetchLimitNumber = 5
         frc.fetchRequest.fetchLimit = fetchLimitNumber
