@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="addButton" destination="3vZ-t1-FZx" id="0uk-mb-1Nf"/>
                 <outlet property="addContactButton" destination="3vZ-t1-FZx" id="IyS-9E-Q2W"/>
+                <outlet property="addEditLabel" destination="bJH-sT-NTD" id="dK0-Nd-97R"/>
                 <outlet property="emailTextField" destination="EC1-Ln-LhG" id="uua-sC-O5R"/>
                 <outlet property="firstNameTextField" destination="9C7-3H-kK3" id="zq9-ZJ-kGs"/>
                 <outlet property="lastNameTextField" destination="P6c-FC-yK5" id="ojE-3R-t8L"/>
