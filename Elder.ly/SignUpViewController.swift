@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var phoneView: UITextField!
@@ -16,10 +16,12 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var firstnameView: UITextField!
     @IBOutlet weak var emailView: UITextField!
     @IBOutlet weak var passwordView: UITextField!
-    
     @IBOutlet weak var profileView: UIPickerView!
-    var selectedProfile: String = ""
+    @IBOutlet weak var requestIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var loginButton: UIButton!
     
+    var selectedProfile: String = ""
     var profilesList: [String] = [String]()
     
     override func viewDidLoad() {
@@ -28,6 +30,12 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil) // Do any additional setup after loading the view.
         
+        // Buttons Styling
+        self.registerButton.layer.cornerRadius = self.registerButton.frame.size.height / 2
+        self.loginButton.layer.borderWidth = 1
+        self.loginButton.layer.borderColor = UIColor.orange().cgColor
+        self.loginButton.layer.cornerRadius = self.loginButton.frame.size.height / 2
+    
         let preferencesProfiles = UserDefaults.standard.value(forKey: "elderlyProfiles")
         if ((preferencesProfiles) != nil) {
             print("Preferences set")
@@ -41,13 +49,31 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         profileView.dataSource = self
         profileView.delegate = self
         
-        loadProfilesFromWS()
+        phoneView.delegate = self
+        phoneView.tag = 0
+        firstnameView.delegate = self
+        firstnameView.tag = 1
+        lastnameView.delegate = self
+        lastnameView.tag = 2
+        emailView.delegate = self
+        emailView.tag = 3
+        passwordView.delegate = self
+        passwordView.tag = 4
         
-//        phoneView.text = "0123456789"
-//        firstnameView.text = "John"
-//        lastnameView.text = "Doe"
-//        emailView.text = "john.doe@nobody.net"
-//        passwordView.text = "0000"
+        loadProfilesFromWS()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        // Try to find next responder
+        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            nextField.becomeFirstResponder()
+        } else {
+            // Not found, so remove keyboard.
+            textField.resignFirstResponder()
+        }
+        // Do not add a line break
+        return false
     }
     
     override func didReceiveMemoryWarning() {
@@ -58,7 +84,7 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @objc func keyboardWillShow(notification:NSNotification){
         //give room at the bottom of the scroll view, so it doesn't cover up anything the user needs to tap
         var userInfo = notification.userInfo!
-        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         keyboardFrame = self.view.convert(keyboardFrame, from: nil)
         
         var contentInset:UIEdgeInsets = self.scrollView.contentInset
@@ -66,9 +92,10 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         scrollView.contentInset = contentInset
     }
     
-    @objc func keyboardWillHide(notification:NSNotification){
+    @objc func keyboardWillHide(notification:NSNotification) {
         let contentInset:UIEdgeInsets = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
     }
     
     @IBAction func loginPressed(_ sender: Any) {
@@ -85,31 +112,90 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let lastname = lastnameView.text!
         let email = emailView.text!
         let profile = selectedProfile
-        if (!UserValidationUtil.validatePhone(phone: phone)) {
-            phoneView.becomeFirstResponder()
-        } else if (!UserValidationUtil.validateFirstname(firstname: firstname)) {
-            firstnameView.becomeFirstResponder()
-        } else if (!UserValidationUtil.validateLastname(lastname: lastname)) {
-            lastnameView.becomeFirstResponder()
-        } else if (!UserValidationUtil.validateEmail(email: email)) {
-            emailView.becomeFirstResponder()
-        } else if (!UserValidationUtil.validatePassword(password: password)) {
+        
+        registerButton.isEnabled = false
+        requestIndicator.isHidden = false
+        
+        var isInvalidField = false
+        
+        if (!UserValidationUtil.validatePassword(password: password)) {
+            isInvalidField = true
+            setHighlightTextField(field: passwordView)
+            self.registerButton.isEnabled = true
+            self.requestIndicator.isHidden = true
             passwordView.becomeFirstResponder()
         } else {
+            resetHighlightTextField(field: passwordView)
+        }
+        
+        if (!UserValidationUtil.validateEmail(email: email)) {
+            isInvalidField = true
+            self.registerButton.isEnabled = true
+            self.requestIndicator.isHidden = true
+            setHighlightTextField(field: emailView)
+            emailView.becomeFirstResponder()
+        } else {
+            resetHighlightTextField(field: emailView)
+        }
+        
+        if (!UserValidationUtil.validateLastname(lastname: lastname)) {
+            isInvalidField = true
+            self.registerButton.isEnabled = true
+            self.requestIndicator.isHidden = true
+            setHighlightTextField(field: lastnameView)
+            lastnameView.becomeFirstResponder()
+        } else {
+            resetHighlightTextField(field: lastnameView)
+        }
+        
+        if (!UserValidationUtil.validateFirstname(firstname: firstname)) {
+            isInvalidField = true
+            self.registerButton.isEnabled = true
+            self.requestIndicator.isHidden = true
+            setHighlightTextField(field: firstnameView)
+            firstnameView.becomeFirstResponder()
+        } else {
+            resetHighlightTextField(field: firstnameView)
+        }
+        
+        if (!UserValidationUtil.validatePhone(phone: phone)) {
+            isInvalidField = true
+            self.registerButton.isEnabled = true
+            self.requestIndicator.isHidden = true
+            setHighlightTextField(field: phoneView)
+            phoneView.becomeFirstResponder()
+        } else {
+            resetHighlightTextField(field: phoneView)
+        }
+        
+        if (!isInvalidField) {
             WebServicesProvider.sharedInstance.createUser(phone: phone, password: password, firstName: firstname, lastName: lastname, email: email, profile: profile, success: {
                 print("User created")
-                self.dismiss(animated: true, completion: {
-                    
-                })
+                DispatchQueue.main.async {
+                    self.registerButton.isEnabled = true
+                    self.requestIndicator.isHidden = true
+                }
+                self.dismiss(animated: true)
             }, failure: { (error) in
                 print(error ?? "ERROR")
                 DispatchQueue.main.async {
+                    self.registerButton.isEnabled = true
+                    self.requestIndicator.isHidden = true
                     self.view.endEditing(true)
                     self.alertErrorSignup(message: (error?.localizedDescription)!)
                 }
                 print("Phone : " + phone + ", Password : " + password + ", Firstname : " + firstname + ", Lastname : " + lastname + ", Email : " + email + ", Profile : " + profile)
             })
         }
+    }
+    
+    func setHighlightTextField(field: UITextField) {
+        field.layer.borderColor = UIColor.red.cgColor
+        field.layer.borderWidth = 1.0
+    }
+    
+    func resetHighlightTextField(field: UITextField) {
+        field.layer.borderWidth = 0.0
     }
     
     func alertErrorSignup(message: String) {
