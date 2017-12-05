@@ -342,7 +342,6 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tutoCheck() {
-        print("tuto check")
         if (self.searchBar.text != "") {
             self.emptyTableView.isHidden = true
             return
