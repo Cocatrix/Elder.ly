@@ -1,9 +1,15 @@
 
+/* Class = "UILabel"; text = "Azerty azerty azerty azerty"; ObjectID = "28D-Nm-ki9"; */
+"28D-Nm-ki9.text" = "Azerty azerty azerty azerty";
+
 /* Class = "UILabel"; text = "N° de téléphone"; ObjectID = "3jU-ER-dZD"; */
 "3jU-ER-dZD.text" = "N° de téléphone";
 
 /* Class = "UILabel"; text = "Josianne"; ObjectID = "7Fe-QB-CYB"; */
 "7Fe-QB-CYB.text" = "Josianne";
+
+/* Class = "UIButton"; normalTitle = "Appeler"; ObjectID = "C1H-yd-cU7"; */
+"C1H-yd-cU7.normalTitle" = "Appeler";
 
 /* Class = "UISegmentedControl"; CMW-Gd-OXo.segmentTitles[0] = "Texto"; ObjectID = "CMW-Gd-OXo"; */
 "CMW-Gd-OXo.segmentTitles[0]" = "Texto";
@@ -13,6 +19,9 @@
 
 /* Class = "UISegmentedControl"; CMW-Gd-OXo.segmentTitles[2] = "Email"; ObjectID = "CMW-Gd-OXo"; */
 "CMW-Gd-OXo.segmentTitles[2]" = "Email";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Cro-to-dZP"; */
+"Cro-to-dZP.normalTitle" = "Ajouter à vos favoris";
 
 /* Class = "UIViewController"; title = "Detail"; ObjectID = "JEX-9P-axG"; */
 "JEX-9P-axG.title" = "Detail";

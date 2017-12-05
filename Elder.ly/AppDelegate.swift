@@ -52,6 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
+        UserDefaults.standard.unsetAuth()
+        UserDefaults.standard.setFirstLogin()
     }
 
     // MARK: - Split view
@@ -91,7 +93,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
-        
         container.viewContext.automaticallyMergesChangesFromParent = true
         
         return container

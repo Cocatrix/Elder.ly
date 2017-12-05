@@ -29,12 +29,48 @@ class SearchCoreDataProvider {
          * Filters contacts matching "content" in their first/last names, phone numbers or emails.
          */
         guard content != "" else {
-            print("Search error")
+            // No content, a nil predicate is needed.
             return nil
         }
         let predicateContent = "(firstName CONTAINS[cd] %@) || (lastName CONTAINS[cd] %@) || (phone CONTAINS[cd] %@) || (email CONTAINS[cd] %@)"
-        let searchPredicate: NSPredicate
-        searchPredicate = NSPredicate(format: predicateContent, content, content, content, content)
+        let searchPredicate = NSPredicate(format: predicateContent, content, content, content, content)
         return searchPredicate
+    }
+    
+    func getFavouritePredicate() -> NSPredicate? {
+        /**
+         * Returns a predicate that filters the results with favourite contacts
+         */
+        let favouritePredicate = NSPredicate(format: "isFavouriteUser == true")
+        return favouritePredicate
+    }
+    
+    func getFrequentPredicate() -> NSPredicate? {
+        /**
+         * Returns a predicate that filters the results with frequent contacts (at least interacted once with)
+         */
+        let frequentPredicate = NSPredicate(format: "frequency != 0")
+        return frequentPredicate
+    }
+    
+    func getDefaultSortDescriptor() -> [NSSortDescriptor] {
+        /**
+         * Returns a sort descriptor array with these sort rules :
+         * Sort by first name, then by last name
+         */
+        let sortFirstName = NSSortDescriptor(key: "firstName", ascending: true)
+        let sortLastName = NSSortDescriptor(key: "lastName", ascending: true)
+        return [sortFirstName, sortLastName]
+    }
+    
+    func getFrequentSortDescriptor() -> [NSSortDescriptor] {
+        /**
+         * Returns a sort descriptor array with these sort rules :
+         * Sort by frequency, then by first name, then by last name
+         */
+        let sortFrequency = NSSortDescriptor(key: "frequency", ascending: false)
+        let sortFirstName = NSSortDescriptor(key: "firstName", ascending: true)
+        let sortLastName = NSSortDescriptor(key: "lastName", ascending: true)
+        return [sortFrequency, sortFirstName, sortLastName]
     }
 }
