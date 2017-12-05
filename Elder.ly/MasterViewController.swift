@@ -48,8 +48,6 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.searchBar.delegate = self
         self.tabBar.delegate = self
         
-        // Not working // self.tableView.backgroundView = UIImageView(image: UIImage(named: "./xcassets/elderly"))
-        
         // NavigationBar colors
         self.navigationController?.navigationBar.tintColor = UIColor.white()
         self.navigationController?.navigationBar.barTintColor = UIColor.purple()
